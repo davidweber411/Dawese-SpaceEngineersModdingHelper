@@ -73,6 +73,7 @@ public class DeployModController {
         }
         try {
             deploymentService.deployMod(selectedMod);
+            jfxUiService.displayInformationDialog("Mod deployed!");
         } catch (NotValidException e) {
             jfxUiService.displayWarnDialog(e.getMessage());
         } catch (IOException e) {
