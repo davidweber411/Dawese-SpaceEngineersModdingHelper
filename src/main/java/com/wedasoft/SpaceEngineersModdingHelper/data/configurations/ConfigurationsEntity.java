@@ -18,10 +18,10 @@ public class ConfigurationsEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "pathToModdingWorkingSpace")
-    private String pathToModdingWorkingSpace;
+    @Column(name = "pathToModsWorkspace")
+    private String pathToModsWorkspace;
 
-    @Column(name = "pathToSpaceEngineersAppdataModsDirectory")
-    private String pathToSpaceEngineersAppdataModsDirectory;
+    @Column(name = "pathToAppdataModsDirectory")
+    private String pathToAppdataModsDirectory;
 
 }
