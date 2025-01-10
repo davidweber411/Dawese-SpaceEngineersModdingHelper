@@ -1,5 +1,6 @@
 package com.wedasoft.SpaceEngineersModdingHelper.services;
 
+import com.wedasoft.wedasoftFxGuiCommons.jfxDialogs.JfxDialogUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Parent;
@@ -53,6 +54,10 @@ public class JfxUiService {
         }
 
         return stage;
+    }
+
+    public void displayInformationDialog(String text) {
+        JfxDialogUtil.createInformationDialog(text).showAndWait();
     }
 
 }

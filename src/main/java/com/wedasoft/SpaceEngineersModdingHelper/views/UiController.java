@@ -1,15 +1,8 @@
 package com.wedasoft.SpaceEngineersModdingHelper.views;
 
-import com.wedasoft.SpaceEngineersModdingHelper.persistence.todo.Todo;
-import com.wedasoft.SpaceEngineersModdingHelper.persistence.todo.TodoRepository;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Dimension2D;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -25,16 +18,9 @@ import java.util.ResourceBundle;
 public class UiController implements Initializable {
 
     private final JfxUiService jfxUiService;
-    private final TodoRepository todoRepository;
-
-    @FXML
-    public ListView<Todo> todosListView;
-    @FXML
-    public TextField todoTf;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        todosListView.setItems(FXCollections.observableArrayList(todoRepository.findAll()));
     }
 
     public void onExitMenuItemClick() {
@@ -42,28 +28,14 @@ public class UiController implements Initializable {
         System.exit(0);
     }
 
-    public void onAddTodoBtnClick() {
-        todoRepository.save(new Todo(null, todoTf.getText()));
-        updateTodosListView();
-    }
-
-    public void onDeleteAllTodosBtnClick() {
-        todoRepository.deleteAll();
-        updateTodosListView();
-    }
-
-    private void updateTodosListView() {
-        todosListView.setItems(FXCollections.observableArrayList(todoRepository.findAll()));
-    }
-
-    public void onOpenDialogMenuItemClick() throws IOException {
+    public void onPreferencesMenuItemClick() throws IOException {
         jfxUiService.createAndShowFxmlDialog(
-                "Non-Spring component dialog",
+                "Preferences",
                 true,
-                true,
-                getClass().getResource("/com/wedasoft/SpaceEngineersModdingHelper/views/dialog.fxml"),
-                new Dimension2D(600, 400),
-                dialogController -> ((DialogController) dialogController).init());
+                false,
+                getClass().getResource("/com/wedasoft/SpaceEngineersModdingHelper/views/preferences.fxml"),
+                null,
+                dialogController -> ((PreferencesController) dialogController).init());
     }
 
 }
