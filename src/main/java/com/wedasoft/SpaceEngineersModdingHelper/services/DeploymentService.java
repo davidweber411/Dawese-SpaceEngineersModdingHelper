@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.Comparator;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -32,11 +32,33 @@ public class DeploymentService {
             throw new NotValidException("Your set path to appdata mods directory doesn't exist.");
         }
 
-        Path copiedModPath = copyDirectory(modToDeploy.toPath(), new File(configurations.getPathToAppdataModsDirectory()).toPath());
-        deleteUnrelevantThings(copiedModPath);
+        copyRelevantFilesAndDirectories(modToDeploy.toPath(), new File(configurations.getPathToAppdataModsDirectory()).toPath());
     }
 
-    private Path copyDirectory(Path dirToCopy, Path intoTargetParentDir) throws IOException {
+    private void copyRelevantFilesAndDirectories(Path dirToCopy, Path intoTargetParentDir) throws IOException {
+        final Set<String> allowedNames = Set.of(
+                "thumb.png", "modinfo.sbmi", "metadata.mod",
+                "Audio", "Brains", "CustomWorlds", "Data", "DataPlatform", "Fonts", "InventoryScenes",
+                "Models", "Mods", "Particles", "Scenarios", "ShaderCache", "Shaders", "Textures", "Videos",
+                "VisualScripts", "VoxelMaps");
+
+        Path targetModDir = intoTargetParentDir.resolve(dirToCopy.getFileName());
+        Files.createDirectories(targetModDir);
+
+        for (File fileOrDir : Objects.requireNonNull(dirToCopy.toFile().listFiles())) {
+            if (!allowedNames.contains(fileOrDir.getName())) {
+                continue;
+            }
+            if (fileOrDir.isDirectory()) {
+                copyDirectory(fileOrDir.toPath(), targetModDir);
+            } else if (fileOrDir.isFile()) {
+                Files.copy(fileOrDir.toPath(), targetModDir.resolve(fileOrDir.getName()));
+            }
+        }
+
+    }
+
+    private void copyDirectory(Path dirToCopy, Path intoTargetParentDir) throws IOException {
         Files.walk(dirToCopy).forEach(sourcePath -> {
             try {
                 Path targetPath = intoTargetParentDir.resolve(dirToCopy.getFileName()).resolve(dirToCopy.relativize(sourcePath));
@@ -49,32 +71,6 @@ public class DeploymentService {
                 throw new RuntimeException("Error copying file: " + sourcePath, e);
             }
         });
-        return intoTargetParentDir.resolve(dirToCopy.getFileName());
     }
 
-    private void deleteUnrelevantThings(Path copiedModPath) throws IOException {
-        final Set<String> allowedNames = Set.of(
-                "thumb.png", "modinfo.sbmi", "metadata.mod",
-                "Audio", "Brains", "CustomWorlds", "Data", "DataPlatform", "Fonts", "InventoryScenes",
-                "Models", "Mods", "Particles", "Scenarios", "ShaderCache", "Shaders", "Textures", "Videos",
-                "VisualScripts", "VoxelMaps");
-
-        Files.walk(copiedModPath)
-                .sorted(Comparator.reverseOrder())
-                .forEach(p -> {
-                    try {
-                        if (!p.equals(copiedModPath)) { // don't delete the root director of the mod
-                            if (!allowedNames.contains(p.getFileName().toString())) {
-                                if (Files.isRegularFile(p)) {
-                                    Files.delete(p);
-                                } else if (Files.isDirectory(p)) {
-                                    Files.delete(p);
-                                }
-                            }
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-    }
 }
