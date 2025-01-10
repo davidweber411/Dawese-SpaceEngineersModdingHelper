@@ -60,4 +60,8 @@ public class JfxUiService {
         JfxDialogUtil.createInformationDialog(text).showAndWait();
     }
 
+    public void displayWarnDialog(String text) {
+        JfxDialogUtil.createWarningDialog(text).showAndWait();
+    }
+
 }

@@ -15,7 +15,7 @@ public class ConfigurationsService {
         if (configurationsRepository.findAll().size() > 1) {
             throw new RuntimeException("There mustn't be more than one configurationsEntity!");
         }
-        return configurationsRepository.findAll().stream().findFirst().orElse(new ConfigurationsEntity());
+        return configurationsRepository.findAll().stream().findFirst().orElse(null);
     }
 
     public void saveConfigurations(ConfigurationsEntity configurationsEntity) {

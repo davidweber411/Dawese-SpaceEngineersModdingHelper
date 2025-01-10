@@ -31,6 +31,9 @@ public class PreferencesController {
 
     public void init() {
         configurationsEntity = configurationsService.loadConfigurations();
+        if (configurationsEntity == null) {
+            configurationsEntity = new ConfigurationsEntity();
+        }
         pathToModsWorkspaceTextField.setText(configurationsEntity.getPathToModsWorkspace());
         pathToAppdataModsDirectoryTextField.setText(configurationsEntity.getPathToAppdataModsDirectory());
     }
