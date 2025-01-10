@@ -13,7 +13,7 @@ plugins {
 }
 
 group = 'com.wedasoft'
-version = '1.0.1'
+version = '1.0.2'
 
 repositories {
     mavenCentral()
@@ -24,6 +24,13 @@ ext {
     javaFxVersion = "17.0.10"
     javaVersion = 17
     customTasksGradleGroupName = '_custom tasks (javafx spring boot application)'
+    appVersion = version
+}
+
+processResources {
+    filesMatching("application.properties") {
+        expand(appVersion: appVersion)
+    }
 }
 
 dependencies {

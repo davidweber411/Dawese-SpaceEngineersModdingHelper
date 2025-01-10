@@ -84,6 +84,8 @@ public class JfxSpringBootAppLauncher {
 
         @Value("${spring.application.name}")
         private final String applicationTitle;
+        @Value("${app.version}")
+        private String appVersion;
         private final ApplicationContext springApplicationContext;
 
         public JfxApplicationStartEventListener(
@@ -104,7 +106,7 @@ public class JfxSpringBootAppLauncher {
                 Scene scene = new Scene(root);
                 Stage stage = event.getStage();
                 stage.setScene(scene);
-                stage.setTitle(this.applicationTitle);
+                stage.setTitle(this.applicationTitle + " " + appVersion);
                 stage.show();
                 log.info(LOG_PREFIX + "JavaFx Spring boot application started.");
             } catch (IOException e) {
