@@ -1,19 +1,23 @@
 package com.wedasoft.SpaceEngineersModdingHelper.views;
 
 import com.wedasoft.SpaceEngineersModdingHelper.data.configurations.ConfigurationsEntity;
+import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
 import com.wedasoft.SpaceEngineersModdingHelper.services.ConfigurationsService;
+import com.wedasoft.SpaceEngineersModdingHelper.services.DeploymentService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.cell.TextFieldListCell;
+import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -23,6 +27,7 @@ import java.util.Objects;
 public class DeployModController {
 
     private final ConfigurationsService configurationsService;
+    private final DeploymentService deploymentService;
     private final JfxUiService jfxUiService;
 
     @FXML
@@ -57,11 +62,22 @@ public class DeployModController {
     }
 
     public void onCancelButtonClick() {
-        System.out.println("CANCEL");
+        ((Stage) modsListView.getScene().getWindow()).close();
     }
 
     public void onDeploySelectedModButtonClick() {
-        System.out.println("DEPLOY");
+        File selectedMod = modsListView.getSelectionModel().getSelectedItem();
+        if (selectedMod == null) {
+            jfxUiService.displayWarnDialog("You must select a mod first.");
+            return;
+        }
+        try {
+            deploymentService.deployMod(selectedMod);
+        } catch (NotValidException e) {
+            jfxUiService.displayWarnDialog(e.getMessage());
+        } catch (IOException e) {
+            jfxUiService.displayErrorDialog(e);
+        }
     }
 
 }

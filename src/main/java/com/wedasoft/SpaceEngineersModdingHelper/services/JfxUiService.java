@@ -64,4 +64,8 @@ public class JfxUiService {
         JfxDialogUtil.createWarningDialog(text).showAndWait();
     }
 
+    public void displayErrorDialog( Exception e) {
+        JfxDialogUtil.createErrorDialog(e.getMessage(), e).showAndWait();
+    }
+
 }
