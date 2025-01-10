@@ -32,10 +32,20 @@ public class UiController implements Initializable {
         jfxUiService.createAndShowFxmlDialog(
                 "Preferences",
                 true,
-                false,
+                true,
                 getClass().getResource("/com/wedasoft/SpaceEngineersModdingHelper/views/preferences.fxml"),
                 null,
                 dialogController -> ((PreferencesController) dialogController).init());
+    }
+
+    public void onDeployModIntoSeModsDirectoryButtonClick() throws IOException {
+        jfxUiService.createAndShowFxmlDialog(
+                "Deploy mod into SE \"Mods\" directory",
+                true,
+                true,
+                getClass().getResource("/com/wedasoft/SpaceEngineersModdingHelper/views/deployMod.fxml"),
+                null,
+                dialogController -> ((DeployModController) dialogController).init());
     }
 
 }
