@@ -101,7 +101,7 @@ public class JfxSpringBootAppLauncher {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/wedasoft/SpaceEngineersModdingHelper/views/ui.fxml"));
                 fxmlLoader.setControllerFactory(springApplicationContext::getBean);
                 Parent root = fxmlLoader.load();
-                Scene scene = new Scene(root, 600, 600);
+                Scene scene = new Scene(root);
                 Stage stage = event.getStage();
                 stage.setScene(scene);
                 stage.setTitle(this.applicationTitle);
