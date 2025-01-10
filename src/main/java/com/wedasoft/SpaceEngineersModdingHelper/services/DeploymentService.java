@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -32,7 +33,30 @@ public class DeploymentService {
             throw new NotValidException("Your set path to appdata mods directory doesn't exist.");
         }
 
+        deleteCurrentOfflineModIfNeccessary(modToDeploy.toPath());
         copyRelevantFilesAndDirectories(modToDeploy.toPath(), new File(configurations.getPathToAppdataModsDirectory()).toPath());
+    }
+
+    private void deleteCurrentOfflineModIfNeccessary(Path modToDeploy) throws IOException {
+        final String modName = modToDeploy.getFileName().toString();
+        final String appdataModsDirPath = configurationsRepository.loadConfigurations().getPathToAppdataModsDirectory();
+        final Path modToDelete = new File(appdataModsDirPath).toPath().resolve(modName);
+
+        if (Files.exists(modToDelete)) {
+            Files.walk(modToDelete)
+                    .sorted(Comparator.reverseOrder())
+                    .forEach(p -> {
+                        try {
+                            if (Files.isRegularFile(p)) {
+                                Files.delete(p);
+                            } else if (Files.isDirectory(p)) {
+                                Files.delete(p);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+        }
     }
 
     private void copyRelevantFilesAndDirectories(Path dirToCopy, Path intoTargetParentDir) throws IOException {
