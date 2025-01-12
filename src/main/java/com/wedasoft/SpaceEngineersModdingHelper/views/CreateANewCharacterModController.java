@@ -40,6 +40,7 @@ public class CreateANewCharacterModController implements Initializable {
     public void onCreateModInWorkspaceButtonClick() {
         try {
             createNewCharacterModService.createNewCharacterMod();
+            jfxUiService.displayInformationDialog("Character mod created in your workspace!");
         } catch (NotValidException e) {
             jfxUiService.displayWarnDialog(e.getMessage());
         }

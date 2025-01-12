@@ -27,7 +27,6 @@ public class CreateNewCharacterModService {
                     Your configured path to your modding workspace doesn't exist.
                     Your configured path: '%s'""", modsWorkspacePath));
         }
-        System.out.println("YOLO");
     }
 
 
