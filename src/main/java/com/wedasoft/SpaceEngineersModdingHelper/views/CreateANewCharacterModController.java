@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -53,7 +54,7 @@ public class CreateANewCharacterModController implements Initializable {
             jfxUiService.displayInformationDialog("Character mod created in your workspace!");
         } catch (NotValidException e) {
             jfxUiService.displayWarnDialog(e.getMessage());
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             jfxUiService.displayErrorDialog(e);
         }
     }

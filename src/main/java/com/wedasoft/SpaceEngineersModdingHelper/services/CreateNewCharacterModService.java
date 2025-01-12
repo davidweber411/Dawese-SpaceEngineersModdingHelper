@@ -13,24 +13,28 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class CreateNewCharacterModService {
 
+    private static final String CHAR_MALE_TEMPLATE = "CharacterMaleTemplate";
+    private static final String CHAR_FEMALE_TEMPLATE = "CharacterFemaleTemplate";
+
     private final ConfigurationsRepository configurationsRepository;
     private final FileSystemRepository fileSystemRepository;
-
-    private static final List<String> TEMPLATE_MARKERS = List.of("CharacterFemaleTemplate", "CharacterMaleTemplate");
 
     public void createNewCharacterMod(
             TextField modNameTextField,
             TextField wishedSubtypeTextField,
-            Gender gender) throws NotValidException, IOException {
+            Gender gender) throws NotValidException, IOException, URISyntaxException {
 
         if (modNameTextField.getText().isBlank()) {
             throw new NotValidException("You must enter a name for your mod.");
@@ -59,18 +63,56 @@ public class CreateNewCharacterModService {
         // create thumbnail
         ImageIO.write(createJpgImageWithText(modNameTextField.getText()), "jpg", modDir.resolve("thumb.jpg").toFile());
 
-        // create data, models, textures dirs
-        final String internalSubDirName = wishedSubtypeTextField.getText();
+        // create data dir
+        final String internalName = wishedSubtypeTextField.getText();
 
         final Path data = fileSystemRepository.createDirectoryIn("Data", modDir);
-        fileSystemRepository.createDirectoryIn(internalSubDirName, data);
+        final Path dataSubdir = fileSystemRepository.createDirectoryIn(internalName, data);
+        if (gender == Gender.MALE) {
+            createModifiedSbcFileInDirectory(
+                    Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc")),
+                    internalName, dataSubdir);
+            createModifiedSbcFileInDirectory(
+                    Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_Characters.sbc")),
+                    internalName, dataSubdir);
+        } else {
+            createModifiedSbcFileInDirectory(
+                    Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_EntityContainers.sbc")),
+                    internalName, dataSubdir);
+            createModifiedSbcFileInDirectory(
+                    Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_Characters.sbc")),
+                    internalName, dataSubdir);
+        }
 
+        // create models dir
         final Path models = fileSystemRepository.createDirectoryIn("Models", modDir);
-        fileSystemRepository.createDirectoryIn(internalSubDirName, models);
+        fileSystemRepository.createDirectoryIn(internalName, models);
 
+        // create textures dir
         final Path textures = fileSystemRepository.createDirectoryIn("Textures", modDir);
-        fileSystemRepository.createDirectoryIn(internalSubDirName, textures);
+        fileSystemRepository.createDirectoryIn(internalName, textures);
+    }
 
+    private void createModifiedSbcFileInDirectory(
+            URL urlToTemplateFile,
+            String replacementText,
+            Path targetDirectory) throws URISyntaxException, IOException {
+
+        final Path templateFile = Path.of(urlToTemplateFile.toURI());
+        final List<String> modifiedLines = Files.readAllLines(templateFile)
+                .stream()
+                .map(line -> {
+                    line = line
+                            .replaceAll(CHAR_MALE_TEMPLATE, replacementText)
+                            .replaceAll(CHAR_FEMALE_TEMPLATE, replacementText);
+                    return line;
+                }).toList();
+
+        final String modifiedFileName = templateFile.getFileName().toString()
+                .replaceAll(CHAR_MALE_TEMPLATE, replacementText)
+                .replaceAll(CHAR_FEMALE_TEMPLATE, replacementText);
+        final Path modifiedFile = targetDirectory.resolve(modifiedFileName);
+        Files.write(modifiedFile, modifiedLines);
     }
 
     private BufferedImage createJpgImageWithText(String text) {
