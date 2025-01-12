@@ -61,7 +61,7 @@ public class DeploymentService {
 
     private void copyRelevantFilesAndDirectories(Path dirToCopy, Path intoTargetParentDir) throws IOException {
         final Set<String> allowedNames = Set.of(
-                "thumb.png", "modinfo.sbmi", "metadata.mod",
+                "thumb.jpg", "thumb.png", "modinfo.sbmi", "metadata.mod",
                 "Audio", "Brains", "CustomWorlds", "Data", "DataPlatform", "Fonts", "InventoryScenes",
                 "Models", "Mods", "Particles", "Scenarios", "ShaderCache", "Shaders", "Textures", "Videos",
                 "VisualScripts", "VoxelMaps");
