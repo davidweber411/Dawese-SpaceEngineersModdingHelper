@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
@@ -77,6 +79,16 @@ public class JfxUiService {
             initMethodOfController.accept(viewController);
         }
         return parent;
+    }
+
+    public void displayConfirmDialog(String contentText, Runnable callbackOnOk) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation please");
+        alert.setContentText(contentText);
+        alert.showAndWait();
+        if (alert.getResult().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+            callbackOnOk.run();
+        }
     }
 
 }

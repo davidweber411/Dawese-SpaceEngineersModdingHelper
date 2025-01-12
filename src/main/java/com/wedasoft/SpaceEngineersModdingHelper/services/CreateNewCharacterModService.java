@@ -57,6 +57,10 @@ public class CreateNewCharacterModService {
                     Your configured path: '%s'""", modsWorkspacePath));
         }
 
+        if (Files.exists(modsWorkspacePath.resolve(modNameTextField.getText()))) {
+            throw new NotValidException("A mod with this name does already exist in your modding workspace.");
+        }
+
         // create mod dir
         final Path modDir = fileSystemRepository.createDirectoryIn(modNameTextField.getText(), modsWorkspacePath);
 
