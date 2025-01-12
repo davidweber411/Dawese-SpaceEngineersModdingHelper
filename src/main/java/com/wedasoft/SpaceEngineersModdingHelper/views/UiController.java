@@ -2,7 +2,9 @@ package com.wedasoft.SpaceEngineersModdingHelper.views;
 
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.BorderPane;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -18,6 +20,9 @@ import java.util.ResourceBundle;
 public class UiController implements Initializable {
 
     private final JfxUiService jfxUiService;
+
+    @FXML
+    private BorderPane rootBorderPane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
