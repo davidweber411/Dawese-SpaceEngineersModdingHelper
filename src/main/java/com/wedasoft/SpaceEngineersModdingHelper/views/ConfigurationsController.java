@@ -28,6 +28,7 @@ public class ConfigurationsController {
     private TextField pathToAppdataModsDirectoryTextField;
 
     private ConfigurationsEntity configurationsEntity;
+    private Runnable onSaveButtonClickCallback;
 
     public void init() {
         configurationsEntity = configurationsService.loadConfigurations();
@@ -38,12 +39,20 @@ public class ConfigurationsController {
         pathToAppdataModsDirectoryTextField.setText(configurationsEntity.getPathToAppdataModsDirectory());
     }
 
+    public void init(Runnable onSaveButtonClickCallback) {
+        init();
+        this.onSaveButtonClickCallback = onSaveButtonClickCallback;
+    }
+
     public void onSaveButtonClick() {
         configurationsEntity.setPathToModsWorkspace(pathToModsWorkspaceTextField.getText());
         configurationsEntity.setPathToAppdataModsDirectory(pathToAppdataModsDirectoryTextField.getText());
         configurationsService.saveConfigurations(configurationsEntity);
         jfxUiService.displayInformationDialog("Saved configurations!");
         ((Stage) pathToModsWorkspaceTextField.getScene().getWindow()).close();
+        if (onSaveButtonClickCallback != null) {
+            onSaveButtonClickCallback.run();
+        }
     }
 
     public void onCancelButtonClick() {

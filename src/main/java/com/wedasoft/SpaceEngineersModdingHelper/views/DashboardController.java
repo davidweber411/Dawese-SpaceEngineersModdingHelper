@@ -44,7 +44,7 @@ public class DashboardController {
                             true,
                             getClass().getResource("/com/wedasoft/SpaceEngineersModdingHelper/views/configurations.fxml"),
                             null,
-                            controller -> ((ConfigurationsController) controller).init());
+                            controller -> ((ConfigurationsController) controller).init(this::reinit));
                 } catch (IOException ex) {
                     jfxUiService.displayWarnDialog("That didn't work. Please set the configurations via the menu bar.");
                     jfxUiService.displayErrorDialog(ex);
@@ -55,6 +55,11 @@ public class DashboardController {
             dashboardContentVbox.getChildren().add(new Label("Path to your modding workspace: " + configurations.getPathToModsWorkspace()));
             dashboardContentVbox.getChildren().add(new Label("Path to your Space Engineers \"Mods\" directory: " + configurations.getPathToAppdataModsDirectory()));
         }
+    }
+
+    private void reinit() {
+        dashboardContentVbox.getChildren().clear();
+        init();
     }
 
     private Label createRedLabel(String text) {
