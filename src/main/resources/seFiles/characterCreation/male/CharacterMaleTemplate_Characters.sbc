@@ -8,7 +8,7 @@
             </Id>
 
             <Name>CharacterMaleTemplate</Name>
-            <Model>Models\Characters\Astronaut\SE_astronaut.mwm</Model>
+            <Model>Models\CharacterMaleTemplate\CharacterMaleTemplate.mwm</Model>
 	        <Gender>Male</Gender>
             <Mass>100</Mass>
             <ReflectorTexture>Textures\Lights\reflector.dds</ReflectorTexture>

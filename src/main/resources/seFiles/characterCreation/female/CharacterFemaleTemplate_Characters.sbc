@@ -8,7 +8,7 @@
             </Id>
 
             <Name>CharacterFemaleTemplate</Name>
-            <Model>Models\Characters\Astronaut\Female\SE_astronaut.mwm</Model>
+            <Model>Models\CharacterFemaleTemplate\CharacterFemaleTemplate.mwm</Model>
 	        <Gender>Female</Gender>
             <Mass>100</Mass>
             <ReflectorTexture>Textures\Lights\reflector.dds</ReflectorTexture>
