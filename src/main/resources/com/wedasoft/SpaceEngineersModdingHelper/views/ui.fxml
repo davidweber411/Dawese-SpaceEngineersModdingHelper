@@ -27,6 +27,7 @@
                      <children>
                         <Button fx:id="dashboardButton" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" onAction="#onDashboardButtonClick" prefHeight="60.0" prefWidth="100.0" text="Dashboard" textAlignment="CENTER" wrapText="true" />
                         <Button mnemonicParsing="false" onAction="#onDeployModIntoSeModsDirectoryButtonClick" prefHeight="60.0" prefWidth="100.0" text="Deploy mod into SE Mods directory" textAlignment="CENTER" wrapText="true" />
+                        <Button layoutX="18.0" layoutY="86.0" mnemonicParsing="false" onAction="#onCreateANewCharacterModButtonClick" prefHeight="60.0" prefWidth="100.0" text="Create a new character mod" textAlignment="CENTER" wrapText="true" />
                      </children>
                      <padding>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />

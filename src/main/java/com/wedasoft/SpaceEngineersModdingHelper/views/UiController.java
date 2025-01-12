@@ -64,4 +64,12 @@ public class UiController implements Initializable {
         centerStackPane.getChildren().add(parent);
     }
 
+    public void onCreateANewCharacterModButtonClick() throws IOException {
+        Parent parent = jfxUiService.loadAndGetNewSceneParent(getClass().getResource(
+                        "/com/wedasoft/SpaceEngineersModdingHelper/views/createANewCharacterMod.fxml"),
+                controller -> ((CreateANewCharacterModController) controller).init());
+        centerStackPane.getChildren().clear();
+        centerStackPane.getChildren().add(parent);
+    }
+
 }
