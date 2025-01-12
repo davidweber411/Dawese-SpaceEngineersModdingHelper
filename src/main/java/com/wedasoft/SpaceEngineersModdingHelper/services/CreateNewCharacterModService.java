@@ -53,13 +53,23 @@ public class CreateNewCharacterModService {
                     Your configured path: '%s'""", modsWorkspacePath));
         }
 
+        // create mod dir
         final Path modDir = fileSystemRepository.createDirectoryIn(modNameTextField.getText(), modsWorkspacePath);
+
+        // create thumbnail
         ImageIO.write(createJpgImageWithText(modNameTextField.getText()), "jpg", modDir.resolve("thumb.jpg").toFile());
+
+        // create data, models, textures dirs
+        final String internalSubDirName = wishedSubtypeTextField.getText();
+
         final Path data = fileSystemRepository.createDirectoryIn("Data", modDir);
+        fileSystemRepository.createDirectoryIn(internalSubDirName, data);
 
         final Path models = fileSystemRepository.createDirectoryIn("Models", modDir);
+        fileSystemRepository.createDirectoryIn(internalSubDirName, models);
 
         final Path textures = fileSystemRepository.createDirectoryIn("Textures", modDir);
+        fileSystemRepository.createDirectoryIn(internalSubDirName, textures);
 
     }
 
