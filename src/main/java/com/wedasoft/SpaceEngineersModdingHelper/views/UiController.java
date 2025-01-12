@@ -4,6 +4,7 @@ import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -44,13 +45,10 @@ public class UiController implements Initializable {
     }
 
     public void onDeployModIntoSeModsDirectoryButtonClick() throws IOException {
-        jfxUiService.createAndShowFxmlDialog(
-                "Deploy mod into SE \"Mods\" directory",
-                true,
-                true,
-                getClass().getResource("/com/wedasoft/SpaceEngineersModdingHelper/views/deployMod.fxml"),
-                null,
-                dialogController -> ((DeployModController) dialogController).init());
+        Parent parent = jfxUiService.loadAndGetNewSceneParent(getClass().getResource(
+                        "/com/wedasoft/SpaceEngineersModdingHelper/views/deployMod.fxml"),
+                controller -> ((DeployModController) controller).init());
+        rootBorderPane.setCenter(parent);
     }
 
 }

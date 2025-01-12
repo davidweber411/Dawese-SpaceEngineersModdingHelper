@@ -64,8 +64,19 @@ public class JfxUiService {
         JfxDialogUtil.createWarningDialog(text).showAndWait();
     }
 
-    public void displayErrorDialog( Exception e) {
+    public void displayErrorDialog(Exception e) {
         JfxDialogUtil.createErrorDialog(e.getMessage(), e).showAndWait();
+    }
+
+    public Parent loadAndGetNewSceneParent(URL absoluteFxmlFileUrl, Consumer initMethodOfController) throws IOException {
+        FXMLLoader loader = new FXMLLoader(absoluteFxmlFileUrl);
+        loader.setControllerFactory(springApplicationContext::getBean);
+        Parent parent = loader.load();
+        Object viewController = loader.getController();
+        if (initMethodOfController != null) {
+            initMethodOfController.accept(viewController);
+        }
+        return parent;
     }
 
 }
