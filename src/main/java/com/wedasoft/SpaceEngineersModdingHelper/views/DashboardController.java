@@ -52,7 +52,8 @@ public class DashboardController {
             });
             dashboardContentVbox.getChildren().add(setConfigurationsHereButton);
         } else {
-            dashboardContentVbox.getChildren().add(createGreenLabel("You have set the configurations!"));
+            dashboardContentVbox.getChildren().add(new Label("Path to your modding workspace: " + configurations.getPathToModsWorkspace()));
+            dashboardContentVbox.getChildren().add(new Label("Path to your Space Engineers \"Mods\" directory: " + configurations.getPathToAppdataModsDirectory()));
         }
     }
 

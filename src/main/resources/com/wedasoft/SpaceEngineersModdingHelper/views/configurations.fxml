@@ -23,7 +23,7 @@
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <Label text="Path to modding working space:" GridPane.rowIndex="1" />
+        <Label text="Path to modding workspace:" GridPane.rowIndex="1" />
         <Label text="Path to Space Engineers &quot;Mod&quot; directory:" GridPane.rowIndex="2" />
         <TextField fx:id="pathToModsWorkspaceTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <TextField fx:id="pathToAppdataModsDirectoryTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
