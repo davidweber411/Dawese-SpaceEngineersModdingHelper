@@ -5,7 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -23,7 +23,7 @@ public class UiController implements Initializable {
     private final JfxUiService jfxUiService;
 
     @FXML
-    private BorderPane rootBorderPane;
+    private StackPane centerStackPane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -48,14 +48,16 @@ public class UiController implements Initializable {
         Parent parent = jfxUiService.loadAndGetNewSceneParent(getClass().getResource(
                         "/com/wedasoft/SpaceEngineersModdingHelper/views/dashboard.fxml"),
                 controller -> ((DashboardController) controller).init());
-        rootBorderPane.setCenter(parent);
+        centerStackPane.getChildren().clear();
+        centerStackPane.getChildren().add(parent);
     }
 
     public void onDeployModIntoSeModsDirectoryButtonClick() throws IOException {
         Parent parent = jfxUiService.loadAndGetNewSceneParent(getClass().getResource(
                         "/com/wedasoft/SpaceEngineersModdingHelper/views/deployMod.fxml"),
                 controller -> ((DeployModController) controller).init());
-        rootBorderPane.setCenter(parent);
+        centerStackPane.getChildren().clear();
+        centerStackPane.getChildren().add(parent);
     }
 
 }
