@@ -44,6 +44,13 @@ public class UiController implements Initializable {
                 dialogController -> ((PreferencesController) dialogController).init());
     }
 
+    public void onDashboardButtonClick() throws IOException {
+        Parent parent = jfxUiService.loadAndGetNewSceneParent(getClass().getResource(
+                        "/com/wedasoft/SpaceEngineersModdingHelper/views/dashboard.fxml"),
+                controller -> ((DashboardController) controller).init());
+        rootBorderPane.setCenter(parent);
+    }
+
     public void onDeployModIntoSeModsDirectoryButtonClick() throws IOException {
         Parent parent = jfxUiService.loadAndGetNewSceneParent(getClass().getResource(
                         "/com/wedasoft/SpaceEngineersModdingHelper/views/deployMod.fxml"),
