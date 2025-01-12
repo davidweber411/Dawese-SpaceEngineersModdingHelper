@@ -17,7 +17,7 @@ import java.io.File;
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @RequiredArgsConstructor
-public class PreferencesController {
+public class ConfigurationsController {
 
     private final ConfigurationsService configurationsService;
     private final JfxUiService jfxUiService;

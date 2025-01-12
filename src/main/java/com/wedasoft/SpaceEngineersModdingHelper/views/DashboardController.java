@@ -39,12 +39,12 @@ public class DashboardController {
             setConfigurationsHereButton.setOnAction(e -> {
                 try {
                     jfxUiService.createAndShowFxmlDialog(
-                            "Preferences",
+                            "Configurations",
                             true,
                             true,
-                            getClass().getResource("/com/wedasoft/SpaceEngineersModdingHelper/views/preferences.fxml"),
+                            getClass().getResource("/com/wedasoft/SpaceEngineersModdingHelper/views/configurations.fxml"),
                             null,
-                            controller -> ((PreferencesController) controller).init());
+                            controller -> ((ConfigurationsController) controller).init());
                 } catch (IOException ex) {
                     jfxUiService.displayWarnDialog("That didn't work. Please set the configurations via the menu bar.");
                     jfxUiService.displayErrorDialog(ex);

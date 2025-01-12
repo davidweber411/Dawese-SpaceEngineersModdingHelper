@@ -38,14 +38,14 @@ public class UiController implements Initializable {
         System.exit(0);
     }
 
-    public void onPreferencesMenuItemClick() throws IOException {
+    public void onConfigurationsMenuItemClick() throws IOException {
         jfxUiService.createAndShowFxmlDialog(
-                "Preferences",
+                "Configurations",
                 true,
                 true,
-                getClass().getResource("/com/wedasoft/SpaceEngineersModdingHelper/views/preferences.fxml"),
+                getClass().getResource("/com/wedasoft/SpaceEngineersModdingHelper/views/configurations.fxml"),
                 null,
-                dialogController -> ((PreferencesController) dialogController).init());
+                dialogController -> ((ConfigurationsController) dialogController).init());
     }
 
     public void onDashboardButtonClick() throws IOException {
