@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,8 @@ public class CreateNewCharacterModService {
 
     private final ConfigurationsRepository configurationsRepository;
     private final FileSystemRepository fileSystemRepository;
+
+    private static final List<String> TEMPLATE_MARKERS = List.of("CharacterFemaleTemplate", "CharacterMaleTemplate");
 
     public void createNewCharacterMod(
             TextField modNameTextField,
@@ -53,8 +56,11 @@ public class CreateNewCharacterModService {
         final Path modDir = fileSystemRepository.createDirectoryIn(modNameTextField.getText(), modsWorkspacePath);
         ImageIO.write(createJpgImageWithText(modNameTextField.getText()), "jpg", modDir.resolve("thumb.jpg").toFile());
         final Path data = fileSystemRepository.createDirectoryIn("Data", modDir);
+
         final Path models = fileSystemRepository.createDirectoryIn("Models", modDir);
+
         final Path textures = fileSystemRepository.createDirectoryIn("Textures", modDir);
+
     }
 
     private BufferedImage createJpgImageWithText(String text) {
