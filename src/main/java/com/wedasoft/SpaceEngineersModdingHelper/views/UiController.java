@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -24,9 +25,12 @@ public class UiController implements Initializable {
 
     @FXML
     private StackPane centerStackPane;
+    @FXML
+    private Button dashboardButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Platform.runLater(() -> dashboardButton.fire()); // set start page
     }
 
     public void onExitMenuItemClick() {
