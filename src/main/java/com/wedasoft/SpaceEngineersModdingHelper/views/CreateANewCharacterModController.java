@@ -1,6 +1,9 @@
 package com.wedasoft.SpaceEngineersModdingHelper.views;
 
 import com.wedasoft.SpaceEngineersModdingHelper.enums.Gender;
+import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
+import com.wedasoft.SpaceEngineersModdingHelper.services.CreateNewCharacterModService;
+import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +22,9 @@ import java.util.ResourceBundle;
 @RequiredArgsConstructor
 public class CreateANewCharacterModController implements Initializable {
 
+    private final CreateNewCharacterModService createNewCharacterModService;
+    private final JfxUiService jfxUiService;
+
     @FXML
     private ChoiceBox<Gender> genderChoiceBox;
 
@@ -32,7 +38,11 @@ public class CreateANewCharacterModController implements Initializable {
     }
 
     public void onCreateModInWorkspaceButtonClick() {
-
+        try {
+            createNewCharacterModService.createNewCharacterMod();
+        } catch (NotValidException e) {
+            jfxUiService.displayWarnDialog(e.getMessage());
+        }
     }
 
 }
