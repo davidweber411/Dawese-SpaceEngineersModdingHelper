@@ -11,11 +11,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -58,62 +57,55 @@ public class CreateNewCharacterModService {
             throw new NotValidException("A mod with this name does already exist in your modding workspace.");
         }
 
-        // create mod dir
         final Path modDir = fileSystemRepository.createDirectoryIn(modNameTextField.getText(), modsWorkspacePath);
-
-        // create thumbnail
-        fileSystemRepository.createJpgWithTextContentInto(modNameTextField, modDir);
-
-        // create data dir
         final String internalName = wishedSubtypeTextField.getText();
 
-        final Path data = fileSystemRepository.createDirectoryIn("Data", modDir);
-        final Path dataSubdir = fileSystemRepository.createDirectoryIn(internalName, data);
-        if (gender == Gender.MALE) {
-            createModifiedSbcFileInDirectory(
-                    Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc")),
-                    internalName, dataSubdir);
-            createModifiedSbcFileInDirectory(
-                    Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_Characters.sbc")),
-                    internalName, dataSubdir);
-        } else {
-            createModifiedSbcFileInDirectory(
-                    Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_EntityContainers.sbc")),
-                    internalName, dataSubdir);
-            createModifiedSbcFileInDirectory(
-                    Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_Characters.sbc")),
-                    internalName, dataSubdir);
-        }
-
-        // create models dir
-        final Path models = fileSystemRepository.createDirectoryIn("Models", modDir);
-        fileSystemRepository.createDirectoryIn(internalName, models);
-
-        // create textures dir
-        final Path textures = fileSystemRepository.createDirectoryIn("Textures", modDir);
-        fileSystemRepository.createDirectoryIn(internalName, textures);
+        createThumbnail(modNameTextField, modDir);
+        createInternalDataSubDir(gender, modDir, internalName);
+        createInternalModelsSubDir(modDir, internalName);
+        createInternalTexturesSubDir(modDir, internalName);
     }
 
-    private void createModifiedSbcFileInDirectory(
-            URL urlToTemplateFile,
-            String replacementText,
-            Path targetDirectory) throws URISyntaxException, IOException {
+    private void createThumbnail(TextField modNameTextField, Path modDir) throws IOException {
+        fileSystemRepository.createJpgWithTextContentInto(modNameTextField, modDir);
+    }
 
-        final Path templateFile = Path.of(urlToTemplateFile.toURI());
-        final List<String> modifiedLines = Files.readAllLines(templateFile)
-                .stream()
-                .map(line -> {
-                    line = line
-                            .replaceAll(CHAR_MALE_TEMPLATE, replacementText)
-                            .replaceAll(CHAR_FEMALE_TEMPLATE, replacementText);
-                    return line;
-                }).toList();
+    private void createInternalDataSubDir(Gender gender, Path modDir, String internalName) throws IOException, URISyntaxException {
+        final Path data = fileSystemRepository.createDirectoryIn("Data", modDir);
+        final Path internalNameDataSubdir = fileSystemRepository.createDirectoryIn(internalName, data);
 
-        final String modifiedFileName = templateFile.getFileName().toString()
-                .replaceAll(CHAR_MALE_TEMPLATE, replacementText)
-                .replaceAll(CHAR_FEMALE_TEMPLATE, replacementText);
-        final Path modifiedFile = targetDirectory.resolve(modifiedFileName);
-        Files.write(modifiedFile, modifiedLines);
+        final Map<String, String> replacements = Map.ofEntries(
+                Map.entry(CHAR_MALE_TEMPLATE, internalName),
+                Map.entry(CHAR_FEMALE_TEMPLATE, internalName));
+        if (gender == Gender.MALE) {
+            fileSystemRepository.createModifiedSbcFileInto(
+                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc")).toURI()),
+                    internalNameDataSubdir,
+                    replacements);
+            fileSystemRepository.createModifiedSbcFileInto(
+                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_Characters.sbc")).toURI()),
+                    internalNameDataSubdir,
+                    replacements);
+        } else {
+            fileSystemRepository.createModifiedSbcFileInto(
+                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_EntityContainers.sbc")).toURI()),
+                    internalNameDataSubdir,
+                    replacements);
+            fileSystemRepository.createModifiedSbcFileInto(
+                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_Characters.sbc")).toURI()),
+                    internalNameDataSubdir,
+                    replacements);
+        }
+    }
+
+    private void createInternalModelsSubDir(Path modDir, String internalName) throws IOException {
+        final Path models = fileSystemRepository.createDirectoryIn("Models", modDir);
+        fileSystemRepository.createDirectoryIn(internalName, models);
+    }
+
+    private void createInternalTexturesSubDir(Path modDir, String internalName) throws IOException {
+        final Path textures = fileSystemRepository.createDirectoryIn("Textures", modDir);
+        fileSystemRepository.createDirectoryIn(internalName, textures);
     }
 
 }

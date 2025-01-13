@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.stream.Stream;
 
 @Service
@@ -92,6 +93,23 @@ public class FileSystemRepository {
 
         g2d.dispose();
         return image;
+    }
+
+    public void createModifiedSbcFileInto(
+            Path templateFile,
+            Path targetDirectory,
+            Map<String, String> originalValueToNewValueMap) throws IOException {
+        String modifiedContent = Files.readString(templateFile);
+        for (Map.Entry<String, String> oldToNewEntry : originalValueToNewValueMap.entrySet()) {
+            modifiedContent = modifiedContent.replaceAll(oldToNewEntry.getKey(), oldToNewEntry.getValue());
+        }
+
+        String modifiedFileName = templateFile.getFileName().toString();
+        for (Map.Entry<String, String> oldToNewEntry : originalValueToNewValueMap.entrySet()) {
+            modifiedFileName = modifiedFileName.replaceAll(oldToNewEntry.getKey(), oldToNewEntry.getValue());
+        }
+
+        Files.writeString(targetDirectory.resolve(modifiedFileName), modifiedContent);
     }
 
 }
