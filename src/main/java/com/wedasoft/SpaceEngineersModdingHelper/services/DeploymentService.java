@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 import java.util.Set;
 
@@ -62,28 +61,9 @@ public class DeploymentService {
             if (!allowedNames.contains(fileOrDir.getName())) {
                 continue;
             }
-            if (fileOrDir.isDirectory()) {
-                copyDirectory(fileOrDir.toPath(), targetModDir);
-            } else if (fileOrDir.isFile()) {
-                Files.copy(fileOrDir.toPath(), targetModDir.resolve(fileOrDir.getName()));
-            }
+            fileSystemRepository.copyFileOrDirectoryInto(fileOrDir, targetModDir);
         }
 
-    }
-
-    private void copyDirectory(Path dirToCopy, Path intoTargetParentDir) throws IOException {
-        Files.walk(dirToCopy).forEach(sourcePath -> {
-            try {
-                Path targetPath = intoTargetParentDir.resolve(dirToCopy.getFileName()).resolve(dirToCopy.relativize(sourcePath));
-                if (Files.isDirectory(sourcePath)) {
-                    Files.createDirectories(targetPath);
-                } else {
-                    Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException("Error copying file: " + sourcePath, e);
-            }
-        });
     }
 
 }
