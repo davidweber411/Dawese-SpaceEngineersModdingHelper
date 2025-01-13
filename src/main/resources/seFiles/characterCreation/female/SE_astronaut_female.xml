@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<Model Name="Default">
+  <Parameter Name="Centered">false</Parameter>
+  <Parameter Name="RescaleFactor">0.01</Parameter>
+  <Parameter Name="RescaleToLengthInMeters">false</Parameter>
+  <Parameter Name="SpecularPower">10</Parameter>
+  <Parameter Name="SpecularShininess">0.8</Parameter>
+  <Parameter Name="RotationY">180</Parameter>
+  <Material Name="Astronaut_head_female">
+    <Parameter Name="Technique">MESH</Parameter>
+    <Parameter Name="ColorMetalTexture">Textures\Models\Characters\Astronaut\Astronaut_head_female_cm.dds</Parameter>
+    <Parameter Name="NormalGlossTexture">Textures\Models\Characters\Astronaut\Astronaut_head_female_ng.dds</Parameter>
+    <Parameter Name="AddMapsTexture">Textures\Models\Characters\Astronaut\Astronaut_head_female_add.dds</Parameter>
+    <Parameter Name="AlphamaskTexture">Textures\Models\Characters\Astronaut\Astronaut_head_female_alphamask.dds</Parameter>
+  </Material>
+  <Material Name="Astronaut_head_female_EyeBrows">
+    <Parameter Name="Technique">ALPHA_MASKED</Parameter>
+    <Parameter Name="ColorMetalTexture">Textures\Models\Characters\Astronaut\Astronaut_head_female_cm.dds</Parameter>
+    <Parameter Name="NormalGlossTexture">Textures\Models\Characters\Astronaut\Astronaut_head_female_ng.dds</Parameter>
+    <Parameter Name="AddMapsTexture">Textures\Models\Characters\Astronaut\Astronaut_head_female_add.dds</Parameter>
+    <Parameter Name="AlphamaskTexture">Textures\Models\Characters\Astronaut\Astronaut_head_female_alphamask.dds</Parameter>
+  </Material>
+  <MaterialRef Name="Cloth" />
+  <MaterialRef Name="Gear" />
+  <MaterialRef Name="Head" />
+  <MaterialRef Name="Arms" />
+  <MaterialRef Name="RightArm" />
+  <MaterialRef Name="LeftGlove" />
+  <MaterialRef Name="RightGlove" />
+  <MaterialRef Name="Boots" />
+  <MaterialRef Name="Spacesuit_hood" />
+  <MaterialRef Name="Headlight" />
+  <MaterialRef Name="Backpack" />
+	<Material Name="Emissive">
+		<Parameter Name="Technique">MESH</Parameter>
+		<Parameter Name="ColorMetalTexture">Textures\Models\Characters\Astronaut\Astronaut_cm.dds</Parameter>
+		<Parameter Name="NormalGlossTexture">Textures\Models\Characters\Astronaut\Astronaut_ng.dds</Parameter>
+		<Parameter Name="AddMapsTexture">Textures\Models\Characters\Astronaut\Astronaut_add.dds</Parameter>
+	</Material>
+  <LOD Distance="7">
+    <Model>Models\Characters\Astronaut\Female\SE_astronaut_LOD1</Model>
+  </LOD>
+  <LOD Distance="10">
+    <Model>Models\Characters\Astronaut\Female\SE_astronaut_LOD2</Model>
+  </LOD>
+</Model>
