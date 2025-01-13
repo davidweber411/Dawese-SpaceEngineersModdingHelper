@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Model Name="Default">
+  <Parameter Name="RescaleFactor">0.01</Parameter>
+  <Parameter Name="RotationY">180</Parameter>
+  <MaterialRef Name="Gear" />
+  <MaterialRef Name="Cloth" />
+  <MaterialRef Name="Head" />
+  <MaterialRef Name="Arms" />
+  <MaterialRef Name="RightArm" />
+  <MaterialRef Name="LeftGlove" />
+  <MaterialRef Name="RightGlove" />
+  <MaterialRef Name="Boots" />
+  <MaterialRef Name="Spacesuit_hood" />
+  <MaterialRef Name="Astronaut_head" />
+  <MaterialRef Name="RightArm" />
+	<Material Name="Emissive">
+		<Parameter Name="Technique">MESH</Parameter>
+		<Parameter Name="ColorMetalTexture">Textures\Models\Characters\Astronaut\Astronaut_cm.dds</Parameter>
+		<Parameter Name="NormalGlossTexture">Textures\Models\Characters\Astronaut\Astronaut_ng.dds</Parameter>
+		<Parameter Name="AddMapsTexture">Textures\Models\Characters\Astronaut\Astronaut_add.dds</Parameter>
+	</Material>
+  <MaterialRef Name="Headlight" />
+  <MaterialRef Name="Backpack" />
+  <LOD Distance="7">
+    <Model>Models\Characters\Astronaut\SE_astronaut_LOD1</Model>
+  </LOD>
+  <LOD Distance="10">
+    <Model>Models\Characters\Astronaut\SE_astronaut_LOD2</Model>
+  </LOD>
+</Model>
