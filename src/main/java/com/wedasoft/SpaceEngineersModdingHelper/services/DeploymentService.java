@@ -58,10 +58,9 @@ public class DeploymentService {
         Files.createDirectories(targetModDir);
 
         for (File fileOrDir : Objects.requireNonNull(dirToCopy.toFile().listFiles())) {
-            if (!allowedNames.contains(fileOrDir.getName())) {
-                continue;
+            if (allowedNames.contains(fileOrDir.getName())) {
+                fileSystemRepository.copyFileOrDirectoryInto(fileOrDir, targetModDir);
             }
-            fileSystemRepository.copyFileOrDirectoryInto(fileOrDir, targetModDir);
         }
 
     }
