@@ -3,6 +3,7 @@ package com.wedasoft.SpaceEngineersModdingHelper.services;
 import com.wedasoft.SpaceEngineersModdingHelper.data.configurations.ConfigurationsEntity;
 import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
 import com.wedasoft.SpaceEngineersModdingHelper.repositories.ConfigurationsRepository;
+import com.wedasoft.SpaceEngineersModdingHelper.repositories.FileSystemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -20,6 +20,7 @@ import java.util.Set;
 public class DeploymentService {
 
     private final ConfigurationsRepository configurationsRepository;
+    private final FileSystemRepository fileSystemRepository;
 
     public void deployMod(File modToDeploy) throws NotValidException, IOException {
         ConfigurationsEntity configurations = configurationsRepository.loadConfigurations();
@@ -43,19 +44,7 @@ public class DeploymentService {
         final Path modToDelete = new File(appdataModsDirPath).toPath().resolve(modName);
 
         if (Files.exists(modToDelete)) {
-            Files.walk(modToDelete)
-                    .sorted(Comparator.reverseOrder())
-                    .forEach(p -> {
-                        try {
-                            if (Files.isRegularFile(p)) {
-                                Files.delete(p);
-                            } else if (Files.isDirectory(p)) {
-                                Files.delete(p);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
+            fileSystemRepository.deleteDirectory(modToDelete);
         }
     }
 
