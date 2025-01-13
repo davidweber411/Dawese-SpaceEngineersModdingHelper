@@ -1,8 +1,12 @@
 package com.wedasoft.SpaceEngineersModdingHelper.repositories;
 
+import javafx.scene.control.TextField;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -61,6 +65,33 @@ public class FileSystemRepository {
                 }
             });
         }
+    }
+
+    public void createJpgWithTextContentInto(TextField modNameTextField, Path modDir) throws IOException {
+        ImageIO.write(createJpgImageWithText(modNameTextField.getText()), "jpg", modDir.resolve("thumb.jpg").toFile());
+    }
+
+    private BufferedImage createJpgImageWithText(String text) {
+        int width = 800;
+        int height = 600;
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = image.createGraphics();
+
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0, 0, width, height);
+
+        g2d.setColor(Color.BLACK);
+        g2d.setFont(new Font("Arial", Font.BOLD, 40));
+
+        FontMetrics fontMetrics = g2d.getFontMetrics();
+        int textWidth = fontMetrics.stringWidth(text);
+        int textHeight = fontMetrics.getHeight();
+        int textPosX = width / 2 - textWidth / 2;
+        int textPosY = height / 2 - textHeight / 2 + fontMetrics.getAscent();
+        g2d.drawString(text, textPosX, textPosY);
+
+        g2d.dispose();
+        return image;
     }
 
 }

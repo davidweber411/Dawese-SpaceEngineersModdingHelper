@@ -9,9 +9,6 @@ import javafx.scene.control.TextField;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -65,7 +62,7 @@ public class CreateNewCharacterModService {
         final Path modDir = fileSystemRepository.createDirectoryIn(modNameTextField.getText(), modsWorkspacePath);
 
         // create thumbnail
-        ImageIO.write(createJpgImageWithText(modNameTextField.getText()), "jpg", modDir.resolve("thumb.jpg").toFile());
+        fileSystemRepository.createJpgWithTextContentInto(modNameTextField, modDir);
 
         // create data dir
         final String internalName = wishedSubtypeTextField.getText();
@@ -117,29 +114,6 @@ public class CreateNewCharacterModService {
                 .replaceAll(CHAR_FEMALE_TEMPLATE, replacementText);
         final Path modifiedFile = targetDirectory.resolve(modifiedFileName);
         Files.write(modifiedFile, modifiedLines);
-    }
-
-    private BufferedImage createJpgImageWithText(String text) {
-        int width = 800;
-        int height = 600;
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2d = image.createGraphics();
-
-        g2d.setColor(Color.WHITE);
-        g2d.fillRect(0, 0, width, height);
-
-        g2d.setColor(Color.BLACK);
-        g2d.setFont(new Font("Arial", Font.BOLD, 40));
-
-        FontMetrics fontMetrics = g2d.getFontMetrics();
-        int textWidth = fontMetrics.stringWidth(text);
-        int textHeight = fontMetrics.getHeight();
-        int textPosX = width / 2 - textWidth / 2;
-        int textPosY = height / 2 - textHeight / 2 + fontMetrics.getAscent();
-        g2d.drawString(text, textPosX, textPosY);
-
-        g2d.dispose();
-        return image;
     }
 
 }
