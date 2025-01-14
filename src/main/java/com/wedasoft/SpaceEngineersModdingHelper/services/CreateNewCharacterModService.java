@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -30,7 +31,8 @@ public class CreateNewCharacterModService {
     public void createNewCharacterMod(
             TextField modNameTextField,
             TextField wishedSubtypeTextField,
-            Gender gender) throws NotValidException, IOException, URISyntaxException {
+            Gender gender,
+            boolean devDataDirShallBeCreated) throws NotValidException, IOException, URISyntaxException {
 
         if (modNameTextField.getText().isBlank()) {
             throw new NotValidException("You must enter a name for your mod.");
@@ -61,6 +63,9 @@ public class CreateNewCharacterModService {
         final String internalName = wishedSubtypeTextField.getText();
 
         createThumbnail(modNameTextField, modDir);
+        if (devDataDirShallBeCreated) {
+            createDevDataDir(modDir, gender);
+        }
         createInternalDataSubDir(gender, modDir, internalName);
         createInternalModelsSubDir(modDir, internalName);
         createInternalTexturesSubDir(modDir, internalName);
@@ -68,6 +73,19 @@ public class CreateNewCharacterModService {
 
     private void createThumbnail(TextField modNameTextField, Path modDir) throws IOException {
         fileSystemRepository.createJpgWithTextContentInto(modNameTextField, modDir);
+    }
+
+    private void createDevDataDir(Path modDir, Gender gender) throws IOException, URISyntaxException {
+        Path devDataDir = fileSystemRepository.createDirectoryIn("_devData", modDir);
+        if (gender == Gender.FEMALE) {
+            fileSystemRepository.copyFileOrDirectoryInto(
+                    new File(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/SE_astronaut_female.FBX")).toURI()),
+                    devDataDir);
+        } else {
+            fileSystemRepository.copyFileOrDirectoryInto(
+                    new File(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/SE_astronaut_male.FBX")).toURI()),
+                    devDataDir);
+        }
     }
 
     private void createInternalDataSubDir(Gender gender, Path modDir, String internalName) throws IOException, URISyntaxException {

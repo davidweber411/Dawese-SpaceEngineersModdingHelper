@@ -7,6 +7,7 @@ import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,8 @@ public class CreateANewCharacterModController implements Initializable {
     private TextField wishedSubtypeTextField;
     @FXML
     private ChoiceBox<Gender> genderChoiceBox;
+    @FXML
+    private CheckBox createDevDataDirCheckbox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -49,8 +52,8 @@ public class CreateANewCharacterModController implements Initializable {
             createNewCharacterModService.createNewCharacterMod(
                     modNameTextField,
                     wishedSubtypeTextField,
-                    genderChoiceBox.getValue()
-            );
+                    genderChoiceBox.getValue(),
+                    createDevDataDirCheckbox.isSelected());
             jfxUiService.displayInformationDialog("Character mod created in your workspace!");
         } catch (NotValidException e) {
             jfxUiService.displayWarnDialog(e.getMessage());
