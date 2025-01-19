@@ -23,8 +23,8 @@
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <Label text="Path to modding workspace:" GridPane.rowIndex="1" />
-        <Label text="Path to Space Engineers &quot;Mod&quot; directory:" GridPane.rowIndex="2" />
+        <Label fx:id="pathToYourModsWorkspaceLabel" text="Path to your mods workspace (?):" GridPane.rowIndex="1" />
+        <Label fx:id="pathToSpaceEngineersModDirectoryLabel" text="Path to Space Engineers &quot;Mod&quot; directory (?):" GridPane.rowIndex="2" />
         <TextField fx:id="pathToModsWorkspaceTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <TextField fx:id="pathToAppdataModsDirectoryTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.columnIndex="2" GridPane.rowIndex="3">

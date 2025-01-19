@@ -3,12 +3,15 @@ package com.wedasoft.SpaceEngineersModdingHelper.services;
 import com.wedasoft.wedasoftFxGuiCommons.jfxDialogs.JfxDialogUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Dimension2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.Tooltip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -79,6 +82,12 @@ public class JfxUiService {
             initMethodOfController.accept(viewController);
         }
         return parent;
+    }
+
+    public void createTooltipFor(Node node, String tooltipText) {
+        Tooltip tooltip = new Tooltip(tooltipText);
+        tooltip.setShowDelay(Duration.millis(50));
+        Tooltip.install(node, tooltip);
     }
 
     public void displayConfirmDialog(String contentText, Runnable callbackOnOk) {

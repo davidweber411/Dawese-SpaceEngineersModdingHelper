@@ -4,6 +4,7 @@ import com.wedasoft.SpaceEngineersModdingHelper.data.configurations.Configuratio
 import com.wedasoft.SpaceEngineersModdingHelper.services.ConfigurationsService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -23,6 +24,11 @@ public class ConfigurationsController {
     private final JfxUiService jfxUiService;
 
     @FXML
+    private Label pathToYourModsWorkspaceLabel;
+    @FXML
+    private Label pathToSpaceEngineersModDirectoryLabel;
+
+    @FXML
     private TextField pathToModsWorkspaceTextField;
     @FXML
     private TextField pathToAppdataModsDirectoryTextField;
@@ -31,6 +37,9 @@ public class ConfigurationsController {
     private Runnable onSaveButtonClickCallback;
 
     public void init() {
+        jfxUiService.createTooltipFor(pathToYourModsWorkspaceLabel, "This is the directory which contains all of your mods.");
+        jfxUiService.createTooltipFor(pathToSpaceEngineersModDirectoryLabel, "This is the 'Mods' directory of your Space Engineers installation. E.g. 'C:\\Users\\username\\AppData\\Roaming\\SpaceEngineers\\Mods'.");
+
         configurationsEntity = configurationsService.loadConfigurations();
         if (configurationsEntity == null) {
             configurationsEntity = new ConfigurationsEntity();
