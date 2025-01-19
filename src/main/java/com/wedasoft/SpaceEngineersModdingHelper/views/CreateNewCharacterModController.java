@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @RequiredArgsConstructor
-public class CreateANewCharacterModController implements Initializable {
+public class CreateNewCharacterModController implements Initializable {
 
     private final CreateNewCharacterModService createNewCharacterModService;
     private final JfxUiService jfxUiService;

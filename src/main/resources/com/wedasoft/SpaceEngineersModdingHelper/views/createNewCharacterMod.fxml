@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wedasoft.SpaceEngineersModdingHelper.views.CreateANewCharacterModController">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wedasoft.SpaceEngineersModdingHelper.views.CreateNewCharacterModController">
    <center>
       <ScrollPane fitToWidth="true" BorderPane.alignment="CENTER">
          <content>
