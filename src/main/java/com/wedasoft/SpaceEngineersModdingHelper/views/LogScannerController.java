@@ -2,8 +2,10 @@ package com.wedasoft.SpaceEngineersModdingHelper.views;
 
 import com.wedasoft.SpaceEngineersModdingHelper.services.ConfigurationsService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -18,6 +20,10 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -33,8 +39,18 @@ public class LogScannerController {
     private TextArea logsTextArea;
 
     private long lastLogFileReadPosition = 0;
+    private ScheduledExecutorService autoUpdateExecutorService;
 
     public void init() {
+        logScannerBorderPane.parentProperty().addListener((observable, oldParent, newParent) -> {
+            if (newParent == null) {
+                System.out.println("Node has been removed from the scene or layout");
+                if (autoUpdateExecutorService != null) {
+                    System.out.println("Shutdown executor service now...");
+                    autoUpdateExecutorService.shutdown();
+                }
+            }
+        });
         Thread t = new Thread(() -> {
             try {
                 updateLogsTextArea();
@@ -45,6 +61,23 @@ public class LogScannerController {
         t.setName("Read logs initially thread");
         t.setDaemon(true);
         t.start();
+    }
+
+    public void onActivateAutoUpdateButtonClick(ActionEvent event) {
+        ToggleButton toggleButton = (ToggleButton) event.getSource();
+        if (toggleButton.isSelected()) {
+            autoUpdateExecutorService = Executors.newScheduledThreadPool(1);
+            autoUpdateExecutorService.scheduleAtFixedRate(() -> {
+                try {
+                    updateLogsTextArea();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }, 0, 5, SECONDS);
+        } else {
+            System.out.println("Shutdown executor service now...");
+            autoUpdateExecutorService.shutdown();
+        }
     }
 
     public void onUpdateLogsButtonClick() throws IOException {
