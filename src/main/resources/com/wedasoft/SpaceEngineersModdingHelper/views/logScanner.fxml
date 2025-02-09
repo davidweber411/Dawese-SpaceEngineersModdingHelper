@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
-<BorderPane fx:id="logScannerBorderPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.wedasoft.SpaceEngineersModdingHelper.views.LogScannerController">
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane fx:id="logScannerBorderPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wedasoft.SpaceEngineersModdingHelper.views.LogScannerController">
+   <center>
+      <TextArea fx:id="logsTextArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <FlowPane hgap="8.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" vgap="8.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="8.0" />
+         </padding>
+         <children>
+            <Button mnemonicParsing="false" onAction="#onUpdateLogsButtonClick" text="Update logs" />
+         </children>
+      </FlowPane>
+   </top>
+   <padding>
+      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+   </padding>
 </BorderPane>
