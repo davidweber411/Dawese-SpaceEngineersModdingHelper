@@ -32,7 +32,6 @@ public class LogScannerController {
     @FXML
     private TextArea logsTextArea;
 
-    private final StringBuilder logContent = new StringBuilder();
     private long lastLogFileReadPosition = 0;
 
     public void init() {
@@ -73,27 +72,28 @@ public class LogScannerController {
 
         if (newFileSize < lastLogFileReadPosition) {
             lastLogFileReadPosition = 0;
-            logContent.setLength(0);
         }
 
+        StringBuilder newLogLines = new StringBuilder();
         try (RandomAccessFile raf = new RandomAccessFile(currentLog.toString(), "r")) {
-            raf.seek(lastLogFileReadPosition); // set the read pointer to the last position
+            raf.seek(lastLogFileReadPosition);
             String line;
+            boolean skipLines = lastLogFileReadPosition == 0; // only ignore on the first read attempt
 
-            boolean skipLines = true;
             while ((line = raf.readLine()) != null) {
                 if (skipLines) {
                     if (line.contains("Loading duration:")) {
                         skipLines = false;
-                        logContent.append(line).append("\n");
                     }
                     continue;
                 }
-                logContent.append(line).append("\n");
+                newLogLines.append(line).append("\n");
             }
             lastLogFileReadPosition = raf.getFilePointer();
         }
-        logsTextArea.setText(logContent.toString());
+        if (!newLogLines.isEmpty()) {
+            logsTextArea.appendText(newLogLines.toString());
+        }
     }
 
 }
