@@ -28,6 +28,8 @@ public class UiController implements Initializable {
     @FXML
     private Button dashboardButton;
     @FXML
+    private Button logScannerButton;
+    @FXML
     private Button deployModIntoSeModsDirectoryButton;
     @FXML
     private Button createNewCharacterModButton;
@@ -35,6 +37,7 @@ public class UiController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         jfxUiService.createTooltipFor(dashboardButton, "The dashboard contains an overview over your configurations.");
+        jfxUiService.createTooltipFor(logScannerButton, "The log scanner gives you access to the SE error logs on a simple way.");
         jfxUiService.createTooltipFor(deployModIntoSeModsDirectoryButton, "This functionality is used to copy the mod with just the relevant files and directories from your workspace into the 'Mods' dir of your SE installation.");
         jfxUiService.createTooltipFor(createNewCharacterModButton, "This functionality is used to create a template mod when creating a new character.");
         Platform.runLater(() -> dashboardButton.fire()); // set start page
