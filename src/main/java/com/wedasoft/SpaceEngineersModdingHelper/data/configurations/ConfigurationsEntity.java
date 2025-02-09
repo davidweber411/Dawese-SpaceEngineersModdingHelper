@@ -3,6 +3,8 @@ package com.wedasoft.SpaceEngineersModdingHelper.data.configurations;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.nio.file.Path;
+
 @Entity
 @Table(name = "ConfigurationsEntity")
 @Getter
@@ -21,7 +23,11 @@ public class ConfigurationsEntity {
     @Column(name = "pathToModsWorkspace")
     private String pathToModsWorkspace;
 
-    @Column(name = "pathToAppdataModsDirectory")
-    private String pathToAppdataModsDirectory;
+    @Column(name = "pathToAppdataSpaceEngineersDirectory")
+    private String pathToAppdataSpaceEngineersDirectory;
+
+    public String getPathToAppdataModsDirectory() {
+        return Path.of(pathToAppdataSpaceEngineersDirectory).resolve("Mods").toString();
+    }
 
 }

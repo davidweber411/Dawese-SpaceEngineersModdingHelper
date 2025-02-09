@@ -24,9 +24,9 @@
             </font>
         </Label>
         <Label fx:id="pathToYourModsWorkspaceLabel" text="Path to your mods workspace (?):" GridPane.rowIndex="1" />
-        <Label fx:id="pathToSpaceEngineersModDirectoryLabel" text="Path to Space Engineers &quot;Mod&quot; directory (?):" GridPane.rowIndex="2" />
+        <Label fx:id="pathToAppdataSpaceEngineersDirectoryLabel" text="Path to %AppData% Space Engineers directory (?):" GridPane.rowIndex="2" />
         <TextField fx:id="pathToModsWorkspaceTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <TextField fx:id="pathToAppdataModsDirectoryTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <TextField fx:id="pathToAppdataSpaceEngineersDirectoryTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
             <children>
                 <Button mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save" />
@@ -34,7 +34,7 @@
             </children>
         </HBox>
         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onChoosePathToModsWorkspaceButtonClick" text="Choose..." GridPane.columnIndex="2" GridPane.rowIndex="1" />
-        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onChoosePathToAppdataModsDirectoryButtonClick" text="Choose..." GridPane.columnIndex="2" GridPane.rowIndex="2" />
+        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onChoosePathToAppdataSpaceEngineersDirectoryButtonClick" text="Choose..." GridPane.columnIndex="2" GridPane.rowIndex="2" />
     </children>
     <padding>
         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />

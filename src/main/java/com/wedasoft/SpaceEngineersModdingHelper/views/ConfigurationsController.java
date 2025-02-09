@@ -26,26 +26,29 @@ public class ConfigurationsController {
     @FXML
     private Label pathToYourModsWorkspaceLabel;
     @FXML
-    private Label pathToSpaceEngineersModDirectoryLabel;
+    private Label pathToAppdataSpaceEngineersDirectoryLabel;
 
     @FXML
     private TextField pathToModsWorkspaceTextField;
     @FXML
-    private TextField pathToAppdataModsDirectoryTextField;
+    private TextField pathToAppdataSpaceEngineersDirectoryTextField;
 
     private ConfigurationsEntity configurationsEntity;
     private Runnable onSaveButtonClickCallback;
 
     public void init() {
-        jfxUiService.createTooltipFor(pathToYourModsWorkspaceLabel, "This is the directory which contains all of your mods.");
-        jfxUiService.createTooltipFor(pathToSpaceEngineersModDirectoryLabel, "This is the 'Mods' directory of your Space Engineers installation. E.g. 'C:\\Users\\username\\AppData\\Roaming\\SpaceEngineers\\Mods'.");
+        jfxUiService.createTooltipFor(pathToYourModsWorkspaceLabel,
+                "This is the directory which contains all of your mods.");
+        jfxUiService.createTooltipFor(pathToAppdataSpaceEngineersDirectoryLabel,
+                "This is a directory of your Space Engineers installation, located somewhere in your %APPDATA% directory. " +
+                "E.g. 'C:\\Users\\username\\AppData\\Roaming\\SpaceEngineers'.");
 
         configurationsEntity = configurationsService.loadConfigurations();
         if (configurationsEntity == null) {
             configurationsEntity = new ConfigurationsEntity();
         }
         pathToModsWorkspaceTextField.setText(configurationsEntity.getPathToModsWorkspace());
-        pathToAppdataModsDirectoryTextField.setText(configurationsEntity.getPathToAppdataModsDirectory());
+        pathToAppdataSpaceEngineersDirectoryTextField.setText(configurationsEntity.getPathToAppdataSpaceEngineersDirectory());
     }
 
     public void init(Runnable onSaveButtonClickCallback) {
@@ -55,7 +58,7 @@ public class ConfigurationsController {
 
     public void onSaveButtonClick() {
         configurationsEntity.setPathToModsWorkspace(pathToModsWorkspaceTextField.getText());
-        configurationsEntity.setPathToAppdataModsDirectory(pathToAppdataModsDirectoryTextField.getText());
+        configurationsEntity.setPathToAppdataSpaceEngineersDirectory(pathToAppdataSpaceEngineersDirectoryTextField.getText());
         configurationsService.saveConfigurations(configurationsEntity);
         jfxUiService.displayInformationDialog("Saved configurations!");
         ((Stage) pathToModsWorkspaceTextField.getScene().getWindow()).close();
@@ -77,12 +80,12 @@ public class ConfigurationsController {
         }
     }
 
-    public void onChoosePathToAppdataModsDirectoryButtonClick() {
+    public void onChoosePathToAppdataSpaceEngineersDirectoryButtonClick() {
         DirectoryChooser dc = new DirectoryChooser();
-        dc.setTitle("Choose the path to your %APPDATA%/.../SpaceEngineers/Mods directory");
+        dc.setTitle("Choose the path to your '%APPDATA%/.../SpaceEngineers' directory");
         File path = dc.showDialog(null);
         if (path != null) {
-            pathToAppdataModsDirectoryTextField.setText(path.getAbsolutePath());
+            pathToAppdataSpaceEngineersDirectoryTextField.setText(path.getAbsolutePath());
         }
     }
 

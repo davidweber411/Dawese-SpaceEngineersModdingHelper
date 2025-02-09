@@ -27,10 +27,10 @@ public class DeploymentService {
             throw new NotValidException("You must set the configurations first.");
         }
         if (!new File(configurations.getPathToModsWorkspace()).exists()) {
-            throw new NotValidException("Your set path to mods workspace doesn't exist.");
+            throw new NotValidException("Your set path to mods workspace doesn't exist: " + configurations.getPathToModsWorkspace());
         }
         if (!new File(configurations.getPathToAppdataModsDirectory()).exists()) {
-            throw new NotValidException("Your set path to appdata mods directory doesn't exist.");
+            throw new NotValidException("Your set path to appdata mods directory doesn't exist: " + configurations.getPathToAppdataModsDirectory());
         }
 
         deleteCurrentOfflineModIfNeccessary(modToDeploy.toPath());

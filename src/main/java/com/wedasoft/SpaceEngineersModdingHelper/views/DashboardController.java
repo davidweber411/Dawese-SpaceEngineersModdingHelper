@@ -52,8 +52,9 @@ public class DashboardController {
             });
             dashboardContentVbox.getChildren().add(setConfigurationsHereButton);
         } else {
-            dashboardContentVbox.getChildren().add(new Label("Path to your modding workspace: " + configurations.getPathToModsWorkspace()));
-            dashboardContentVbox.getChildren().add(new Label("Path to your Space Engineers \"Mods\" directory: " + configurations.getPathToAppdataModsDirectory()));
+            dashboardContentVbox.getChildren().add(new Label("Your modding workspace: " + configurations.getPathToModsWorkspace()));
+            dashboardContentVbox.getChildren().add(new Label("Your %APPDATA% Space Engineers directory: " + configurations.getPathToAppdataSpaceEngineersDirectory()));
+            dashboardContentVbox.getChildren().add(new Label("Your inferred 'Mods' directory: " + configurations.getPathToAppdataModsDirectory()));
         }
     }
 
