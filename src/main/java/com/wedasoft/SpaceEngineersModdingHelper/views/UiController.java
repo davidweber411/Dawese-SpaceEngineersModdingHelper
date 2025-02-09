@@ -63,6 +63,14 @@ public class UiController implements Initializable {
         centerStackPane.getChildren().add(parent);
     }
 
+    public void onLogScannerButtonClick() throws IOException {
+        Parent parent = jfxUiService.loadAndGetNewSceneParent(getClass().getResource(
+                        "/com/wedasoft/SpaceEngineersModdingHelper/views/logScanner.fxml"),
+                controller -> ((LogScannerController) controller).init());
+        centerStackPane.getChildren().clear();
+        centerStackPane.getChildren().add(parent);
+    }
+
     public void onDeployModIntoSeModsDirectoryButtonClick() throws IOException {
         Parent parent = jfxUiService.loadAndGetNewSceneParent(getClass().getResource(
                         "/com/wedasoft/SpaceEngineersModdingHelper/views/deployMod.fxml"),

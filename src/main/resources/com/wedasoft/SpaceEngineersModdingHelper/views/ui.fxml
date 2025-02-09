@@ -26,6 +26,7 @@
                   <VBox spacing="8.0">
                      <children>
                         <Button fx:id="dashboardButton" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" onAction="#onDashboardButtonClick" prefHeight="60.0" prefWidth="100.0" text="Dashboard (?)" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="deployModIntoSeModsDirectoryButton1" layoutX="18.0" layoutY="86.0" mnemonicParsing="false" onAction="#onLogScannerButtonClick" prefHeight="60.0" prefWidth="100.0" text="Log scanner (?)" textAlignment="CENTER" wrapText="true" />
                         <Button fx:id="deployModIntoSeModsDirectoryButton" mnemonicParsing="false" onAction="#onDeployModIntoSeModsDirectoryButtonClick" prefHeight="60.0" prefWidth="100.0" text="Deploy mod into SE Mods directory (?)" textAlignment="CENTER" wrapText="true" />
                         <Button fx:id="createNewCharacterModButton" layoutX="18.0" layoutY="86.0" mnemonicParsing="false" onAction="#onCreateNewCharacterModButtonClick" prefHeight="60.0" prefWidth="100.0" text="Create new character mod (?)" textAlignment="CENTER" wrapText="true" />
                      </children>
