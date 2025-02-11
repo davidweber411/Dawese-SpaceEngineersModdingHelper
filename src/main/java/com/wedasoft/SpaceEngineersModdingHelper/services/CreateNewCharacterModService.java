@@ -92,26 +92,30 @@ public class CreateNewCharacterModService {
         final Path dataDir = fileSystemRepository.createDirectoryIn("Data", modDir);
         final Path internalNameSubdir = fileSystemRepository.createDirectoryIn(internalName, dataDir);
 
+        createCharactersSbcAndEntityContainersSbc(gender, internalName, internalNameSubdir);
+    }
+
+    private void createCharactersSbcAndEntityContainersSbc(Gender gender, String internalNameForReplacements, Path targetDir) throws IOException, URISyntaxException {
         final Map<String, String> replacements = Map.ofEntries(
-                Map.entry(CHAR_MALE_TEMPLATE, internalName),
-                Map.entry(CHAR_FEMALE_TEMPLATE, internalName));
+                Map.entry(CHAR_MALE_TEMPLATE, internalNameForReplacements),
+                Map.entry(CHAR_FEMALE_TEMPLATE, internalNameForReplacements));
         if (gender == Gender.MALE) {
             fileSystemRepository.createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc")).toURI()),
-                    internalNameSubdir,
+                    targetDir,
                     replacements);
             fileSystemRepository.createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_Characters.sbc")).toURI()),
-                    internalNameSubdir,
+                    targetDir,
                     replacements);
         } else {
             fileSystemRepository.createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_EntityContainers.sbc")).toURI()),
-                    internalNameSubdir,
+                    targetDir,
                     replacements);
             fileSystemRepository.createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_Characters.sbc")).toURI()),
-                    internalNameSubdir,
+                    targetDir,
                     replacements);
         }
     }
