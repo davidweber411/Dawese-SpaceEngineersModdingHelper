@@ -5,7 +5,7 @@
 
     <AIBehavior xsi:type="MyObjectBuilder_BehaviorTreeDefinition">
       <Id Type="MyObjectBuilder_BehaviorTreeDefinition"
-        Subtype="DaweseAstronautDefaultMaleBehaviorSubtype" />
+        Subtype="CharacterDefaultTemplateBehaviorSubtype" />
       <FirstNode xsi:type="MyObjectBuilder_BehaviorTreeSequenceNode">
         <BTNodes>
           <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSelectorNode">
@@ -190,7 +190,7 @@
         </BTNodes>
         <Name>AttackSequence</Name>
       </FirstNode>
-      <Behavior>DaweseAstronautDefaultMaleBehavior</Behavior>
+      <Behavior>CharacterDefaultTemplateBehavior</Behavior>
     </AIBehavior>
 
   </AIBehaviors>

@@ -6,12 +6,12 @@
     <EntityComponent xsi:type="MyObjectBuilder_EntityStatComponentDefinition">
       <Id>
         <TypeId>CharacterStatComponent</TypeId>
-        <SubtypeId>DaweseAstronautDefaultMale</SubtypeId>
+        <SubtypeId>CharacterDefaultTemplate</SubtypeId>
       </Id>
       <Stats>
         <Stat>
           <TypeId>MyObjectBuilder_EntityStat</TypeId>
-          <SubtypeId>DaweseAstronautDefaultMaleHealth</SubtypeId>
+          <SubtypeId>CharacterDefaultTemplateHealth</SubtypeId>
         </Stat>
       </Stats>
       <Scripts>

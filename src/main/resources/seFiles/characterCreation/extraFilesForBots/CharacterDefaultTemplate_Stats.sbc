@@ -6,7 +6,7 @@
     <Stat xsi:type="MyObjectBuilder_EntityStatDefinition">
       <Id>
         <TypeId>MyObjectBuilder_EntityStat</TypeId>
-        <SubtypeId>DaweseAstronautDefaultMaleHealth</SubtypeId>
+        <SubtypeId>CharacterDefaultTemplateHealth</SubtypeId>
       </Id>
       <Name>Health</Name>
       <MinValue>1</MinValue>

@@ -6,12 +6,12 @@
     <Bot xsi:type="MyObjectBuilder_AnimalBotDefinition">
       <Id>
         <TypeId>MyObjectBuilder_AnimalBot</TypeId>
-        <SubtypeId>DaweseAstronautDefaultMale</SubtypeId>
+        <SubtypeId>CharacterDefaultTemplate</SubtypeId>
       </Id>
       <DisplayName>DisplayName_Bots_Deer</DisplayName>
       <Icon>Textures\FAKE.dds</Icon>
       <BotModel>SE_astronaut</BotModel>
-      <BotBehaviorTree Subtype="DaweseAstronautDefaultMaleBehaviorSubtype" /><!-- ai behaviour -->
+      <BotBehaviorTree Subtype="CharacterDefaultTemplateBehaviorSubtype" /><!-- ai behaviour -->
       <BehaviorType>Wolf</BehaviorType>               <!-- Which actions (and logic) class to use -->
       <TargetType>Wolf</TargetType>
       <Public>true</Public>
@@ -20,7 +20,7 @@
       <InventoryContentGenerated>true</InventoryContentGenerated>
       <InventoryContainerTypeId>
         <TypeId>ContainerTypeDefinition</TypeId>
-        <SubtypeId>DaweseAstronautDefaultMaleLoot</SubtypeId>
+        <SubtypeId>CharacterDefaultTemplateLoot</SubtypeId>
       </InventoryContainerTypeId>
       <FactionTag>SPID</FactionTag>
     </Bot>

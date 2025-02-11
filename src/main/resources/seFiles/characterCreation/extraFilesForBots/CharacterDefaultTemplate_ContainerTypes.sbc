@@ -6,7 +6,7 @@
     <ContainerType CountMin="2" CountMax="4">
       <Id>
         <TypeId>ContainerTypeDefinition</TypeId>
-        <SubtypeId>DaweseAstronautDefaultMaleLoot</SubtypeId>
+        <SubtypeId>CharacterDefaultTemplateLoot</SubtypeId>
       </Id>
       <Items>
         <Item AmountMin="5" AmountMax="10">
