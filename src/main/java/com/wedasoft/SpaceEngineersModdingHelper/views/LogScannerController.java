@@ -104,22 +104,32 @@ public class LogScannerController {
         long newFileSize = Files.size(currentLog);
 
         if (newFileSize < lastLogFileReadPosition) {
-            lastLogFileReadPosition = 0;
+            lastLogFileReadPosition = 0; // read complete file again if it's smaller than before.
         }
 
         StringBuilder newLogLines = new StringBuilder();
         try (RandomAccessFile raf = new RandomAccessFile(currentLog.toString(), "r")) {
+            // find the last "Loading duration:" position when the file is read the first time
+            if (lastLogFileReadPosition == 0) {
+                long lastLoadingDurationPos = -1;
+                String lastLoadingDurationLine = "";
+                String line;
+                while ((line = raf.readLine()) != null) {
+                    if (line.contains("Loading duration:")) {
+                        lastLoadingDurationPos = raf.getFilePointer();
+                        lastLoadingDurationLine = line;
+                    }
+                }
+                if (lastLoadingDurationPos != -1) {
+                    lastLogFileReadPosition = lastLoadingDurationPos;
+                    newLogLines.append(lastLoadingDurationLine).append("\n");
+                }
+            }
+
+            // append lines
             raf.seek(lastLogFileReadPosition);
             String line;
-            boolean skipLines = lastLogFileReadPosition == 0; // only ignore on the first read attempt
-
             while ((line = raf.readLine()) != null) {
-                if (skipLines) {
-                    if (line.contains("Loading duration:")) {
-                        skipLines = false;
-                    }
-                    continue;
-                }
                 newLogLines.append(line).append("\n");
             }
             lastLogFileReadPosition = raf.getFilePointer();
