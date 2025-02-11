@@ -89,8 +89,8 @@ public class CreateNewCharacterModService {
     }
 
     private void createInternalDataSubDir(Gender gender, Path modDir, String internalName) throws IOException, URISyntaxException {
-        final Path data = fileSystemRepository.createDirectoryIn("Data", modDir);
-        final Path internalNameDataSubdir = fileSystemRepository.createDirectoryIn(internalName, data);
+        final Path dataDir = fileSystemRepository.createDirectoryIn("Data", modDir);
+        final Path internalNameSubdir = fileSystemRepository.createDirectoryIn(internalName, dataDir);
 
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHAR_MALE_TEMPLATE, internalName),
@@ -98,20 +98,20 @@ public class CreateNewCharacterModService {
         if (gender == Gender.MALE) {
             fileSystemRepository.createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc")).toURI()),
-                    internalNameDataSubdir,
+                    internalNameSubdir,
                     replacements);
             fileSystemRepository.createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_Characters.sbc")).toURI()),
-                    internalNameDataSubdir,
+                    internalNameSubdir,
                     replacements);
         } else {
             fileSystemRepository.createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_EntityContainers.sbc")).toURI()),
-                    internalNameDataSubdir,
+                    internalNameSubdir,
                     replacements);
             fileSystemRepository.createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_Characters.sbc")).toURI()),
-                    internalNameDataSubdir,
+                    internalNameSubdir,
                     replacements);
         }
     }
