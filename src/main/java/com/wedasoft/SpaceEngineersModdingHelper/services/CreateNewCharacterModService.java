@@ -24,6 +24,7 @@ public class CreateNewCharacterModService {
 
     private static final String CHAR_MALE_TEMPLATE = "CharacterMaleTemplate";
     private static final String CHAR_FEMALE_TEMPLATE = "CharacterFemaleTemplate";
+    private static final String CHARACTER_DEFAULT_TEMPLATE = "CharacterDefaultTemplate";
 
     private final ConfigurationsRepository configurationsRepository;
     private final FileSystemRepository fileSystemRepository;
@@ -98,7 +99,7 @@ public class CreateNewCharacterModService {
 
         createCharactersSbcAndEntityContainersSbc(gender, internalName, internalNameSubdir);
         if (createAdditionalFilesForAnAnimalBot) {
-            createAdditionalFilesForAnAnimalBot();
+            createAdditionalFilesForAnAnimalBot(internalName, internalNameSubdir);
         }
     }
 
@@ -130,8 +131,42 @@ public class CreateNewCharacterModService {
         }
     }
 
-    private void createAdditionalFilesForAnAnimalBot() {
+    private void createAdditionalFilesForAnAnimalBot(
+            final String internalNameForReplacements, Path targetDir)
+            throws URISyntaxException, IOException {
 
+        final Map<String, String> replacements = Map.ofEntries(
+                Map.entry(CHARACTER_DEFAULT_TEMPLATE, internalNameForReplacements));
+
+        // create Stats.sbc
+        fileSystemRepository.createModifiedSbcFileInto(
+                Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Stats.sbc")).toURI()),
+                targetDir,
+                replacements);
+
+        // create EntityComponents.sbc
+        fileSystemRepository.createModifiedSbcFileInto(
+                Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_EntityComponents.sbc")).toURI()),
+                targetDir,
+                replacements);
+
+        // create Bots.sbc
+        fileSystemRepository.createModifiedSbcFileInto(
+                Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Bots.sbc")).toURI()),
+                targetDir,
+                replacements);
+
+        // create AIBehavior.sbc
+        fileSystemRepository.createModifiedSbcFileInto(
+                Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_AIBehavior.sbc")).toURI()),
+                targetDir,
+                replacements);
+
+        // create ContainerTypes.sbc
+        fileSystemRepository.createModifiedSbcFileInto(
+                Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_ContainerTypes.sbc")).toURI()),
+                targetDir,
+                replacements);
     }
 
     private void createInternalModelsSubDir(Path modDir, String internalName) throws IOException {
