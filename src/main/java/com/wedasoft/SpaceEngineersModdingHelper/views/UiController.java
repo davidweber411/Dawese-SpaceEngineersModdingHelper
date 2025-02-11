@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -67,11 +68,15 @@ public class UiController implements Initializable {
     }
 
     public void onLogScannerButtonClick() throws IOException {
-        Parent parent = jfxUiService.loadAndGetNewSceneParent(getClass().getResource(
-                        "/com/wedasoft/SpaceEngineersModdingHelper/views/logScanner.fxml"),
+        Stage logScannerDialog = jfxUiService.createFxmlDialog(
+                "Log scanner",
+                false,
+                true,
+                getClass().getResource("/com/wedasoft/SpaceEngineersModdingHelper/views/logScanner.fxml"),
+                null,
                 controller -> ((LogScannerController) controller).init());
-        centerStackPane.getChildren().clear();
-        centerStackPane.getChildren().add(parent);
+        logScannerDialog.initOwner(centerStackPane.getScene().getWindow());
+        logScannerDialog.show();
     }
 
     public void onDeployModIntoSeModsDirectoryButtonClick() throws IOException {

@@ -42,13 +42,10 @@ public class LogScannerController {
     private ScheduledExecutorService autoUpdateExecutorService;
 
     public void init() {
+        logScannerBorderPane.getScene().getWindow().setOnCloseRequest(e -> unloadScene());
         logScannerBorderPane.parentProperty().addListener((observable, oldParent, newParent) -> {
             if (newParent == null) {
-                System.out.println("Node has been removed from the scene or layout");
-                if (autoUpdateExecutorService != null) {
-                    System.out.println("Shutdown executor service now...");
-                    autoUpdateExecutorService.shutdown();
-                }
+                unloadScene();
             }
         });
         Thread t = new Thread(() -> {
@@ -61,6 +58,14 @@ public class LogScannerController {
         t.setName("Read logs initially thread");
         t.setDaemon(true);
         t.start();
+    }
+
+    private void unloadScene() {
+        System.out.println("Node has been removed from the scene or layout");
+        if (autoUpdateExecutorService != null) {
+            System.out.println("Shutdown executor service now...");
+            autoUpdateExecutorService.shutdown();
+        }
     }
 
     public void onActivateAutoUpdateButtonClick(ActionEvent event) {
