@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Bots>
+
+    <Bot xsi:type="MyObjectBuilder_AnimalBotDefinition">
+      <Id>
+        <TypeId>MyObjectBuilder_AnimalBot</TypeId>
+        <SubtypeId>DaweseAstronautDefaultMale</SubtypeId>
+      </Id>
+      <DisplayName>DisplayName_Bots_Deer</DisplayName>
+      <Icon>Textures\FAKE.dds</Icon>
+      <BotModel>SE_astronaut</BotModel>
+      <BotBehaviorTree Subtype="DaweseAstronautDefaultMaleBehaviorSubtype" /><!-- ai behaviour -->
+      <BehaviorType>Wolf</BehaviorType>               <!-- Which actions (and logic) class to use -->
+      <TargetType>Wolf</TargetType>
+      <Public>true</Public>
+      <AvailableInSurvival>false</AvailableInSurvival>
+      <RemoveAfterDeath>true</RemoveAfterDeath>
+      <InventoryContentGenerated>true</InventoryContentGenerated>
+      <InventoryContainerTypeId>
+        <TypeId>ContainerTypeDefinition</TypeId>
+        <SubtypeId>DaweseAstronautDefaultMaleLoot</SubtypeId>
+      </InventoryContainerTypeId>
+      <FactionTag>SPID</FactionTag>
+    </Bot>
+
+  </Bots>
+</Definitions>

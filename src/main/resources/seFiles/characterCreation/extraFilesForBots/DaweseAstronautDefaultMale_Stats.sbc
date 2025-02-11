@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <StatDefinitions>
+
+    <Stat xsi:type="MyObjectBuilder_EntityStatDefinition">
+      <Id>
+        <TypeId>MyObjectBuilder_EntityStat</TypeId>
+        <SubtypeId>DaweseAstronautDefaultMaleHealth</SubtypeId>
+      </Id>
+      <Name>Health</Name>
+      <MinValue>1</MinValue>
+      <MaxValue>150</MaxValue>
+    </Stat>
+
+  </StatDefinitions>
+</Definitions>

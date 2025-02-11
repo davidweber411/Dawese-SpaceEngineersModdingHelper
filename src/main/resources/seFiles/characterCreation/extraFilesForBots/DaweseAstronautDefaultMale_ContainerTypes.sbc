@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContainerTypes>
+
+    <ContainerType CountMin="2" CountMax="4">
+      <Id>
+        <TypeId>ContainerTypeDefinition</TypeId>
+        <SubtypeId>DaweseAstronautDefaultMaleLoot</SubtypeId>
+      </Id>
+      <Items>
+        <Item AmountMin="5" AmountMax="10">
+          <Frequency>0.5</Frequency>
+          <Id>
+            <TypeId>Component</TypeId>
+            <SubtypeId>Motor</SubtypeId>
+          </Id>
+        </Item>
+        <Item AmountMin="5" AmountMax="10">
+          <Frequency>1</Frequency>
+          <Id>
+            <TypeId>Component</TypeId>
+            <SubtypeId>RadioCommunication</SubtypeId>
+          </Id>
+        </Item>
+        <Item AmountMin="5" AmountMax="10">
+          <Frequency>0.25</Frequency>
+          <Id>
+            <TypeId>Component</TypeId>
+            <SubtypeId>Superconductor</SubtypeId>
+          </Id>
+        </Item>
+        <Item AmountMin="1" AmountMax="1">
+          <Frequency>0.3</Frequency>
+          <Id>
+            <TypeId>PhysicalGunObject</TypeId>
+            <SubtypeId>AngleGrinderItem</SubtypeId>
+          </Id>
+        </Item>
+        <Item AmountMin="1" AmountMax="1">
+          <Frequency>0.3</Frequency>
+          <Id>
+            <TypeId>PhysicalGunObject</TypeId>
+            <SubtypeId>WelderItem</SubtypeId>
+          </Id>
+        </Item>
+        <Item AmountMin="1" AmountMax="1">
+          <Frequency>0.3</Frequency>
+          <Id>
+            <TypeId>PhysicalGunObject</TypeId>
+            <SubtypeId>HandDrillItem</SubtypeId>
+          </Id>
+        </Item>
+        <Item AmountMin="1" AmountMax="1">
+          <Frequency>1</Frequency>
+          <Id>
+            <TypeId>Component</TypeId>
+            <SubtypeId>Detector</SubtypeId>
+          </Id>
+        </Item>
+        <Item AmountMin="50" AmountMax="100">
+          <Frequency>0.25</Frequency>
+          <Id>
+            <TypeId>Component</TypeId>
+            <SubtypeId>SteelPlate</SubtypeId>
+          </Id>
+        </Item>
+        <Item AmountMin="25" AmountMax="50">
+          <Frequency>0.50</Frequency>
+          <Id>
+            <TypeId>Component</TypeId>
+            <SubtypeId>Computer</SubtypeId>
+          </Id>
+        </Item>
+        <Item AmountMin="4" AmountMax="4">
+          <Frequency>1.0</Frequency>
+          <Id>
+            <TypeId>Component</TypeId>
+            <SubtypeId>PowerCell</SubtypeId>
+          </Id>
+        </Item>
+        <Item AmountMin="1" AmountMax="1">
+          <Frequency>0.15</Frequency>
+          <Id>
+            <TypeId>Ingot</TypeId>
+            <SubtypeId>Iron</SubtypeId>
+          </Id>
+        </Item>
+      </Items>
+    </ContainerType>
+
+  </ContainerTypes>
+</Definitions>
