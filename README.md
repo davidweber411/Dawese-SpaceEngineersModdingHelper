@@ -6,12 +6,13 @@ Please backup your files before using it for security.
 
 ### Features: Run and package
 
-| Feature                                                 | Additional informations                                                                                                                                                                                    |
-|---------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Dashboard                                               | Helps you to setup your environment.                                                                                                                                                                       |
-| Log scanner                                             | Provides you a near real time scanning of your current logs. Never bother around with plenty of log files.                                                                                                 |
-| Deploy mods from your working dir into the SE mods dir. | Select the mod you want to deploy. It just includes all directories which are present in the "SpaceEngineers/Content" directory and the files "thumb.jpg", "thumb.png", "modinfo.sbmi" and "metadata.mod". |
-| Create a template mod for a new character.              | Creates a complete mod structure. Includes configurable subtype id and gender, preconfigured SBC files and dev files creation (FBX, XML) in your mod directory.                                            |
+| Feature                                                              | Additional informations                                                                                                                                                                                    |
+|----------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Dashboard                                                            | Helps you to setup your environment.                                                                                                                                                                       |
+| Log scanner                                                          | Provides you a near real time scanning of your current logs. Never bother around with plenty of log files.                                                                                                 |
+| Deploy mods from your working dir into the SE mods dir.              | Select the mod you want to deploy. It just includes all directories which are present in the "SpaceEngineers/Content" directory and the files "thumb.jpg", "thumb.png", "modinfo.sbmi" and "metadata.mod". |
+| Create a template mod for a new character.                           | Creates a complete mod structure. Includes configurable subtype id and gender, preconfigured SBC files and dev files creation (FBX, XML) in your mod directory.                                            |
+| Create a template mod for a new character as animal bot like wolves! | Same as above, but as animal bot!                                                                                                                                                                          |
 
 ### Used technologies
 
