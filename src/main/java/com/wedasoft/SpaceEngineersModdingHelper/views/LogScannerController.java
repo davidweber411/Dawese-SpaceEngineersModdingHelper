@@ -36,6 +36,8 @@ public class LogScannerController {
     @FXML
     private BorderPane logScannerBorderPane;
     @FXML
+    private ToggleButton activateAutoUpdateToggleButton;
+    @FXML
     private TextArea logsTextArea;
 
     private long lastLogFileReadPosition = 0;
@@ -58,6 +60,7 @@ public class LogScannerController {
         t.setName("Read logs initially thread");
         t.setDaemon(true);
         t.start();
+        activateAutoUpdateToggleButton.fire();
     }
 
     private void unloadScene() {

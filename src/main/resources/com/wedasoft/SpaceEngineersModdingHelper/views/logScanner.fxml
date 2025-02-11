@@ -16,7 +16,7 @@
             <Insets bottom="8.0" />
          </padding>
          <children>
-            <ToggleButton mnemonicParsing="false" onAction="#onActivateAutoUpdateButtonClick" text="Activate auto update (5s ticks)" />
+            <ToggleButton fx:id="activateAutoUpdateToggleButton" mnemonicParsing="false" onAction="#onActivateAutoUpdateButtonClick" text="Activate auto update (5s ticks)" />
             <Button mnemonicParsing="false" onAction="#onUpdateLogsButtonClick" text="Update logs manually" />
          </children>
       </FlowPane>
