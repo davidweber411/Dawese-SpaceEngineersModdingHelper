@@ -37,6 +37,8 @@ public class CreateNewCharacterModController implements Initializable {
     private ChoiceBox<Gender> genderChoiceBox;
     @FXML
     private CheckBox createDevDataDirCheckbox;
+    @FXML
+    private CheckBox createAdditionalFilesForAnAnimalBotCheckbox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -53,7 +55,8 @@ public class CreateNewCharacterModController implements Initializable {
                     modNameTextField,
                     wishedSubtypeTextField,
                     genderChoiceBox.getValue(),
-                    createDevDataDirCheckbox.isSelected());
+                    createDevDataDirCheckbox.isSelected(),
+                    createAdditionalFilesForAnAnimalBotCheckbox.isSelected());
             jfxUiService.displayInformationDialog("Character mod created in your workspace!");
         } catch (NotValidException e) {
             jfxUiService.displayWarnDialog(e.getMessage());

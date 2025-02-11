@@ -32,7 +32,8 @@ public class CreateNewCharacterModService {
             TextField modNameTextField,
             TextField wishedSubtypeTextField,
             Gender gender,
-            boolean devDataDirShallBeCreated) throws NotValidException, IOException, URISyntaxException {
+            boolean devDataDirShallBeCreated,
+            boolean createAdditionalFilesForAnAnimalBot) throws NotValidException, IOException, URISyntaxException {
 
         if (modNameTextField.getText().isBlank()) {
             throw new NotValidException("You must enter a name for your mod.");
@@ -66,7 +67,7 @@ public class CreateNewCharacterModService {
         if (devDataDirShallBeCreated) {
             createDevDataDir(modDir, gender);
         }
-        createInternalDataSubDir(gender, modDir, internalName);
+        createInternalDataSubDir(modDir, internalName, gender, createAdditionalFilesForAnAnimalBot);
         createInternalModelsSubDir(modDir, internalName);
         createInternalTexturesSubDir(modDir, internalName);
     }
@@ -88,14 +89,23 @@ public class CreateNewCharacterModService {
         }
     }
 
-    private void createInternalDataSubDir(Gender gender, Path modDir, String internalName) throws IOException, URISyntaxException {
+    private void createInternalDataSubDir(
+            Path modDir, String internalName, Gender gender, boolean createAdditionalFilesForAnAnimalBot)
+            throws IOException, URISyntaxException {
+
         final Path dataDir = fileSystemRepository.createDirectoryIn("Data", modDir);
         final Path internalNameSubdir = fileSystemRepository.createDirectoryIn(internalName, dataDir);
 
         createCharactersSbcAndEntityContainersSbc(gender, internalName, internalNameSubdir);
+        if (createAdditionalFilesForAnAnimalBot) {
+            createAdditionalFilesForAnAnimalBot();
+        }
     }
 
-    private void createCharactersSbcAndEntityContainersSbc(Gender gender, String internalNameForReplacements, Path targetDir) throws IOException, URISyntaxException {
+    private void createCharactersSbcAndEntityContainersSbc(
+            Gender gender, String internalNameForReplacements, Path targetDir)
+            throws IOException, URISyntaxException {
+
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHAR_MALE_TEMPLATE, internalNameForReplacements),
                 Map.entry(CHAR_FEMALE_TEMPLATE, internalNameForReplacements));
@@ -118,6 +128,10 @@ public class CreateNewCharacterModService {
                     targetDir,
                     replacements);
         }
+    }
+
+    private void createAdditionalFilesForAnAnimalBot() {
+
     }
 
     private void createInternalModelsSubDir(Path modDir, String internalName) throws IOException {
