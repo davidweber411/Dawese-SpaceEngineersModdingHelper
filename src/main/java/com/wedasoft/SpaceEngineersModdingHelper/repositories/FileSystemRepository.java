@@ -8,7 +8,10 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -66,6 +69,35 @@ public class FileSystemRepository {
                 }
             });
         }
+    }
+
+    public void copyResourceFileInto(URL resourceFileUrl, Path targetDir) throws IOException {
+        File file = getTempFileFromURL(resourceFileUrl);
+        Path copiedFile = Files.copy(file.toPath(), targetDir.resolve(file.getName()));
+        String fileName = new File(resourceFileUrl.getPath()).getName();
+        copiedFile.toFile().renameTo(new File(copiedFile.toFile().getParent(), fileName));
+    }
+
+    private File getTempFileFromURL(URL resourceUrl) throws IOException {
+        if (resourceUrl == null) {
+            throw new IllegalArgumentException("Resource URL cannot be null");
+        }
+
+        String fileName = new File(resourceUrl.getPath()).getName();
+        int dotIndex = fileName.lastIndexOf('.');
+        String namePart = (dotIndex == -1) ? fileName : fileName.substring(0, dotIndex);
+        String extension = (dotIndex == -1) ? ".tmp" : fileName.substring(dotIndex);
+
+        File tempFile = File.createTempFile(namePart, extension);
+
+        try (InputStream inputStream = resourceUrl.openStream()) {
+            if (inputStream == null) {
+                throw new FileNotFoundException("Unable to open stream for: " + resourceUrl);
+            }
+            Files.copy(inputStream, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        return tempFile;
     }
 
     public void createJpgWithTextContentInto(TextField modNameTextField, Path modDir) throws IOException {

@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -80,12 +79,12 @@ public class CreateNewCharacterModService {
     private void createDevDataDir(Path modDir, Gender gender) throws IOException, URISyntaxException {
         Path devDataDir = fileSystemRepository.createDirectoryIn("_devData", modDir);
         if (gender == Gender.FEMALE) {
-            fileSystemRepository.copyFileOrDirectoryInto(
-                    new File(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/SE_astronaut_female.FBX")).toURI()),
+            fileSystemRepository.copyResourceFileInto(
+                    getClass().getResource("/seFiles/characterCreation/female/SE_astronaut_female.FBX"),
                     devDataDir);
         } else {
-            fileSystemRepository.copyFileOrDirectoryInto(
-                    new File(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/SE_astronaut_male.FBX")).toURI()),
+            fileSystemRepository.copyResourceFileInto(
+                    getClass().getResource("/seFiles/characterCreation/male/SE_astronaut_male.FBX"),
                     devDataDir);
         }
     }
