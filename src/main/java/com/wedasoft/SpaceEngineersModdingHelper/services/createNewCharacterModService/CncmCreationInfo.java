@@ -22,5 +22,11 @@ public class CncmCreationInfo {
         return wishedSubtype;
     }
 
+    public Path getDataInternalKeyDir() {
+        return modRootDirectory
+                .resolve("Data")
+                .resolve(getInternalKeyName());
+    }
+
 }
 
