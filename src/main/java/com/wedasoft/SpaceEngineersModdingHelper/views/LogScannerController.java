@@ -42,6 +42,7 @@ public class LogScannerController {
 
     private long lastLogFileReadPosition = 0;
     private ScheduledExecutorService autoUpdateExecutorService;
+    public boolean isUpdating;
 
     public void init() {
         logScannerBorderPane.getScene().getWindow().setOnCloseRequest(e -> unloadScene());
@@ -104,6 +105,11 @@ public class LogScannerController {
     }
 
     private void updateLogsTextArea() throws IOException {
+        if (isUpdating) {
+            return;
+        }
+        isUpdating = true;
+
         final Path currentLog = getCurrentLogFile();
         if (currentLog == null) {
             jfxUiService.displayWarnDialog("There isn't any log file yet!");
@@ -145,6 +151,7 @@ public class LogScannerController {
         if (!newLogLines.isEmpty()) {
             logsTextArea.appendText(newLogLines.toString());
         }
+        isUpdating = false;
     }
 
 }
