@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
 @Service
 @RequiredArgsConstructor
@@ -14,8 +13,9 @@ public class CncmModelsDirSubService {
     private final FileSystemRepository fileSystemRepository;
 
     public void createInternalModelsSubDir(CncmCreationInfo creationInfo) throws IOException {
-        final Path models = fileSystemRepository.createDirectoryIn("Models", creationInfo.getModRootDirectory());
-        fileSystemRepository.createDirectoryIn(creationInfo.getInternalKeyName(), models);
+        fileSystemRepository.createDirectoryIn(
+                creationInfo.getInternalKeyName(),
+                creationInfo.getModelsInternalKeyDir());
     }
 
 }

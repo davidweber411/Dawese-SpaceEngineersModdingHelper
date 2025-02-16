@@ -28,5 +28,17 @@ public class CncmCreationInfo {
                 .resolve(getInternalKeyName());
     }
 
+    public Path getTexturesInternalKeyDir() {
+        return modRootDirectory
+                .resolve("Textures")
+                .resolve(getInternalKeyName());
+    }
+
+    public Path getModelsInternalKeyDir() {
+        return modRootDirectory
+                .resolve("Models")
+                .resolve(getInternalKeyName());
+    }
+
 }
 
