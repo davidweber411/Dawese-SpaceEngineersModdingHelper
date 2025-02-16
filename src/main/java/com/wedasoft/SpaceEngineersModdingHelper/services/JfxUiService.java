@@ -1,6 +1,7 @@
 package com.wedasoft.SpaceEngineersModdingHelper.services;
 
 import com.wedasoft.wedasoftFxGuiCommons.jfxDialogs.JfxDialogUtil;
+import com.wedasoft.wedasoftFxGuiCommons.sceneUtil.SceneUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
@@ -98,6 +99,10 @@ public class JfxUiService {
         if (alert.getResult().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
             callbackOnOk.run();
         }
+    }
+
+    public Stage getStageBy(Node node) {
+        return SceneUtil.getStageByChildNode(node);
     }
 
 }

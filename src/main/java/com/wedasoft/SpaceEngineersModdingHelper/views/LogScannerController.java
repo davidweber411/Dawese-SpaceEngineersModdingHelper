@@ -4,6 +4,7 @@ import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
 import com.wedasoft.SpaceEngineersModdingHelper.helper.RedirectionHelper;
 import com.wedasoft.SpaceEngineersModdingHelper.services.ConfigurationsService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -52,6 +53,7 @@ public class LogScannerController {
         } catch (NotValidException e) {
             jfxUiService.displayWarnDialog(e.getMessage());
             RedirectionHelper.redirectToDashboard();
+            Platform.runLater(()-> jfxUiService.getStageBy(logScannerBorderPane).close());
             return;
         }
 
