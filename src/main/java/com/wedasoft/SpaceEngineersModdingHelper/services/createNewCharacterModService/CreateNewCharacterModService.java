@@ -24,15 +24,17 @@ public class CreateNewCharacterModService {
     private static final String CHAR_FEMALE_TEMPLATE = "CharacterFemaleTemplate";
     private static final String CHARACTER_DEFAULT_TEMPLATE = "CharacterDefaultTemplate";
 
+    private final CncmTexturesDirSubService cncmTexturesDirSubService;
     private final ConfigurationsRepository configurationsRepository;
+    private final CncmDevDataDirSubService cncmDevDataDirSubService;
+    private final CncmModelsDirSubService cncmModelsDirSubService;
+    private final CncmThumbnailSubService cncmThumbnailSubService;
     private final FileSystemRepository fileSystemRepository;
 
     public void createNewCharacterMod(
-            TextField modNameTextField,
-            TextField wishedSubtypeTextField,
-            Gender gender,
-            boolean devDataDirShallBeCreated,
-            boolean createAdditionalFilesForAnAnimalBot) throws NotValidException, IOException, URISyntaxException {
+            TextField modNameTextField, TextField wishedSubtypeTextField, Gender gender,
+            boolean devDataDirShallBeCreated, boolean createAdditionalFilesForAnAnimalBot)
+            throws NotValidException, IOException, URISyntaxException {
 
         if (modNameTextField.getText().isBlank()) {
             throw new NotValidException("You must enter a name for your mod.");
@@ -43,52 +45,36 @@ public class CreateNewCharacterModService {
         if (gender == null) {
             throw new NotValidException("Your entered gender is invalid.");
         }
-
         if (modExistsAlreadyInModsWorkspace(modNameTextField.getText())) {
             throw new NotValidException("A mod with this name already exists in your modding workspace.");
         }
 
-        final Path modDir = fileSystemRepository.createDirectoryIn(
+        final CncmCreationInfo creationInfo = new CncmCreationInfo(
                 modNameTextField.getText(),
-                Paths.get(configurationsRepository.loadAndValidateConfigurations().getPathToModsWorkspace()));
-        final String internalKeyName = wishedSubtypeTextField.getText();
+                wishedSubtypeTextField.getText(),
+                gender,
+                devDataDirShallBeCreated,
+                createAdditionalFilesForAnAnimalBot,
+                fileSystemRepository.createDirectoryIn(
+                        modNameTextField.getText(),
+                        Paths.get(configurationsRepository.loadAndValidateConfigurations().getPathToModsWorkspace())));
 
-        createThumbnail(modNameTextField, modDir);
+        cncmThumbnailSubService.createThumbnail(creationInfo);
         if (devDataDirShallBeCreated) {
-            createDevDataDir(modDir, gender);
+            cncmDevDataDirSubService.createDevDataDir(creationInfo);
         }
-        createInternalDataSubDir(modDir, internalKeyName, gender, createAdditionalFilesForAnAnimalBot);
-        createInternalModelsSubDir(modDir, internalKeyName);
-        createInternalTexturesSubDir(modDir, internalKeyName);
+        createInternalDataSubDir(creationInfo);
+        cncmModelsDirSubService.createInternalModelsSubDir(creationInfo);
+        cncmTexturesDirSubService.createInternalTexturesSubDir(creationInfo);
     }
 
-    private void createThumbnail(TextField modNameTextField, Path modDir) throws IOException {
-        fileSystemRepository.createJpgWithTextContentInto(modNameTextField, modDir);
-    }
+    private void createInternalDataSubDir(CncmCreationInfo creationInfo) throws IOException, URISyntaxException {
+        final Path dataDir = fileSystemRepository.createDirectoryIn("Data", creationInfo.getModRootDirectory());
+        final Path internalNameSubdir = fileSystemRepository.createDirectoryIn(creationInfo.getInternalKeyName(), dataDir);
 
-    private void createDevDataDir(Path modDir, Gender gender) throws IOException, URISyntaxException {
-        Path devDataDir = fileSystemRepository.createDirectoryIn("_devData", modDir);
-        if (gender == Gender.FEMALE) {
-            fileSystemRepository.copyResourceFileInto(
-                    getClass().getResource("/seFiles/characterCreation/female/SE_astronaut_female.FBX"),
-                    devDataDir);
-        } else {
-            fileSystemRepository.copyResourceFileInto(
-                    getClass().getResource("/seFiles/characterCreation/male/SE_astronaut_male.FBX"),
-                    devDataDir);
-        }
-    }
-
-    private void createInternalDataSubDir(
-            Path modDir, String internalName, Gender gender, boolean createAdditionalFilesForAnAnimalBot)
-            throws IOException, URISyntaxException {
-
-        final Path dataDir = fileSystemRepository.createDirectoryIn("Data", modDir);
-        final Path internalNameSubdir = fileSystemRepository.createDirectoryIn(internalName, dataDir);
-
-        createCharactersSbcAndEntityContainersSbc(gender, internalName, internalNameSubdir);
-        if (createAdditionalFilesForAnAnimalBot) {
-            createAdditionalFilesForAnAnimalBot(internalName, internalNameSubdir);
+        createCharactersSbcAndEntityContainersSbc(creationInfo.getGender(), creationInfo.getInternalKeyName(), internalNameSubdir);
+        if (creationInfo.isCreateAdditionalFilesForAnAnimalBot()) {
+            createAdditionalFilesForAnAnimalBot(creationInfo.getInternalKeyName(), internalNameSubdir);
         }
     }
 
@@ -156,16 +142,6 @@ public class CreateNewCharacterModService {
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_ContainerTypes.sbc")).toURI()),
                 targetDir,
                 replacements);
-    }
-
-    private void createInternalModelsSubDir(Path modDir, String internalName) throws IOException {
-        final Path models = fileSystemRepository.createDirectoryIn("Models", modDir);
-        fileSystemRepository.createDirectoryIn(internalName, models);
-    }
-
-    private void createInternalTexturesSubDir(Path modDir, String internalName) throws IOException {
-        final Path textures = fileSystemRepository.createDirectoryIn("Textures", modDir);
-        fileSystemRepository.createDirectoryIn(internalName, textures);
     }
 
     public void createModifiedSbcFileInto(

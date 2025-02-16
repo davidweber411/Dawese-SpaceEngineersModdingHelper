@@ -1,6 +1,5 @@
 package com.wedasoft.SpaceEngineersModdingHelper.repositories;
 
-import javafx.scene.control.TextField;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -99,8 +98,8 @@ public class FileSystemRepository {
         return tempFile;
     }
 
-    public void createJpgWithTextContentInto(TextField modNameTextField, Path modDir) throws IOException {
-        ImageIO.write(createJpgImageWithText(modNameTextField.getText()), "jpg", modDir.resolve("thumb.jpg").toFile());
+    public void createJpgWithTextContentInto(String text, Path modDir) throws IOException {
+        ImageIO.write(createJpgImageWithText(text), "jpg", modDir.resolve("thumb.jpg").toFile());
     }
 
     private BufferedImage createJpgImageWithText(String text) {
