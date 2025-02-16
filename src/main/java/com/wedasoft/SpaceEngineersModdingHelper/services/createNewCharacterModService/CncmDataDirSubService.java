@@ -57,12 +57,12 @@ public class CncmDataDirSubService {
                 Map.entry(CHAR_FEMALE_TEMPLATE, creationInfo.getInternalKeyName()));
         if (creationInfo.getGender() == Gender.MALE) {
             createModifiedSbcFileInto(
-                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc")).toURI()),
+                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_Characters.sbc")).toURI()),
                     creationInfo.getDataInternalKeyDir(),
                     replacements);
         } else {
             createModifiedSbcFileInto(
-                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_EntityContainers.sbc")).toURI()),
+                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_Characters.sbc")).toURI()),
                     creationInfo.getDataInternalKeyDir(),
                     replacements);
         }
