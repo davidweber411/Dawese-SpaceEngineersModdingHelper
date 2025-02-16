@@ -55,12 +55,12 @@ public class CreateNewCharacterModService {
                         Paths.get(configurationsRepository.loadAndValidateConfigurations().getPathToModsWorkspace())));
 
         cncmThumbnailSubService.createThumbnail(creationInfo);
-        if (devDataDirShallBeCreated) {
-            cncmDevDataDirSubService.createDevDataDir(creationInfo);
-        }
         cncmDataDirSubService.createInternalDataSubDir(creationInfo);
         cncmModelsDirSubService.createInternalModelsSubDir(creationInfo);
         cncmTexturesDirSubService.createInternalTexturesSubDir(creationInfo);
+        if (devDataDirShallBeCreated) {
+            cncmDevDataDirSubService.createDevDataDir(creationInfo);
+        }
     }
 
     private boolean modExistsAlreadyInModsWorkspace(String modName) throws NotValidException {
