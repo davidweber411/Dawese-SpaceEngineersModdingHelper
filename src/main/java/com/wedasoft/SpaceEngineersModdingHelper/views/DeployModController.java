@@ -2,11 +2,11 @@ package com.wedasoft.SpaceEngineersModdingHelper.views;
 
 import com.wedasoft.SpaceEngineersModdingHelper.data.configurations.ConfigurationsEntity;
 import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
+import com.wedasoft.SpaceEngineersModdingHelper.helper.RedirectionHelper;
 import com.wedasoft.SpaceEngineersModdingHelper.services.ConfigurationsService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.DeploymentService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -34,14 +34,12 @@ public class DeployModController {
     private ListView<File> modsListView;
 
     public void init() {
-        ConfigurationsEntity configurationsEntity = configurationsService.loadConfigurations();
-        if (configurationsEntity == null) {
-            jfxUiService.displayWarnDialog("You must set the configurations first.");
-            return;
-        }
-        File pathToModsWorkspace = new File(configurationsEntity.getPathToModsWorkspace());
-        if (!pathToModsWorkspace.exists() || !pathToModsWorkspace.isDirectory()) {
-            jfxUiService.displayWarnDialog("The path to your configured mod workspace doesn't exist or isn't a directory: " + pathToModsWorkspace);
+        ConfigurationsEntity configurations;
+        try {
+            configurations = configurationsService.loadAndValidateConfigurations();
+        } catch (NotValidException e) {
+            jfxUiService.displayWarnDialog(e.getMessage());
+            RedirectionHelper.redirectToDashboard();
             return;
         }
 
@@ -56,9 +54,10 @@ public class DeployModController {
                 }
             }
         });
-        ObservableList<File> allModDirectories = FXCollections.observableArrayList(
-                Arrays.stream(Objects.requireNonNull(pathToModsWorkspace.listFiles())).filter(File::isDirectory).toList());
-        modsListView.setItems(allModDirectories);
+
+        modsListView.setItems(FXCollections.observableArrayList(
+                Arrays.stream(Objects.requireNonNull(new File(configurations.getPathToModsWorkspace()).listFiles()))
+                        .filter(File::isDirectory).toList()));
     }
 
     public void onCancelButtonClick() {

@@ -2,6 +2,8 @@ package com.wedasoft.SpaceEngineersModdingHelper.views;
 
 import com.wedasoft.SpaceEngineersModdingHelper.enums.Gender;
 import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
+import com.wedasoft.SpaceEngineersModdingHelper.helper.RedirectionHelper;
+import com.wedasoft.SpaceEngineersModdingHelper.services.ConfigurationsService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.CreateNewCharacterModService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.collections.FXCollections;
@@ -27,6 +29,7 @@ import java.util.ResourceBundle;
 public class CreateNewCharacterModController implements Initializable {
 
     private final CreateNewCharacterModService createNewCharacterModService;
+    private final ConfigurationsService configurationsService;
     private final JfxUiService jfxUiService;
 
     @FXML
@@ -47,6 +50,13 @@ public class CreateNewCharacterModController implements Initializable {
     }
 
     public void init() {
+        try {
+            configurationsService.loadAndValidateConfigurations();
+        } catch (NotValidException e) {
+            jfxUiService.displayWarnDialog(e.getMessage());
+            RedirectionHelper.redirectToDashboard();
+            return;
+        }
     }
 
     public void onCreateModInWorkspaceButtonClick() {

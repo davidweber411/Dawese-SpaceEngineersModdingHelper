@@ -1,6 +1,7 @@
 package com.wedasoft.SpaceEngineersModdingHelper.views;
 
 import com.wedasoft.SpaceEngineersModdingHelper.data.configurations.ConfigurationsEntity;
+import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
 import com.wedasoft.SpaceEngineersModdingHelper.services.ConfigurationsService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.fxml.FXML;
@@ -32,9 +33,14 @@ public class DashboardController {
     private VBox dashboardContentVbox;
 
     public void init() {
-        ConfigurationsEntity configurations = configurationsService.loadConfigurations();
-        if (configurations == null) {
-            dashboardContentVbox.getChildren().add(createRedLabel("You have not set the configurations!"));
+        ConfigurationsEntity configurations;
+        try {
+            configurations = configurationsService.loadAndValidateConfigurations();
+        } catch (NotValidException nve) {
+            for (String problem : nve.getMessage().split("\n")) {
+                dashboardContentVbox.getChildren().add(createRedLabel(problem));
+            }
+
             Button setConfigurationsHereButton = new Button("Set configurations here");
             setConfigurationsHereButton.setOnAction(e -> {
                 try {
@@ -51,11 +57,12 @@ public class DashboardController {
                 }
             });
             dashboardContentVbox.getChildren().add(setConfigurationsHereButton);
-        } else {
-            dashboardContentVbox.getChildren().add(new Label("Your modding workspace: " + configurations.getPathToModsWorkspace()));
-            dashboardContentVbox.getChildren().add(new Label("Your %APPDATA% Space Engineers directory: " + configurations.getPathToAppdataSpaceEngineersDirectory()));
-            dashboardContentVbox.getChildren().add(new Label("Your inferred 'Mods' directory: " + configurations.getPathToAppdataModsDirectory()));
+            return;
         }
+
+        dashboardContentVbox.getChildren().add(new Label("Your modding workspace: " + configurations.getPathToModsWorkspace()));
+        dashboardContentVbox.getChildren().add(new Label("Your %APPDATA% Space Engineers directory: " + configurations.getPathToAppdataSpaceEngineersDirectory()));
+        dashboardContentVbox.getChildren().add(new Label("Your inferred 'Mods' directory: " + configurations.getPathToAppdataModsDirectory()));
     }
 
     private void reinit() {

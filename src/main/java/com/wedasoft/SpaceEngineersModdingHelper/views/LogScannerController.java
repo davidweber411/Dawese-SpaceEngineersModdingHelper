@@ -1,5 +1,7 @@
 package com.wedasoft.SpaceEngineersModdingHelper.views;
 
+import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
+import com.wedasoft.SpaceEngineersModdingHelper.helper.RedirectionHelper;
 import com.wedasoft.SpaceEngineersModdingHelper.services.ConfigurationsService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.event.ActionEvent;
@@ -45,6 +47,14 @@ public class LogScannerController {
     public boolean isUpdating;
 
     public void init() {
+        try {
+            configurationsService.loadAndValidateConfigurations();
+        } catch (NotValidException e) {
+            jfxUiService.displayWarnDialog(e.getMessage());
+            RedirectionHelper.redirectToDashboard();
+            return;
+        }
+
         logScannerBorderPane.getScene().getWindow().setOnCloseRequest(e -> unloadScene());
         logScannerBorderPane.parentProperty().addListener((observable, oldParent, newParent) -> {
             if (newParent == null) {
