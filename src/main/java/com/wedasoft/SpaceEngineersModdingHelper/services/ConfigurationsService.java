@@ -17,9 +17,7 @@ public class ConfigurationsService {
     }
 
     public ConfigurationsEntity loadAndValidateConfigurations() throws NotValidException {
-        ConfigurationsEntity configurations = loadConfigurations();
-        configurationsRepository.checkForProblems(configurations);
-        return configurations;
+        return configurationsRepository.loadAndValidateConfigurations();
     }
 
     public void saveConfigurations(ConfigurationsEntity configurationsEntity) {

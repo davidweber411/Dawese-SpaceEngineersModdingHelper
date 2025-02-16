@@ -57,4 +57,10 @@ public class ConfigurationsRepository {
         throw new NotValidException(String.join("\n\n", problems));
     }
 
+    public ConfigurationsEntity loadAndValidateConfigurations() throws NotValidException {
+        ConfigurationsEntity configurations = loadConfigurations();
+        checkForProblems(configurations);
+        return configurations;
+    }
+
 }
