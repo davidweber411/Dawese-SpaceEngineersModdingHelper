@@ -23,15 +23,7 @@ public class DeploymentService {
 
     public void deployMod(File modToDeploy) throws NotValidException, IOException {
         ConfigurationsEntity configurations = configurationsRepository.loadConfigurations();
-        if (configurations == null) {
-            throw new NotValidException("You must set the configurations first.");
-        }
-        if (!new File(configurations.getPathToModsWorkspace()).exists()) {
-            throw new NotValidException("Your set path to mods workspace doesn't exist: " + configurations.getPathToModsWorkspace());
-        }
-        if (!new File(configurations.getPathToAppdataModsDirectory()).exists()) {
-            throw new NotValidException("Your set path to appdata mods directory doesn't exist: " + configurations.getPathToAppdataModsDirectory());
-        }
+        configurationsRepository.checkForProblems(configurations);
 
         deleteCurrentOfflineModIfNeccessary(modToDeploy.toPath());
         copyRelevantFilesAndDirectories(modToDeploy.toPath(), new File(configurations.getPathToAppdataModsDirectory()).toPath());

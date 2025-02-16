@@ -41,18 +41,20 @@ public class ConfigurationsRepository {
 
         File modsWorkspaceDir = new File(configurations.getPathToModsWorkspace());
         if (!modsWorkspaceDir.exists() || !modsWorkspaceDir.isDirectory()) {
-            problems.add("Your set path to your mods workspace directory doesn't exist or isn't pointing to a directory!");
+            problems.add("Your set path to your mods workspace directory doesn't exist or isn't pointing to a directory: "
+                         + configurations.getPathToModsWorkspace());
         }
 
         File appDataSeDir = new File(configurations.getPathToAppdataSpaceEngineersDirectory());
         if (!appDataSeDir.exists() || !appDataSeDir.isDirectory()) {
-            problems.add("Your set path to your appdata Space Engineers directory doesn't exist or isn't pointing to a directory!");
+            problems.add("Your set path to your appdata Space Engineers directory doesn't exist or isn't pointing to a directory: "
+                         + configurations.getPathToAppdataSpaceEngineersDirectory());
         }
 
         if (problems.isEmpty()) {
             return;
         }
-        throw new NotValidException(String.join("\n", problems));
+        throw new NotValidException(String.join("\n\n", problems));
     }
 
 }
