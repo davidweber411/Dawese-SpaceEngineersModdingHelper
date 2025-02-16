@@ -26,7 +26,11 @@ public class CncmDataDirSubService {
         createCharactersSbc(creationInfo);
 
         if (creationInfo.isCreateAdditionalFilesForAnAnimalBot()) {
-            createAdditionalFilesForAnAnimalBot(creationInfo);
+            createStatsSbc(creationInfo);
+            createEntityComponentsSbc(creationInfo);
+            createBotsSbc(creationInfo);
+            createAIBehaviorSbc(creationInfo);
+            createContainerTypesSbc(creationInfo);
         }
     }
 
@@ -64,42 +68,52 @@ public class CncmDataDirSubService {
         }
     }
 
-    private void createAdditionalFilesForAnAnimalBot(CncmCreationInfo creationInfo) throws URISyntaxException, IOException {
+    private void createStatsSbc(CncmCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
-
-        // create Stats.sbc
         createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Stats.sbc")).toURI()),
                 creationInfo.getDataInternalKeyDir(),
                 replacements);
+    }
 
-        // create EntityComponents.sbc
+    private void createEntityComponentsSbc(CncmCreationInfo creationInfo) throws URISyntaxException, IOException {
+        final Map<String, String> replacements = Map.ofEntries(
+                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_EntityComponents.sbc")).toURI()),
                 creationInfo.getDataInternalKeyDir(),
                 replacements);
+    }
 
-        // create Bots.sbc
+    private void createBotsSbc(CncmCreationInfo creationInfo) throws URISyntaxException, IOException {
+        final Map<String, String> replacements = Map.ofEntries(
+                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Bots.sbc")).toURI()),
                 creationInfo.getDataInternalKeyDir(),
                 replacements);
+    }
 
-        // create AIBehavior.sbc
+    private void createAIBehaviorSbc(CncmCreationInfo creationInfo) throws URISyntaxException, IOException {
+        final Map<String, String> replacements = Map.ofEntries(
+                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_AIBehavior.sbc")).toURI()),
                 creationInfo.getDataInternalKeyDir(),
                 replacements);
+    }
 
-        // create ContainerTypes.sbc
+    private void createContainerTypesSbc(CncmCreationInfo creationInfo) throws URISyntaxException, IOException {
+        final Map<String, String> replacements = Map.ofEntries(
+                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_ContainerTypes.sbc")).toURI()),
                 creationInfo.getDataInternalKeyDir(),
                 replacements);
     }
 
-    public void createModifiedSbcFileInto(
+    private void createModifiedSbcFileInto(
             Path templateFile,
             Path targetDirectory,
             Map<String, String> originalValueToNewValueMap) throws IOException {
