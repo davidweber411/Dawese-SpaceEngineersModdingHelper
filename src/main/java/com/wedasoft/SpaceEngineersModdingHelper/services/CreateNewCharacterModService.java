@@ -110,20 +110,20 @@ public class CreateNewCharacterModService {
                 Map.entry(CHAR_MALE_TEMPLATE, internalNameForReplacements),
                 Map.entry(CHAR_FEMALE_TEMPLATE, internalNameForReplacements));
         if (gender == Gender.MALE) {
-            fileSystemRepository.createModifiedSbcFileInto(
+           createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc")).toURI()),
                     targetDir,
                     replacements);
-            fileSystemRepository.createModifiedSbcFileInto(
+           createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_Characters.sbc")).toURI()),
                     targetDir,
                     replacements);
         } else {
-            fileSystemRepository.createModifiedSbcFileInto(
+           createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_EntityContainers.sbc")).toURI()),
                     targetDir,
                     replacements);
-            fileSystemRepository.createModifiedSbcFileInto(
+           createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_Characters.sbc")).toURI()),
                     targetDir,
                     replacements);
@@ -138,31 +138,31 @@ public class CreateNewCharacterModService {
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, internalNameForReplacements));
 
         // create Stats.sbc
-        fileSystemRepository.createModifiedSbcFileInto(
+       createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Stats.sbc")).toURI()),
                 targetDir,
                 replacements);
 
         // create EntityComponents.sbc
-        fileSystemRepository.createModifiedSbcFileInto(
+       createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_EntityComponents.sbc")).toURI()),
                 targetDir,
                 replacements);
 
         // create Bots.sbc
-        fileSystemRepository.createModifiedSbcFileInto(
+       createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Bots.sbc")).toURI()),
                 targetDir,
                 replacements);
 
         // create AIBehavior.sbc
-        fileSystemRepository.createModifiedSbcFileInto(
+       createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_AIBehavior.sbc")).toURI()),
                 targetDir,
                 replacements);
 
         // create ContainerTypes.sbc
-        fileSystemRepository.createModifiedSbcFileInto(
+       createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_ContainerTypes.sbc")).toURI()),
                 targetDir,
                 replacements);
@@ -176,6 +176,23 @@ public class CreateNewCharacterModService {
     private void createInternalTexturesSubDir(Path modDir, String internalName) throws IOException {
         final Path textures = fileSystemRepository.createDirectoryIn("Textures", modDir);
         fileSystemRepository.createDirectoryIn(internalName, textures);
+    }
+
+    public void createModifiedSbcFileInto(
+            Path templateFile,
+            Path targetDirectory,
+            Map<String, String> originalValueToNewValueMap) throws IOException {
+        String modifiedContent = Files.readString(templateFile);
+        for (Map.Entry<String, String> oldToNewEntry : originalValueToNewValueMap.entrySet()) {
+            modifiedContent = modifiedContent.replaceAll(oldToNewEntry.getKey(), oldToNewEntry.getValue());
+        }
+
+        String modifiedFileName = templateFile.getFileName().toString();
+        for (Map.Entry<String, String> oldToNewEntry : originalValueToNewValueMap.entrySet()) {
+            modifiedFileName = modifiedFileName.replaceAll(oldToNewEntry.getKey(), oldToNewEntry.getValue());
+        }
+
+        Files.writeString(targetDirectory.resolve(modifiedFileName), modifiedContent);
     }
 
 }

@@ -127,21 +127,4 @@ public class FileSystemRepository {
         return image;
     }
 
-    public void createModifiedSbcFileInto(
-            Path templateFile,
-            Path targetDirectory,
-            Map<String, String> originalValueToNewValueMap) throws IOException {
-        String modifiedContent = Files.readString(templateFile);
-        for (Map.Entry<String, String> oldToNewEntry : originalValueToNewValueMap.entrySet()) {
-            modifiedContent = modifiedContent.replaceAll(oldToNewEntry.getKey(), oldToNewEntry.getValue());
-        }
-
-        String modifiedFileName = templateFile.getFileName().toString();
-        for (Map.Entry<String, String> oldToNewEntry : originalValueToNewValueMap.entrySet()) {
-            modifiedFileName = modifiedFileName.replaceAll(oldToNewEntry.getKey(), oldToNewEntry.getValue());
-        }
-
-        Files.writeString(targetDirectory.resolve(modifiedFileName), modifiedContent);
-    }
-
 }
