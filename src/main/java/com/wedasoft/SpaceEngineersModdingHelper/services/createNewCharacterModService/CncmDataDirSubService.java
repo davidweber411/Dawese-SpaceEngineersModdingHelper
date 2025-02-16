@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
@@ -40,12 +41,12 @@ public class CncmDataDirSubService {
                 Map.entry(CHAR_FEMALE_TEMPLATE, creationInfo.getInternalKeyName()));
         if (creationInfo.getGender() == Gender.MALE) {
             createModifiedSbcFileInto(
-                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc")).toURI()),
+                    getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc"),
                     creationInfo.getDataInternalKeyDir(),
                     replacements);
         } else {
             createModifiedSbcFileInto(
-                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_EntityContainers.sbc")).toURI()),
+                    getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_EntityContainers.sbc"),
                     creationInfo.getDataInternalKeyDir(),
                     replacements);
         }
@@ -57,12 +58,12 @@ public class CncmDataDirSubService {
                 Map.entry(CHAR_FEMALE_TEMPLATE, creationInfo.getInternalKeyName()));
         if (creationInfo.getGender() == Gender.MALE) {
             createModifiedSbcFileInto(
-                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_Characters.sbc")).toURI()),
+                    getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_Characters.sbc"),
                     creationInfo.getDataInternalKeyDir(),
                     replacements);
         } else {
             createModifiedSbcFileInto(
-                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_Characters.sbc")).toURI()),
+                    getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_Characters.sbc"),
                     creationInfo.getDataInternalKeyDir(),
                     replacements);
         }
@@ -72,7 +73,7 @@ public class CncmDataDirSubService {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(
-                Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Stats.sbc")).toURI()),
+                getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Stats.sbc"),
                 creationInfo.getDataInternalKeyDir(),
                 replacements);
     }
@@ -81,7 +82,7 @@ public class CncmDataDirSubService {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(
-                Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_EntityComponents.sbc")).toURI()),
+                getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_EntityComponents.sbc"),
                 creationInfo.getDataInternalKeyDir(),
                 replacements);
     }
@@ -90,7 +91,7 @@ public class CncmDataDirSubService {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(
-                Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Bots.sbc")).toURI()),
+                getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Bots.sbc"),
                 creationInfo.getDataInternalKeyDir(),
                 replacements);
     }
@@ -99,7 +100,7 @@ public class CncmDataDirSubService {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(
-                Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_AIBehavior.sbc")).toURI()),
+                getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_AIBehavior.sbc"),
                 creationInfo.getDataInternalKeyDir(),
                 replacements);
     }
@@ -108,15 +109,18 @@ public class CncmDataDirSubService {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(
-                Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_ContainerTypes.sbc")).toURI()),
+                getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_ContainerTypes.sbc"),
                 creationInfo.getDataInternalKeyDir(),
                 replacements);
     }
 
     private void createModifiedSbcFileInto(
-            Path templateFile,
-            Path targetDirectory,
-            Map<String, String> originalValueToNewValueMap) throws IOException {
+            URL templateFileUrl, Path targetDirectory,
+            Map<String, String> originalValueToNewValueMap)
+            throws IOException, URISyntaxException {
+
+        Path templateFile = Path.of(Objects.requireNonNull(templateFileUrl).toURI());
+
         String modifiedContent = Files.readString(templateFile);
         for (Map.Entry<String, String> oldToNewEntry : originalValueToNewValueMap.entrySet()) {
             modifiedContent = modifiedContent.replaceAll(oldToNewEntry.getKey(), oldToNewEntry.getValue());
