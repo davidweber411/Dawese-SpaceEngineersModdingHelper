@@ -2,7 +2,7 @@ package com.wedasoft.SpaceEngineersModdingHelper.repositories;
 
 import javafx.scene.control.TextField;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -16,10 +16,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
-import java.util.Map;
 import java.util.stream.Stream;
 
-@Service
+@Repository
 @RequiredArgsConstructor
 public class FileSystemRepository {
 
