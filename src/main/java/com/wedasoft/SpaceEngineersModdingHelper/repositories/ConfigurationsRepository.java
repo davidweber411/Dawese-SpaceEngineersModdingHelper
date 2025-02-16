@@ -5,6 +5,8 @@ import com.wedasoft.SpaceEngineersModdingHelper.data.configurations.Configuratio
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Objects;
+
 @Repository
 @RequiredArgsConstructor
 public class ConfigurationsRepository {
@@ -20,7 +22,7 @@ public class ConfigurationsRepository {
 
     public void saveConfigurations(ConfigurationsEntity configurationsEntity) {
         ConfigurationsEntity existingConfigurations = configurationsEntityRepository.findAll().stream().findFirst().orElse(null);
-        if (existingConfigurations != null && existingConfigurations.getId() != configurationsEntity.getId()) {
+        if (existingConfigurations != null && !Objects.equals(existingConfigurations.getId(), configurationsEntity.getId())) {
             throw new RuntimeException("There mustn't be more than one configurationsEntity!");
         }
         configurationsEntityRepository.save(configurationsEntity);
