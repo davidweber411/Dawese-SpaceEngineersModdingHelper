@@ -1,4 +1,4 @@
-package com.wedasoft.SpaceEngineersModdingHelper.services;
+package com.wedasoft.SpaceEngineersModdingHelper.services.createNewCharacterModService;
 
 import com.wedasoft.SpaceEngineersModdingHelper.enums.Gender;
 import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;

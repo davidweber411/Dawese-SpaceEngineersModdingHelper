@@ -4,7 +4,7 @@ import com.wedasoft.SpaceEngineersModdingHelper.enums.Gender;
 import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
 import com.wedasoft.SpaceEngineersModdingHelper.helper.RedirectionHelper;
 import com.wedasoft.SpaceEngineersModdingHelper.services.ConfigurationsService;
-import com.wedasoft.SpaceEngineersModdingHelper.services.CreateNewCharacterModService;
+import com.wedasoft.SpaceEngineersModdingHelper.services.createNewCharacterModService.CreateNewCharacterModService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
