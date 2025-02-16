@@ -1,6 +1,5 @@
 package com.wedasoft.SpaceEngineersModdingHelper.services;
 
-import com.wedasoft.SpaceEngineersModdingHelper.data.configurations.ConfigurationsEntity;
 import com.wedasoft.SpaceEngineersModdingHelper.enums.Gender;
 import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
 import com.wedasoft.SpaceEngineersModdingHelper.repositories.ConfigurationsRepository;
@@ -45,23 +44,22 @@ public class CreateNewCharacterModService {
             throw new NotValidException("Your entered gender is invalid.");
         }
 
-        final ConfigurationsEntity configurations = configurationsRepository.loadAndValidateConfigurations();
-        final Path modsWorkspacePath = Paths.get(configurations.getPathToModsWorkspace());
-
-        if (Files.exists(modsWorkspacePath.resolve(modNameTextField.getText()))) {
-            throw new NotValidException("A mod with this name does already exist in your modding workspace.");
+        if (modExistsAlreadyInModsWorkspace(modNameTextField.getText())) {
+            throw new NotValidException("A mod with this name already exists in your modding workspace.");
         }
 
-        final Path modDir = fileSystemRepository.createDirectoryIn(modNameTextField.getText(), modsWorkspacePath);
-        final String internalName = wishedSubtypeTextField.getText();
+        final Path modDir = fileSystemRepository.createDirectoryIn(
+                modNameTextField.getText(),
+                Paths.get(configurationsRepository.loadAndValidateConfigurations().getPathToModsWorkspace()));
+        final String internalKeyName = wishedSubtypeTextField.getText();
 
         createThumbnail(modNameTextField, modDir);
         if (devDataDirShallBeCreated) {
             createDevDataDir(modDir, gender);
         }
-        createInternalDataSubDir(modDir, internalName, gender, createAdditionalFilesForAnAnimalBot);
-        createInternalModelsSubDir(modDir, internalName);
-        createInternalTexturesSubDir(modDir, internalName);
+        createInternalDataSubDir(modDir, internalKeyName, gender, createAdditionalFilesForAnAnimalBot);
+        createInternalModelsSubDir(modDir, internalKeyName);
+        createInternalTexturesSubDir(modDir, internalKeyName);
     }
 
     private void createThumbnail(TextField modNameTextField, Path modDir) throws IOException {
@@ -185,6 +183,11 @@ public class CreateNewCharacterModService {
         }
 
         Files.writeString(targetDirectory.resolve(modifiedFileName), modifiedContent);
+    }
+
+    private boolean modExistsAlreadyInModsWorkspace(String modName) throws NotValidException {
+        final Path modsWorkspacePath = Paths.get(configurationsRepository.loadAndValidateConfigurations().getPathToModsWorkspace());
+        return Files.exists(modsWorkspacePath.resolve(modName));
     }
 
 }
