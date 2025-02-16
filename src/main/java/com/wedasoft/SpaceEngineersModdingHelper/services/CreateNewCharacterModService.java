@@ -45,16 +45,8 @@ public class CreateNewCharacterModService {
             throw new NotValidException("Your entered gender is invalid.");
         }
 
-        final ConfigurationsEntity configurations = configurationsRepository.loadConfigurations();
-        if (configurations == null) {
-            throw new NotValidException("You must set the configurations first.");
-        }
+        final ConfigurationsEntity configurations = configurationsRepository.loadAndValidateConfigurations();
         final Path modsWorkspacePath = Paths.get(configurations.getPathToModsWorkspace());
-        if (!Files.exists(modsWorkspacePath)) {
-            throw new NotValidException(String.format("""
-                    Your configured path to your modding workspace doesn't exist.
-                    Your configured path: '%s'""", modsWorkspacePath));
-        }
 
         if (Files.exists(modsWorkspacePath.resolve(modNameTextField.getText()))) {
             throw new NotValidException("A mod with this name does already exist in your modding workspace.");
@@ -110,20 +102,20 @@ public class CreateNewCharacterModService {
                 Map.entry(CHAR_MALE_TEMPLATE, internalNameForReplacements),
                 Map.entry(CHAR_FEMALE_TEMPLATE, internalNameForReplacements));
         if (gender == Gender.MALE) {
-           createModifiedSbcFileInto(
+            createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc")).toURI()),
                     targetDir,
                     replacements);
-           createModifiedSbcFileInto(
+            createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_Characters.sbc")).toURI()),
                     targetDir,
                     replacements);
         } else {
-           createModifiedSbcFileInto(
+            createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_EntityContainers.sbc")).toURI()),
                     targetDir,
                     replacements);
-           createModifiedSbcFileInto(
+            createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_Characters.sbc")).toURI()),
                     targetDir,
                     replacements);
@@ -138,31 +130,31 @@ public class CreateNewCharacterModService {
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, internalNameForReplacements));
 
         // create Stats.sbc
-       createModifiedSbcFileInto(
+        createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Stats.sbc")).toURI()),
                 targetDir,
                 replacements);
 
         // create EntityComponents.sbc
-       createModifiedSbcFileInto(
+        createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_EntityComponents.sbc")).toURI()),
                 targetDir,
                 replacements);
 
         // create Bots.sbc
-       createModifiedSbcFileInto(
+        createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Bots.sbc")).toURI()),
                 targetDir,
                 replacements);
 
         // create AIBehavior.sbc
-       createModifiedSbcFileInto(
+        createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_AIBehavior.sbc")).toURI()),
                 targetDir,
                 replacements);
 
         // create ContainerTypes.sbc
-       createModifiedSbcFileInto(
+        createModifiedSbcFileInto(
                 Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_ContainerTypes.sbc")).toURI()),
                 targetDir,
                 replacements);
