@@ -22,13 +22,15 @@ public class CncmDataDirSubService {
     public void createInternalDataSubDir(CncmCreationInfo creationInfo) throws IOException, URISyntaxException {
         Files.createDirectories(creationInfo.getDataInternalKeyDir());
 
-        createCharactersSbcAndEntityContainersSbc(creationInfo);
+        createEntityContainersSbc(creationInfo);
+        createCharactersSbc(creationInfo);
+
         if (creationInfo.isCreateAdditionalFilesForAnAnimalBot()) {
             createAdditionalFilesForAnAnimalBot(creationInfo);
         }
     }
 
-    private void createCharactersSbcAndEntityContainersSbc(CncmCreationInfo creationInfo) throws IOException, URISyntaxException {
+    private void createEntityContainersSbc(CncmCreationInfo creationInfo) throws IOException, URISyntaxException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHAR_MALE_TEMPLATE, creationInfo.getInternalKeyName()),
                 Map.entry(CHAR_FEMALE_TEMPLATE, creationInfo.getInternalKeyName()));
@@ -37,17 +39,26 @@ public class CncmDataDirSubService {
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc")).toURI()),
                     creationInfo.getDataInternalKeyDir(),
                     replacements);
-            createModifiedSbcFileInto(
-                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_Characters.sbc")).toURI()),
-                    creationInfo.getDataInternalKeyDir(),
-                    replacements);
         } else {
             createModifiedSbcFileInto(
                     Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_EntityContainers.sbc")).toURI()),
                     creationInfo.getDataInternalKeyDir(),
                     replacements);
+        }
+    }
+
+    private void createCharactersSbc(CncmCreationInfo creationInfo) throws IOException, URISyntaxException {
+        final Map<String, String> replacements = Map.ofEntries(
+                Map.entry(CHAR_MALE_TEMPLATE, creationInfo.getInternalKeyName()),
+                Map.entry(CHAR_FEMALE_TEMPLATE, creationInfo.getInternalKeyName()));
+        if (creationInfo.getGender() == Gender.MALE) {
             createModifiedSbcFileInto(
-                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_Characters.sbc")).toURI()),
+                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc")).toURI()),
+                    creationInfo.getDataInternalKeyDir(),
+                    replacements);
+        } else {
+            createModifiedSbcFileInto(
+                    Path.of(Objects.requireNonNull(getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_EntityContainers.sbc")).toURI()),
                     creationInfo.getDataInternalKeyDir(),
                     replacements);
         }
