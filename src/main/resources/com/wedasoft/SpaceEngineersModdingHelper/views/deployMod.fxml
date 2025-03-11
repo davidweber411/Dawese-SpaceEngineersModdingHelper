@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:id="deployModBorderPane"
             fx:controller="com.wedasoft.SpaceEngineersModdingHelper.views.DeployModController">
     <bottom>
         <HBox alignment="CENTER_RIGHT" spacing="8.0" BorderPane.alignment="CENTER">

@@ -10,7 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.cell.TextFieldListCell;
-import javafx.stage.Stage;
+import javafx.scene.layout.BorderPane;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -31,6 +31,8 @@ public class DeployModController {
     private final JfxUiService jfxUiService;
 
     @FXML
+    private BorderPane deployModBorderPane;
+    @FXML
     private ListView<File> modsListView;
 
     public void init() {
@@ -43,6 +45,13 @@ public class DeployModController {
             return;
         }
 
+        deployModBorderPane.getScene().getWindow().setOnCloseRequest(e -> unloadScene());
+        deployModBorderPane.parentProperty().addListener((observable, oldParent, newParent) -> {
+            if (newParent == null) {
+                unloadScene();
+            }
+        });
+
         modsListView.setCellFactory(listView -> new TextFieldListCell<>() {
             @Override
             public void updateItem(File file, boolean empty) {
@@ -54,10 +63,13 @@ public class DeployModController {
                 }
             }
         });
-
         modsListView.setItems(FXCollections.observableArrayList(
                 Arrays.stream(Objects.requireNonNull(new File(configurations.getPathToModsWorkspace()).listFiles()))
                         .filter(File::isDirectory).toList()));
+    }
+
+    private void unloadScene() {
+        System.out.println("unloadScene from deploy mod");
     }
 
     public void onDeploySelectedModButtonClick() {
