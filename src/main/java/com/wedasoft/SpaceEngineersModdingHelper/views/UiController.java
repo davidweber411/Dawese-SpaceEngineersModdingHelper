@@ -4,6 +4,7 @@ import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Dimension2D;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -80,11 +81,15 @@ public class UiController implements Initializable {
     }
 
     public void onDeployModButtonClick() throws IOException {
-        Parent parent = jfxUiService.loadAndGetNewSceneParent(getClass().getResource(
-                        "/com/wedasoft/SpaceEngineersModdingHelper/views/deployMod.fxml"),
+        Stage dialog = jfxUiService.createFxmlDialog(
+                "Deploy mod",
+                false,
+                true,
+                getClass().getResource("/com/wedasoft/SpaceEngineersModdingHelper/views/deployMod.fxml"),
+                new Dimension2D(600, 400),
                 controller -> ((DeployModController) controller).init());
-        centerStackPane.getChildren().clear();
-        centerStackPane.getChildren().add(parent);
+        dialog.initOwner(centerStackPane.getScene().getWindow());
+        dialog.show();
     }
 
     public void onCreateNewCharacterModButtonClick() throws IOException {
