@@ -60,10 +60,6 @@ public class DeployModController {
                         .filter(File::isDirectory).toList()));
     }
 
-    public void onCancelButtonClick() {
-        ((Stage) modsListView.getScene().getWindow()).close();
-    }
-
     public void onDeploySelectedModButtonClick() {
         File selectedMod = modsListView.getSelectionModel().getSelectedItem();
         if (selectedMod == null) {
