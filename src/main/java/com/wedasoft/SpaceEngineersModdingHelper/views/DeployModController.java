@@ -122,7 +122,7 @@ public class DeployModController {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }, 0, 10, SECONDS);
+            }, 0, 7, SECONDS);
         } else {
             autoDeployExecutorService.shutdown();
         }
