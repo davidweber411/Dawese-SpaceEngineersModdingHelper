@@ -4,22 +4,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:id="deployModBorderPane"
-            fx:controller="com.wedasoft.SpaceEngineersModdingHelper.views.DeployModController">
+<BorderPane fx:id="deployModBorderPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wedasoft.SpaceEngineersModdingHelper.views.DeployModController">
     <bottom>
         <HBox alignment="CENTER_RIGHT" spacing="8.0" BorderPane.alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" onAction="#onDeploySelectedModButtonClick" text="Deploy selected mod"/>
+            <ToggleButton fx:id="autoDeploySelectedModToggleButton" mnemonicParsing="false" onAction="#onAutoDeploySelectedModToggleButtonClick" text="Auto deploy selected mod" />
+                <Button mnemonicParsing="false" onAction="#onDeploySelectedModButtonClick" text="Deploy selected mod" />
             </children>
             <padding>
-                <Insets top="8.0"/>
+                <Insets top="8.0" />
             </padding>
         </HBox>
     </bottom>
     <center>
-        <ListView fx:id="modsListView" BorderPane.alignment="CENTER"/>
+        <ListView fx:id="modsListView" BorderPane.alignment="CENTER" />
     </center>
     <padding>
-        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
     </padding>
 </BorderPane>

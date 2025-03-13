@@ -7,8 +7,10 @@ import com.wedasoft.SpaceEngineersModdingHelper.services.ConfigurationsService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.DeploymentService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.BorderPane;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -34,6 +40,10 @@ public class DeployModController {
     private BorderPane deployModBorderPane;
     @FXML
     private ListView<File> modsListView;
+    @FXML
+    private ToggleButton autoDeploySelectedModToggleButton;
+
+    private ScheduledExecutorService autoDeployExecutorService;
 
     public void init() {
         ConfigurationsEntity configurations;
@@ -45,10 +55,10 @@ public class DeployModController {
             return;
         }
 
-        deployModBorderPane.getScene().getWindow().setOnCloseRequest(e -> unloadScene());
+        deployModBorderPane.getScene().getWindow().setOnCloseRequest(e -> resetAutoDeployFeature());
         deployModBorderPane.parentProperty().addListener((observable, oldParent, newParent) -> {
             if (newParent == null) {
-                unloadScene();
+                resetAutoDeployFeature();
             }
         });
 
@@ -66,10 +76,50 @@ public class DeployModController {
         modsListView.setItems(FXCollections.observableArrayList(
                 Arrays.stream(Objects.requireNonNull(new File(configurations.getPathToModsWorkspace()).listFiles()))
                         .filter(File::isDirectory).toList()));
+        modsListView.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
+            System.out.println("ListView selection changed.");
+            resetAutoDeployFeature();
+        });
     }
 
-    private void unloadScene() {
-        System.out.println("unloadScene from deploy mod");
+    private void resetAutoDeployFeature() {
+        autoDeploySelectedModToggleButton.setSelected(false);
+        if (autoDeployExecutorService != null) {
+            System.out.println("Shutdown executor service 'autoDeployExecutorService' now...");
+            autoDeployExecutorService.shutdown();
+        }
+    }
+
+    public void onAutoDeploySelectedModToggleButtonClick(ActionEvent event) {
+        File selectedMod = modsListView.getSelectionModel().getSelectedItem();
+        if (selectedMod == null) {
+            autoDeploySelectedModToggleButton.setSelected(false);
+            jfxUiService.displayWarnDialog("You must select a mod first.");
+            return;
+        }
+
+        ToggleButton button = (ToggleButton) event.getSource();
+        if (button.isSelected()) {
+            if (!((ToggleButton) event.getSource()).isSelected()) {
+                System.out.println("Shutdown executor service 'autoDeployExecutorService' now...");
+                autoDeployExecutorService.shutdown();
+            }
+
+            autoDeployExecutorService = Executors.newScheduledThreadPool(1);
+            autoDeployExecutorService.scheduleAtFixedRate(() -> {
+                try {
+                    System.out.println("Deploying automatically...");
+                    // if size anders oder so
+                    deploymentService.deployMod(selectedMod);
+                } catch (NotValidException e) {
+                    jfxUiService.displayWarnDialog(e.getMessage());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }, 0, 10, SECONDS);
+        } else {
+            autoDeployExecutorService.shutdown();
+        }
     }
 
     public void onDeploySelectedModButtonClick() {
