@@ -11,15 +11,26 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
 @Repository
 @RequiredArgsConstructor
 public class FileSystemRepository {
+
+    public long getSizeInBytes(Path fileOrDirectory) throws IOException {
+        final long[] size = {0};
+        Files.walkFileTree(fileOrDirectory, new SimpleFileVisitor<>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                size[0] += attrs.size();
+                return FileVisitResult.CONTINUE;
+            }
+        });
+        return size[0];
+    }
 
     public Path createDirectoryIn(String directoryName, Path parentDir) throws IOException {
         Files.createDirectories(parentDir);

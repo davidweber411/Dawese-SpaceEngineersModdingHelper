@@ -5,6 +5,7 @@ import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
 import com.wedasoft.SpaceEngineersModdingHelper.helper.RedirectionHelper;
 import com.wedasoft.SpaceEngineersModdingHelper.services.ConfigurationsService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.DeploymentService;
+import com.wedasoft.SpaceEngineersModdingHelper.services.FileSystemService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -34,6 +35,7 @@ public class DeployModController {
 
     private final ConfigurationsService configurationsService;
     private final DeploymentService deploymentService;
+    private final FileSystemService fileSystemService;
     private final JfxUiService jfxUiService;
 
     @FXML
@@ -44,6 +46,7 @@ public class DeployModController {
     private ToggleButton autoDeploySelectedModToggleButton;
 
     private ScheduledExecutorService autoDeployExecutorService;
+    private long lastModSize = 0;
 
     public void init() {
         ConfigurationsEntity configurations;
@@ -108,9 +111,12 @@ public class DeployModController {
             autoDeployExecutorService = Executors.newScheduledThreadPool(1);
             autoDeployExecutorService.scheduleAtFixedRate(() -> {
                 try {
-                    System.out.println("Deploying automatically...");
-                    // if size anders oder so
-                    deploymentService.deployMod(selectedMod);
+                    System.out.println("Checking for edited files...");
+                    if (lastModSize != fileSystemService.getSizeInBytes(selectedMod.toPath())) {
+                        System.out.println("Deploying automatically...");
+                        deploymentService.deployMod(selectedMod);
+                        lastModSize = fileSystemService.getSizeInBytes(selectedMod.toPath());
+                    }
                 } catch (NotValidException e) {
                     jfxUiService.displayWarnDialog(e.getMessage());
                 } catch (IOException e) {
