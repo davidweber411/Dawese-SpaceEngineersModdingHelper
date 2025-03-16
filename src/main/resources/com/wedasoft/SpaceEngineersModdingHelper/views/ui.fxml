@@ -29,6 +29,7 @@
                         <Button fx:id="logScannerButton" layoutX="18.0" layoutY="86.0" mnemonicParsing="false" onAction="#onLogScannerButtonClick" prefHeight="60.0" prefWidth="100.0" text="Log scanner (?)" textAlignment="CENTER" wrapText="true" />
                         <Button fx:id="deployModButton" mnemonicParsing="false" onAction="#onDeployModButtonClick" prefHeight="60.0" prefWidth="100.0" text="Deploy mod (?)" textAlignment="CENTER" wrapText="true" />
                         <Button fx:id="createNewCharacterModButton" layoutX="18.0" layoutY="86.0" mnemonicParsing="false" onAction="#onCreateNewCharacterModButtonClick" prefHeight="60.0" prefWidth="100.0" text="Create new character mod (?)" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="createNewEmptyModButton" layoutX="18.0" layoutY="222.0" mnemonicParsing="false" onAction="#onCreateNewEmptyModButtonClick" prefHeight="60.0" prefWidth="100.0" text="Create new empty mod (?)" textAlignment="CENTER" wrapText="true" />
                      </children>
                      <padding>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />

@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 @Service
@@ -103,6 +105,14 @@ public class JfxUiService {
 
     public Stage getStageBy(Node node) {
         return SceneUtil.getStageByChildNode(node);
+    }
+
+    public Optional<String> displayInputDialog(String title, String contentText) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle(title);
+        dialog.setHeaderText(null);
+        dialog.setContentText(contentText);
+        return dialog.showAndWait();
     }
 
 }

@@ -1,5 +1,7 @@
 package com.wedasoft.SpaceEngineersModdingHelper.views;
 
+import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
+import com.wedasoft.SpaceEngineersModdingHelper.services.CreateNewEmptyModService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Component
@@ -24,6 +27,7 @@ import java.util.ResourceBundle;
 public class UiController implements Initializable {
 
     private final JfxUiService jfxUiService;
+    private final CreateNewEmptyModService createNewEmptyModService;
 
     @FXML
     private StackPane centerStackPane;
@@ -35,13 +39,16 @@ public class UiController implements Initializable {
     private Button deployModButton;
     @FXML
     private Button createNewCharacterModButton;
+    @FXML
+    private Button createNewEmptyModButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         jfxUiService.createTooltipFor(dashboardButton, "The dashboard contains an overview over your configurations.");
         jfxUiService.createTooltipFor(logScannerButton, "The log scanner gives you access to the SE error logs on a simple way.");
         jfxUiService.createTooltipFor(deployModButton, "This functionality is used to copy the mod with just the relevant files and directories from your workspace into the 'Mods' dir of your SE installation.");
-        jfxUiService.createTooltipFor(createNewCharacterModButton, "This functionality is used to create a template mod when creating a new character.");
+        jfxUiService.createTooltipFor(createNewCharacterModButton, "Creates a template mod for creating a new character.");
+        jfxUiService.createTooltipFor(createNewEmptyModButton, "Create a new empty template mod.");
         Platform.runLater(() -> dashboardButton.fire()); // set start page
     }
 
@@ -98,6 +105,25 @@ public class UiController implements Initializable {
                 controller -> ((CreateNewCharacterModController) controller).init());
         centerStackPane.getChildren().clear();
         centerStackPane.getChildren().add(parent);
+    }
+
+    public void onCreateNewEmptyModButtonClick() {
+        Optional<String> modname = jfxUiService.displayInputDialog("Create new empty mod", "Please enter the modname:");
+        if (modname.isEmpty()) {
+            return;
+        }
+        if (modname.get().isBlank()) {
+            jfxUiService.displayWarnDialog("You must enter a mod name.");
+            return;
+        }
+        try {
+            createNewEmptyModService.createNewEmptyMod(modname.get());
+            jfxUiService.displayInformationDialog("Mod '" + modname.get() + "' created!");
+        } catch (NotValidException e) {
+            jfxUiService.displayWarnDialog(e.getMessage());
+        } catch (IOException e) {
+            jfxUiService.displayErrorDialog(e);
+        }
     }
 
 }
