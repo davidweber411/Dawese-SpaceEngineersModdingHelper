@@ -27,10 +27,20 @@ public class CreateNewEmptyModService {
         if (modExistsAlreadyInModsWorkspace(modname)) {
             throw new NotValidException("A mod with this name already exists in your modding workspace.");
         }
+        final ConfigurationsEntity configurations = configurationsRepository.loadAndValidateConfigurations();
+        Path modRootDir = fileSystemRepository.createDirectoryIn(modname, Paths.get(configurations.getPathToModsWorkspace()));
 
-        final Path modRootDir = createDirectoryStructure(modname);
+        createDirectoryStructure(modRootDir, modname);
         createDotnetProjectForSpaceEngineers(modRootDir, modname);
+        moveClassOneIntoScriptsDirectory(modRootDir, modname);
         createGitProject(modRootDir);
+    }
+
+    private void moveClassOneIntoScriptsDirectory(Path modRootDir, String modname) throws IOException {
+        final String filename = "Class1.cs";
+        Files.move(
+                modRootDir.resolve(filename),
+                modRootDir.resolve("Data").resolve("Scripts").resolve(modname).resolve(filename));
     }
 
     private void createGitProject(Path modRootDir) throws NotValidException {
@@ -63,10 +73,7 @@ public class CreateNewEmptyModService {
         }
     }
 
-    private Path createDirectoryStructure(String modname) throws IOException, NotValidException {
-        final ConfigurationsEntity configurations = configurationsRepository.loadAndValidateConfigurations();
-
-        Path modRootDir = fileSystemRepository.createDirectoryIn(modname, Paths.get(configurations.getPathToModsWorkspace()));
+    private void createDirectoryStructure(Path modRootDir, String modname) throws IOException {
         fileSystemRepository.createJpgWithTextContentInto(modname, modRootDir);
         fileSystemRepository.createDirectoryIn("_devData", modRootDir);
         fileSystemRepository.createDirectoryIn("Models", modRootDir);
@@ -74,7 +81,6 @@ public class CreateNewEmptyModService {
         Path dataDir = fileSystemRepository.createDirectoryIn("Data", modRootDir);
         Path scriptsDir = fileSystemRepository.createDirectoryIn("Scripts", dataDir);
         fileSystemRepository.createDirectoryIn(modname, scriptsDir);
-        return modRootDir;
     }
 
     private boolean modExistsAlreadyInModsWorkspace(String modName) throws NotValidException {
