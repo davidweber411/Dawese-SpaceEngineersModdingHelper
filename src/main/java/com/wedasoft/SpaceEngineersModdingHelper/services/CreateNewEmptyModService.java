@@ -31,9 +31,15 @@ public class CreateNewEmptyModService {
         Path modRootDir = fileSystemRepository.createDirectoryIn(modname, Paths.get(configurations.getPathToModsWorkspace()));
 
         createDirectoryStructure(modRootDir, modname);
+        addAdditionFilesForIde(modRootDir);
         createDotnetProjectForSpaceEngineers(modRootDir, modname);
         moveClassOneIntoScriptsDirectory(modRootDir, modname);
         createGitProject(modRootDir);
+    }
+
+    private void addAdditionFilesForIde(Path modRootDir) throws IOException {
+        fileSystemRepository.createFileFromResource(getClass().getResourceAsStream("/newProjectFiles/.editorconfig"), modRootDir.resolve(".editorconfig"));
+        fileSystemRepository.createFileFromResource(getClass().getResourceAsStream("/newProjectFiles/gitignore"), modRootDir.resolve(".gitignore"));
     }
 
     private void moveClassOneIntoScriptsDirectory(Path modRootDir, String modname) throws IOException {
@@ -46,13 +52,13 @@ public class CreateNewEmptyModService {
     private void createGitProject(Path modRootDir) throws NotValidException {
         try {
             if (!CommandLineHelper.runCommandAndWait(modRootDir, "git", "init")
-                && !CommandLineHelper.runCommandAndWait(modRootDir, "git", "add", ".")
-                && !CommandLineHelper.runCommandAndWait(modRootDir, "git", "commit", "-m", "Initial commit")) {
+                || !CommandLineHelper.runCommandAndWait(modRootDir, "git", "add", ".")
+                || !CommandLineHelper.runCommandAndWait(modRootDir, "git", "commit", "-m", "Initial commit")) {
                 throw new Exception("Git project couldn't be created.");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new NotValidException(e.getMessage(), e);
+//            JfxDialogUtil.createErrorDialog("Error creating the git project!", e);
         }
     }
 
@@ -65,11 +71,11 @@ public class CreateNewEmptyModService {
             }
             Files.deleteIfExists(modRootDir.resolve(modname + ".csproj"));
             Path csproj = fileSystemRepository.createFileFromResource(getClass().getResourceAsStream("/newProjectFiles/modname.csproj"), modRootDir.resolve(modname + ".csproj"));
-            fileSystemRepository.replaceInFileContent(csproj, "[[MOD_NAME]]", modname);
+            fileSystemRepository.replaceInFileContent(csproj, "[[MOD_NAME]]", modname.replace(" ", "_"));
             fileSystemRepository.replaceInFileContent(csproj, "[[SPACE_ENGINEERS_BIN_64]]", "C:\\Program Files (x86)\\Steam\\steamapps\\common\\SpaceEngineers\\Bin64");
         } catch (Exception e) {
             e.printStackTrace();
-            throw new NotValidException(e.getMessage(), e);
+//            JfxDialogUtil.createErrorDialog("Error creating the dotnet project!", e);
         }
     }
 

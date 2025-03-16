@@ -122,7 +122,8 @@ public class UiController implements Initializable {
         } catch (NotValidException e) {
             jfxUiService.displayWarnDialog(e.getMessage());
         } catch (IOException e) {
-            jfxUiService.displayErrorDialog(e);
+            e.printStackTrace();
+//            jfxUiService.displayErrorDialog(e);
         }
     }
 
