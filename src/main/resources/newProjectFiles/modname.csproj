@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
-    <RootNamespace>Dawese_Roleplay_Hacking</RootNamespace>
+    <RootNamespace>[[MOD_NAME]]</RootNamespace>
     <!-- <ImplicitUsings>enable</ImplicitUsings> -->
     <!-- <Nullable>enable</Nullable> -->
-    <Version>0.1.1</Version>
+    <Version>0.0.1</Version>
     <OutputPath>dist</OutputPath>
     <Platforms>x64</Platforms>
     <LangVersion>6</LangVersion>

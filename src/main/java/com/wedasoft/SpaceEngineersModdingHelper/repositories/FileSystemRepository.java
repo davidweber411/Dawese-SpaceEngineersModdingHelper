@@ -6,10 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -80,11 +77,31 @@ public class FileSystemRepository {
         }
     }
 
-    public void copyResourceFileInto(URL resourceFileUrl, Path targetDir) throws IOException {
+    public Path createFileFromResource(InputStream resourceFile, Path targetPathInclFile) throws IOException {
+        if (resourceFile == null) {
+            throw new FileNotFoundException("File not found in resource directory!");
+        }
+
+        Files.createDirectories(targetPathInclFile.getParent());
+
+        try (OutputStream outputStream = new FileOutputStream(targetPathInclFile.toFile())) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = resourceFile.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        } finally {
+            resourceFile.close();
+        }
+        return targetPathInclFile;
+    }
+
+    public Path copyResourceFileInto(URL resourceFileUrl, Path targetDir) throws IOException {
         File file = getTempFileFromURL(resourceFileUrl);
         Path copiedFile = Files.copy(file.toPath(), targetDir.resolve(file.getName()));
         String fileName = new File(resourceFileUrl.getPath()).getName();
         copiedFile.toFile().renameTo(new File(copiedFile.toFile().getParent(), fileName));
+        return copiedFile;
     }
 
     private File getTempFileFromURL(URL resourceUrl) throws IOException {
