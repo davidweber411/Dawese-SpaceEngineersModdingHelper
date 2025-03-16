@@ -13,7 +13,7 @@ plugins {
 }
 
 group = 'com.wedasoft'
-version = '1.7.0-SNAPSHOT'
+version = '1.6.1'
 
 repositories {
     mavenCentral()
