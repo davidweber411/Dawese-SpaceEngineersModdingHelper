@@ -6,4 +6,8 @@ public class NotValidException extends Exception {
         super(message);
     }
 
+    public NotValidException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }

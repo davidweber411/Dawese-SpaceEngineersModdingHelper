@@ -2,6 +2,7 @@ package com.wedasoft.SpaceEngineersModdingHelper.services;
 
 import com.wedasoft.SpaceEngineersModdingHelper.data.configurations.ConfigurationsEntity;
 import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
+import com.wedasoft.SpaceEngineersModdingHelper.helper.CommandLineHelper;
 import com.wedasoft.SpaceEngineersModdingHelper.repositories.ConfigurationsRepository;
 import com.wedasoft.SpaceEngineersModdingHelper.repositories.FileSystemRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,24 @@ public class CreateNewEmptyModService {
         if (modExistsAlreadyInModsWorkspace(modname)) {
             throw new NotValidException("A mod with this name already exists in your modding workspace.");
         }
+
+        final Path modRootDir = createDirectoryStructure(modname);
+        createDotnetProject(modRootDir, modname);
+    }
+
+    private void createDotnetProject(Path modRootDir, String modname) throws NotValidException {
+        try {
+            if (!CommandLineHelper.runCommandAndWait(
+                    modRootDir.getParent(),
+                    "dotnet", "new", "classlib", "-n", modname)) {
+                throw new Exception("Dotnet project couldn't be created.");
+            }
+        } catch (Exception e) {
+            throw new NotValidException(e.getMessage(), e);
+        }
+    }
+
+    private Path createDirectoryStructure(String modname) throws IOException, NotValidException {
         final ConfigurationsEntity configurations = configurationsRepository.loadAndValidateConfigurations();
 
         Path modRootDir = fileSystemRepository.createDirectoryIn(modname, Paths.get(configurations.getPathToModsWorkspace()));
@@ -36,6 +55,7 @@ public class CreateNewEmptyModService {
         Path dataDir = fileSystemRepository.createDirectoryIn("Data", modRootDir);
         Path scriptsDir = fileSystemRepository.createDirectoryIn("Scripts", dataDir);
         fileSystemRepository.createDirectoryIn(modname, scriptsDir);
+        return modRootDir;
     }
 
     private boolean modExistsAlreadyInModsWorkspace(String modName) throws NotValidException {
