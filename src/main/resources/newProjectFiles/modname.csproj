@@ -1,0 +1,82 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <RootNamespace>Dawese_Roleplay_Hacking</RootNamespace>
+    <!-- <ImplicitUsings>enable</ImplicitUsings> -->
+    <!-- <Nullable>enable</Nullable> -->
+    <Version>0.1.1</Version>
+    <OutputPath>dist</OutputPath>
+    <Platforms>x64</Platforms>
+    <LangVersion>6</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
+    <SpaceEngineersBin64>C:\Program Files (x86)\Steam\steamapps\common\SpaceEngineers\Bin64</SpaceEngineersBin64>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="netstandard">
+      <HintPath>$(SpaceEngineersBin64)\netstandard.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ProtoBuf.Net.Core">
+      <HintPath>$(SpaceEngineersBin64)\ProtoBuf.Net.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Sandbox.Common">
+      <HintPath>$(SpaceEngineersBin64)\Sandbox.Common.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Sandbox.Game">
+      <HintPath>$(SpaceEngineersBin64)\Sandbox.Game.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Sandbox.Graphics">
+      <HintPath>$(SpaceEngineersBin64)\Sandbox.Graphics.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SpaceEngineers.Game">
+      <HintPath>$(SpaceEngineersBin64)\SpaceEngineers.Game.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SpaceEngineers.ObjectBuilders">
+      <HintPath>$(SpaceEngineersBin64)\SpaceEngineers.ObjectBuilders.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="VRage">
+      <HintPath>$(SpaceEngineersBin64)\VRage.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="VRage.Game">
+      <HintPath>$(SpaceEngineersBin64)\VRage.Game.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="VRage.Input">
+      <HintPath>$(SpaceEngineersBin64)\VRage.Input.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="VRage.Library">
+      <HintPath>$(SpaceEngineersBin64)\VRage.Library.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="VRage.Math">
+      <HintPath>$(SpaceEngineersBin64)\VRage.Math.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="VRage.Render">
+      <HintPath>$(SpaceEngineersBin64)\VRage.Render.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>$(SpaceEngineersBin64)\System.Collections.Immutable.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ModInfo.sbc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

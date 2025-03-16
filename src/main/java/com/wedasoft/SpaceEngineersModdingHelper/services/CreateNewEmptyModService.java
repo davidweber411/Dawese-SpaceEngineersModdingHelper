@@ -29,16 +29,17 @@ public class CreateNewEmptyModService {
         }
 
         final Path modRootDir = createDirectoryStructure(modname);
-        createDotnetProject(modRootDir, modname);
+        createDotnetProjectForSpaceEngineers(modRootDir, modname);
     }
 
-    private void createDotnetProject(Path modRootDir, String modname) throws NotValidException {
+    private void createDotnetProjectForSpaceEngineers(Path modRootDir, String modname) throws NotValidException {
         try {
             if (!CommandLineHelper.runCommandAndWait(
                     modRootDir.getParent(),
                     "dotnet", "new", "classlib", "-n", modname)) {
                 throw new Exception("Dotnet project couldn't be created.");
             }
+
         } catch (Exception e) {
             throw new NotValidException(e.getMessage(), e);
         }
