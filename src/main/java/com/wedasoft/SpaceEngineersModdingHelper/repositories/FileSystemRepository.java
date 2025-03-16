@@ -96,6 +96,11 @@ public class FileSystemRepository {
         return targetPathInclFile;
     }
 
+    public Path replaceInFileContent(Path file, String patternToFind, String replacement) throws IOException {
+        Files.writeString(file, Files.readString(file).replace(patternToFind, replacement));
+        return file;
+    }
+
     public Path copyResourceFileInto(URL resourceFileUrl, Path targetDir) throws IOException {
         File file = getTempFileFromURL(resourceFileUrl);
         Path copiedFile = Files.copy(file.toPath(), targetDir.resolve(file.getName()));

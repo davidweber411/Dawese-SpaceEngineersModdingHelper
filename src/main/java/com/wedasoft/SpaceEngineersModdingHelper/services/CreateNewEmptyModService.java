@@ -40,9 +40,10 @@ public class CreateNewEmptyModService {
                 throw new Exception("Dotnet project couldn't be created.");
             }
             Files.deleteIfExists(modRootDir.resolve(modname + ".csproj"));
-            fileSystemRepository.createFileFromResource(
+            Path csproj = fileSystemRepository.createFileFromResource(
                     getClass().getResourceAsStream("/newProjectFiles/modname.csproj"),
                     modRootDir.resolve(modname + ".csproj"));
+            fileSystemRepository.replaceInFileContent(csproj, "[[MOD_NAME]]", modname);
         } catch (Exception e) {
             e.printStackTrace();
             throw new NotValidException(e.getMessage(), e);
