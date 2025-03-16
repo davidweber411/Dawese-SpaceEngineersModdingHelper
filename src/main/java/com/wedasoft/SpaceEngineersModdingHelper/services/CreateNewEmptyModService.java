@@ -30,6 +30,20 @@ public class CreateNewEmptyModService {
 
         final Path modRootDir = createDirectoryStructure(modname);
         createDotnetProjectForSpaceEngineers(modRootDir, modname);
+        createGitProject(modRootDir);
+    }
+
+    private void createGitProject(Path modRootDir) throws NotValidException {
+        try {
+            if (!CommandLineHelper.runCommandAndWait(modRootDir, "git", "init")
+                && !CommandLineHelper.runCommandAndWait(modRootDir, "git", "add", ".")
+                && !CommandLineHelper.runCommandAndWait(modRootDir, "git", "commit", "-m", "Initial commit")) {
+                throw new Exception("Git project couldn't be created.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new NotValidException(e.getMessage(), e);
+        }
     }
 
     private void createDotnetProjectForSpaceEngineers(Path modRootDir, String modname) throws NotValidException {
