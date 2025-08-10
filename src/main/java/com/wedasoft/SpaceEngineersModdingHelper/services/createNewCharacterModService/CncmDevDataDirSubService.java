@@ -14,7 +14,7 @@ public class CncmDevDataDirSubService {
 
     private final FileSystemRepository fileSystemRepository;
 
-    public void createDevDataDir(CncmCreationInfo creationInfo) throws IOException {
+    public void createDevDataDir(CharacterModCreationInfo creationInfo) throws IOException {
         Path devDataDir = fileSystemRepository.createDirectoryIn("_devData", creationInfo.getModRootDirectory());
         if (creationInfo.getGender() == Gender.FEMALE) {
             fileSystemRepository.copyResourceFileInto(

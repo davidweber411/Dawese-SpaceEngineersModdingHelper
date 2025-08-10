@@ -20,7 +20,7 @@ public class CncmDataDirSubService {
     private static final String CHAR_FEMALE_TEMPLATE = "CharacterFemaleTemplate";
     private static final String CHARACTER_DEFAULT_TEMPLATE = "CharacterDefaultTemplate";
 
-    public void createInternalDataSubDir(CncmCreationInfo creationInfo) throws IOException, URISyntaxException {
+    public void createInternalDataSubDir(CharacterModCreationInfo creationInfo) throws IOException, URISyntaxException {
         Files.createDirectories(creationInfo.getDataInternalKeyDir());
 
         createEntityContainersSbc(creationInfo);
@@ -35,7 +35,7 @@ public class CncmDataDirSubService {
         }
     }
 
-    private void createEntityContainersSbc(CncmCreationInfo creationInfo) throws IOException, URISyntaxException {
+    private void createEntityContainersSbc(CharacterModCreationInfo creationInfo) throws IOException, URISyntaxException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHAR_MALE_TEMPLATE, creationInfo.getInternalKeyName()),
                 Map.entry(CHAR_FEMALE_TEMPLATE, creationInfo.getInternalKeyName()));
@@ -52,7 +52,7 @@ public class CncmDataDirSubService {
         }
     }
 
-    private void createCharactersSbc(CncmCreationInfo creationInfo) throws IOException, URISyntaxException {
+    private void createCharactersSbc(CharacterModCreationInfo creationInfo) throws IOException, URISyntaxException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHAR_MALE_TEMPLATE, creationInfo.getInternalKeyName()),
                 Map.entry(CHAR_FEMALE_TEMPLATE, creationInfo.getInternalKeyName()));
@@ -69,7 +69,7 @@ public class CncmDataDirSubService {
         }
     }
 
-    private void createStatsSbc(CncmCreationInfo creationInfo) throws URISyntaxException, IOException {
+    private void createStatsSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(
@@ -78,7 +78,7 @@ public class CncmDataDirSubService {
                 replacements);
     }
 
-    private void createEntityComponentsSbc(CncmCreationInfo creationInfo) throws URISyntaxException, IOException {
+    private void createEntityComponentsSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(
@@ -87,7 +87,7 @@ public class CncmDataDirSubService {
                 replacements);
     }
 
-    private void createBotsSbc(CncmCreationInfo creationInfo) throws URISyntaxException, IOException {
+    private void createBotsSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(
@@ -96,7 +96,7 @@ public class CncmDataDirSubService {
                 replacements);
     }
 
-    private void createAIBehaviorSbc(CncmCreationInfo creationInfo) throws URISyntaxException, IOException {
+    private void createAIBehaviorSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(
@@ -105,7 +105,7 @@ public class CncmDataDirSubService {
                 replacements);
     }
 
-    private void createContainerTypesSbc(CncmCreationInfo creationInfo) throws URISyntaxException, IOException {
+    private void createContainerTypesSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
         createModifiedSbcFileInto(

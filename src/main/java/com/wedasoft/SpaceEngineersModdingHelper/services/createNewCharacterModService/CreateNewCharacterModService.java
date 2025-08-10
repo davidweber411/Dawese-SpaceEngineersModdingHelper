@@ -44,7 +44,7 @@ public class CreateNewCharacterModService {
             throw new NotValidException("A mod with this name already exists in your modding workspace.");
         }
 
-        final CncmCreationInfo creationInfo = new CncmCreationInfo(
+        final CharacterModCreationInfo creationInfo = new CharacterModCreationInfo(
                 modNameTextField.getText(),
                 wishedSubtypeTextField.getText(),
                 gender,

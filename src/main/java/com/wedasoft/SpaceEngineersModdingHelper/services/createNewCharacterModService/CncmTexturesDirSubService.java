@@ -10,7 +10,7 @@ import java.nio.file.Files;
 @RequiredArgsConstructor
 public class CncmTexturesDirSubService {
 
-    public void createInternalTexturesSubDir(CncmCreationInfo creationInfo) throws IOException {
+    public void createInternalTexturesSubDir(CharacterModCreationInfo creationInfo) throws IOException {
         Files.createDirectories(creationInfo.getTexturesInternalKeyDir());
     }
 

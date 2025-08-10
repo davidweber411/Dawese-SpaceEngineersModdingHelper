@@ -12,7 +12,7 @@ public class CncmThumbnailSubService {
 
     private final FileSystemRepository fileSystemRepository;
 
-    public void createThumbnail(CncmCreationInfo creationInfo) throws IOException {
+    public void createThumbnail(CharacterModCreationInfo creationInfo) throws IOException {
         fileSystemRepository.createJpgWithTextContentInto(creationInfo.getModName(), creationInfo.getModRootDirectory());
     }
 

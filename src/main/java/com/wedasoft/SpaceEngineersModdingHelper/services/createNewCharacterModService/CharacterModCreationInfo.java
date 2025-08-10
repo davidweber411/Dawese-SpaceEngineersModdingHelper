@@ -9,7 +9,7 @@ import java.nio.file.Path;
 @SuppressWarnings("ClassCanBeRecord")
 @Getter
 @RequiredArgsConstructor
-public class CncmCreationInfo {
+public class CharacterModCreationInfo {
 
     private final String modName;
     private final String wishedSubtype;

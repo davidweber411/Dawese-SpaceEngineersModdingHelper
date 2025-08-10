@@ -10,7 +10,7 @@ import java.nio.file.Files;
 @RequiredArgsConstructor
 public class CncmModelsDirSubService {
 
-    public void createInternalModelsSubDir(CncmCreationInfo creationInfo) throws IOException {
+    public void createInternalModelsSubDir(CharacterModCreationInfo creationInfo) throws IOException {
         Files.createDirectories(creationInfo.getModelsInternalKeyDir());
     }
 
