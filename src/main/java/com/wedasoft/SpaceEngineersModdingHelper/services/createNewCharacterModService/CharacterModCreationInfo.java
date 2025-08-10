@@ -28,7 +28,7 @@ public class CharacterModCreationInfo {
                 .resolve(getModScopeName());
     }
 
-    public Path getTexturesInternalKeyDir() {
+    public Path getTexturesModScopeDir() {
         return modRootDirectory
                 .resolve("Textures")
                 .resolve(getModScopeName());
