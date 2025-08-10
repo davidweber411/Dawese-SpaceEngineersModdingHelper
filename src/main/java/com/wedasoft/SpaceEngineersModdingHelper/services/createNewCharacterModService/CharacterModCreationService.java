@@ -27,38 +27,38 @@ public class CharacterModCreationService {
     private final FileSystemRepository fileSystemRepository;
 
     public void createNewCharacterMod(
-            TextField modNameTextField, TextField wishedSubtypeTextField, Gender gender,
-            boolean devDataDirShallBeCreated, boolean createAdditionalFilesForAnAnimalBot)
+            String modName, String newSubtype, Gender gender,
+            boolean createDevDataDir, boolean createAdditionalFilesForAnAnimalBot)
             throws NotValidException, IOException, URISyntaxException {
 
-        if (modNameTextField.getText().isBlank()) {
+        if (modName.isBlank()) {
             throw new NotValidException("You must enter a name for your mod.");
         }
-        if (wishedSubtypeTextField.getText().isBlank() || !wishedSubtypeTextField.getText().matches("[a-zA-Z_]+")) {
+        if (newSubtype.isBlank() || !newSubtype.matches("[a-zA-Z_]+")) {
             throw new NotValidException("Your entered subtype for your character is invalid.\nOnly alphabetic characters and the underscore are allowed.");
         }
         if (gender == null) {
             throw new NotValidException("Your entered gender is invalid.");
         }
-        if (modExistsAlreadyInModsWorkspace(modNameTextField.getText())) {
+        if (modExistsAlreadyInModsWorkspace(modName)) {
             throw new NotValidException("A mod with this name already exists in your modding workspace.");
         }
 
         final CharacterModCreationInfo creationInfo = new CharacterModCreationInfo(
-                modNameTextField.getText(),
-                wishedSubtypeTextField.getText(),
+                modName,
+                newSubtype,
                 gender,
-                devDataDirShallBeCreated,
+                createDevDataDir,
                 createAdditionalFilesForAnAnimalBot,
                 fileSystemRepository.createDirectoryIn(
-                        modNameTextField.getText(),
+                        modName,
                         Paths.get(configurationsRepository.loadAndValidateConfigurations().getPathToModsWorkspace())));
 
         cncmThumbnailSubService.createThumbnail(creationInfo);
         cncmDataDirSubService.createInternalDataSubDir(creationInfo);
         cncmModelsDirSubService.createInternalModelsSubDir(creationInfo);
         cncmTexturesDirSubService.createInternalTexturesSubDir(creationInfo);
-        if (devDataDirShallBeCreated) {
+        if (createDevDataDir) {
             cncmDevDataDirSubService.createDevDataDir(creationInfo);
         }
     }

@@ -62,8 +62,8 @@ public class CreateNewCharacterModController implements Initializable {
     public void onCreateModInWorkspaceButtonClick() {
         try {
             characterModCreationService.createNewCharacterMod(
-                    modNameTextField,
-                    wishedSubtypeTextField,
+                    modNameTextField.getText(),
+                    wishedSubtypeTextField.getText(),
                     genderChoiceBox.getValue(),
                     createDevDataDirCheckbox.isSelected(),
                     createAdditionalFilesForAnAnimalBotCheckbox.isSelected());
