@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 
 @Service
 @RequiredArgsConstructor
-public class CreateNewCharacterModService {
+public class CharacterModCreationService {
 
     private final CncmTexturesDirSubService cncmTexturesDirSubService;
     private final ConfigurationsRepository configurationsRepository;
