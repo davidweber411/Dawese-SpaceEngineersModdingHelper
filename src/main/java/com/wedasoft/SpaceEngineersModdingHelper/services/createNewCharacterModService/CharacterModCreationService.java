@@ -23,7 +23,6 @@ public class CharacterModCreationService {
     private final TexturesDirSubService texturesDirSubService;
     private final DevDataDirSubService devDataDirSubService;
     private final ModelsDirSubService modelsDirSubService;
-    private final ThumbnailSubService thumbnailSubService;
     private final DataDirSubService dataDirSubService;
 
     public void createNewCharacterMod(
@@ -55,7 +54,9 @@ public class CharacterModCreationService {
                 createAdditionalFilesForAnAnimalBot,
                 modRootDir);
 
-        thumbnailSubService.createThumbnail(creationInfo);
+
+        createThumbnail(creationInfo);
+
         dataDirSubService.createInternalDataSubDir(creationInfo);
         modelsDirSubService.createInternalModelsSubDir(creationInfo);
         texturesDirSubService.createInternalTexturesSubDir(creationInfo);
@@ -67,6 +68,10 @@ public class CharacterModCreationService {
     private boolean modExistsAlreadyInModsWorkspace(String modName) throws NotValidException {
         final Path modsWorkspacePath = Paths.get(configurationsRepository.loadAndValidateConfigurations().getPathToModsWorkspace());
         return Files.exists(modsWorkspacePath.resolve(modName));
+    }
+
+    public void createThumbnail(CharacterModCreationInfo creationInfo) throws IOException {
+        fileSystemRepository.createJpgWithTextContentInto(creationInfo.getModName(), creationInfo.getModRootDirectory());
     }
 
 }
