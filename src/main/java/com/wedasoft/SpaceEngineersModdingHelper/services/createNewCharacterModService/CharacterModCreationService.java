@@ -87,7 +87,7 @@ public class CharacterModCreationService {
     }
 
     public void createInternalModelsSubDir(CharacterModCreationInfo creationInfo) throws IOException {
-        Files.createDirectories(creationInfo.getModelsInternalKeyDir());
+        Files.createDirectories(creationInfo.getModelsModScopeDir());
     }
 
     private void createInternalTexturesSubDir(CharacterModCreationInfo creationInfo) throws IOException {

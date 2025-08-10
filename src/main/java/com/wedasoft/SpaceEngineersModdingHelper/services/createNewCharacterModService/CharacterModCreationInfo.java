@@ -34,7 +34,7 @@ public class CharacterModCreationInfo {
                 .resolve(getModScopeName());
     }
 
-    public Path getModelsInternalKeyDir() {
+    public Path getModelsModScopeDir() {
         return modRootDirectory
                 .resolve("Models")
                 .resolve(getModScopeName());
