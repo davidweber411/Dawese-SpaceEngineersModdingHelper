@@ -22,7 +22,7 @@ public class CharacterModCreationInfo {
         return newSubtype;
     }
 
-    public Path getDataInternalKeyDir() {
+    public Path getDataModScopeDir() {
         return modRootDirectory
                 .resolve("Data")
                 .resolve(getModScopeName());

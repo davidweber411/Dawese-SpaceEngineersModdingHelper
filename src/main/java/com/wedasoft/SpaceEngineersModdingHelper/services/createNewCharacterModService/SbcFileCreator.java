@@ -27,12 +27,12 @@ public class SbcFileCreator {
         if (creationInfo.getGender() == Gender.MALE) {
             createModifiedSbcFileInto(
                     getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc"),
-                    creationInfo.getDataInternalKeyDir(),
+                    creationInfo.getDataModScopeDir(),
                     replacements);
         } else {
             createModifiedSbcFileInto(
                     getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_EntityContainers.sbc"),
-                    creationInfo.getDataInternalKeyDir(),
+                    creationInfo.getDataModScopeDir(),
                     replacements);
         }
     }
@@ -44,12 +44,12 @@ public class SbcFileCreator {
         if (creationInfo.getGender() == Gender.MALE) {
             createModifiedSbcFileInto(
                     getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_Characters.sbc"),
-                    creationInfo.getDataInternalKeyDir(),
+                    creationInfo.getDataModScopeDir(),
                     replacements);
         } else {
             createModifiedSbcFileInto(
                     getClass().getResource("/seFiles/characterCreation/female/CharacterFemaleTemplate_Characters.sbc"),
-                    creationInfo.getDataInternalKeyDir(),
+                    creationInfo.getDataModScopeDir(),
                     replacements);
         }
     }
@@ -59,7 +59,7 @@ public class SbcFileCreator {
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
                 getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Stats.sbc"),
-                creationInfo.getDataInternalKeyDir(),
+                creationInfo.getDataModScopeDir(),
                 replacements);
     }
 
@@ -68,7 +68,7 @@ public class SbcFileCreator {
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
                 getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_EntityComponents.sbc"),
-                creationInfo.getDataInternalKeyDir(),
+                creationInfo.getDataModScopeDir(),
                 replacements);
     }
 
@@ -77,7 +77,7 @@ public class SbcFileCreator {
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
                 getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Bots.sbc"),
-                creationInfo.getDataInternalKeyDir(),
+                creationInfo.getDataModScopeDir(),
                 replacements);
     }
 
@@ -86,7 +86,7 @@ public class SbcFileCreator {
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
                 getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_AIBehavior.sbc"),
-                creationInfo.getDataInternalKeyDir(),
+                creationInfo.getDataModScopeDir(),
                 replacements);
     }
 
@@ -95,7 +95,7 @@ public class SbcFileCreator {
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
                 getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_ContainerTypes.sbc"),
-                creationInfo.getDataInternalKeyDir(),
+                creationInfo.getDataModScopeDir(),
                 replacements);
     }
 

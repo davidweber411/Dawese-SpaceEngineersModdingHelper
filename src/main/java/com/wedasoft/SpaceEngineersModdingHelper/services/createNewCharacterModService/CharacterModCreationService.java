@@ -74,7 +74,7 @@ public class CharacterModCreationService {
     }
 
     private void createInternalDataSubDir(CharacterModCreationInfo creationInfo) throws IOException {
-        Files.createDirectories(creationInfo.getDataInternalKeyDir());
+        Files.createDirectories(creationInfo.getDataModScopeDir());
     }
 
     private boolean modExistsAlreadyInModsWorkspace(String modName) throws NotValidException {
