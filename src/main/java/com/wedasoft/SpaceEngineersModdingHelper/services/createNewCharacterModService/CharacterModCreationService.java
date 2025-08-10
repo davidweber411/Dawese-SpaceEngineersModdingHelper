@@ -20,7 +20,6 @@ public class CharacterModCreationService {
     private final ConfigurationsRepository configurationsRepository;
     private final FileSystemRepository fileSystemRepository;
 
-    private final DevDataDirSubService devDataDirSubService;
     private final DataDirSubService dataDirSubService;
 
     public void createNewCharacterMod(
@@ -59,7 +58,7 @@ public class CharacterModCreationService {
         createInternalModelsSubDir(creationInfo);
         createInternalTexturesSubDir(creationInfo);
         if (createDevDataDir) {
-            devDataDirSubService.createDevDataDir(creationInfo);
+            createDevDataDir(creationInfo);
         }
     }
 
@@ -78,6 +77,19 @@ public class CharacterModCreationService {
 
     private void createInternalTexturesSubDir(CharacterModCreationInfo creationInfo) throws IOException {
         Files.createDirectories(creationInfo.getTexturesInternalKeyDir());
+    }
+
+    private void createDevDataDir(CharacterModCreationInfo creationInfo) throws IOException {
+        Path devDataDir = fileSystemRepository.createDirectoryIn("_devData", creationInfo.getModRootDirectory());
+        if (creationInfo.getGender() == Gender.FEMALE) {
+            fileSystemRepository.copyResourceFileInto(
+                    getClass().getResource("/seFiles/characterCreation/female/SE_astronaut_female.FBX"),
+                    devDataDir);
+        } else {
+            fileSystemRepository.copyResourceFileInto(
+                    getClass().getResource("/seFiles/characterCreation/male/SE_astronaut_male.FBX"),
+                    devDataDir);
+        }
     }
 
 }
