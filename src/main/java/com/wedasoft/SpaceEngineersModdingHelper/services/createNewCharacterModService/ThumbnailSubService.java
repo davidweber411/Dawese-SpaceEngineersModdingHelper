@@ -8,7 +8,7 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class CncmThumbnailSubService {
+public class ThumbnailSubService {
 
     private final FileSystemRepository fileSystemRepository;
 

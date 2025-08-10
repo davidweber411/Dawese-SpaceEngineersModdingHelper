@@ -14,7 +14,7 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class CncmDataDirSubService {
+public class DataDirSubService {
 
     private static final String CHAR_MALE_TEMPLATE = "CharacterMaleTemplate";
     private static final String CHAR_FEMALE_TEMPLATE = "CharacterFemaleTemplate";

@@ -17,13 +17,14 @@ import java.nio.file.Paths;
 @RequiredArgsConstructor
 public class CharacterModCreationService {
 
-    private final CncmTexturesDirSubService cncmTexturesDirSubService;
     private final ConfigurationsRepository configurationsRepository;
-    private final CncmDevDataDirSubService cncmDevDataDirSubService;
-    private final CncmModelsDirSubService cncmModelsDirSubService;
-    private final CncmThumbnailSubService cncmThumbnailSubService;
-    private final CncmDataDirSubService cncmDataDirSubService;
     private final FileSystemRepository fileSystemRepository;
+
+    private final TexturesDirSubService texturesDirSubService;
+    private final DevDataDirSubService devDataDirSubService;
+    private final ModelsDirSubService modelsDirSubService;
+    private final ThumbnailSubService thumbnailSubService;
+    private final DataDirSubService dataDirSubService;
 
     public void createNewCharacterMod(
             String modName, String newSubtype, Gender gender,
@@ -54,12 +55,12 @@ public class CharacterModCreationService {
                 createAdditionalFilesForAnAnimalBot,
                 modRootDir);
 
-        cncmThumbnailSubService.createThumbnail(creationInfo);
-        cncmDataDirSubService.createInternalDataSubDir(creationInfo);
-        cncmModelsDirSubService.createInternalModelsSubDir(creationInfo);
-        cncmTexturesDirSubService.createInternalTexturesSubDir(creationInfo);
+        thumbnailSubService.createThumbnail(creationInfo);
+        dataDirSubService.createInternalDataSubDir(creationInfo);
+        modelsDirSubService.createInternalModelsSubDir(creationInfo);
+        texturesDirSubService.createInternalTexturesSubDir(creationInfo);
         if (createDevDataDir) {
-            cncmDevDataDirSubService.createDevDataDir(creationInfo);
+            devDataDirSubService.createDevDataDir(creationInfo);
         }
     }
 

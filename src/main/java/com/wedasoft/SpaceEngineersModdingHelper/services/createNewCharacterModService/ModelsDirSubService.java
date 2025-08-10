@@ -8,10 +8,10 @@ import java.nio.file.Files;
 
 @Service
 @RequiredArgsConstructor
-public class CncmTexturesDirSubService {
+public class ModelsDirSubService {
 
-    public void createInternalTexturesSubDir(CharacterModCreationInfo creationInfo) throws IOException {
-        Files.createDirectories(creationInfo.getTexturesInternalKeyDir());
+    public void createInternalModelsSubDir(CharacterModCreationInfo creationInfo) throws IOException {
+        Files.createDirectories(creationInfo.getModelsInternalKeyDir());
     }
 
 }

@@ -10,7 +10,7 @@ import java.nio.file.Path;
 
 @Service
 @RequiredArgsConstructor
-public class CncmDevDataDirSubService {
+public class DevDataDirSubService {
 
     private final FileSystemRepository fileSystemRepository;
 
