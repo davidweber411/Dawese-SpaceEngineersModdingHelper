@@ -21,8 +21,6 @@ public class DataDirSubService {
     private static final String CHARACTER_DEFAULT_TEMPLATE = "CharacterDefaultTemplate";
 
     public void createInternalDataSubDir(CharacterModCreationInfo creationInfo) throws IOException, URISyntaxException {
-        Files.createDirectories(creationInfo.getDataInternalKeyDir());
-
         createEntityContainersSbc(creationInfo);
         createCharactersSbc(creationInfo);
 

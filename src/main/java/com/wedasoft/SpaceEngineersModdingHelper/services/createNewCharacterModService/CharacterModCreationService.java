@@ -53,13 +53,18 @@ public class CharacterModCreationService {
 
 
         createThumbnail(creationInfo);
-
-        dataDirSubService.createInternalDataSubDir(creationInfo);
+        createInternalDataSubDir(creationInfo);
         createInternalModelsSubDir(creationInfo);
         createInternalTexturesSubDir(creationInfo);
+
+        dataDirSubService.createInternalDataSubDir(creationInfo);
         if (createDevDataDir) {
             createDevDataDir(creationInfo);
         }
+    }
+
+    private void createInternalDataSubDir(CharacterModCreationInfo creationInfo) throws IOException {
+        Files.createDirectories(creationInfo.getDataInternalKeyDir());
     }
 
     private boolean modExistsAlreadyInModsWorkspace(String modName) throws NotValidException {
