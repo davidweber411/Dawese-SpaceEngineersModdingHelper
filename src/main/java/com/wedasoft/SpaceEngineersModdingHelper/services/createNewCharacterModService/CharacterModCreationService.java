@@ -4,7 +4,6 @@ import com.wedasoft.SpaceEngineersModdingHelper.enums.Gender;
 import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
 import com.wedasoft.SpaceEngineersModdingHelper.repositories.ConfigurationsRepository;
 import com.wedasoft.SpaceEngineersModdingHelper.repositories.FileSystemRepository;
-import javafx.scene.control.TextField;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -44,15 +43,16 @@ public class CharacterModCreationService {
             throw new NotValidException("A mod with this name already exists in your modding workspace.");
         }
 
+        final Path modRootDir = fileSystemRepository.createDirectoryIn(
+                modName,
+                Paths.get(configurationsRepository.loadAndValidateConfigurations().getPathToModsWorkspace()));
         final CharacterModCreationInfo creationInfo = new CharacterModCreationInfo(
                 modName,
                 newSubtype,
                 gender,
                 createDevDataDir,
                 createAdditionalFilesForAnAnimalBot,
-                fileSystemRepository.createDirectoryIn(
-                        modName,
-                        Paths.get(configurationsRepository.loadAndValidateConfigurations().getPathToModsWorkspace())));
+                modRootDir);
 
         cncmThumbnailSubService.createThumbnail(creationInfo);
         cncmDataDirSubService.createInternalDataSubDir(creationInfo);
