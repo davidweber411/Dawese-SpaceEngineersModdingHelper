@@ -50,15 +50,26 @@ public class CharacterModCreationService {
                 createAdditionalFilesForAnAnimalBot,
                 modRootDir);
 
-
+        /* create thumbnail */
         createThumbnail(creationInfo);
+
+        /* create directories only */
         createInternalDataSubDir(creationInfo);
         createInternalModelsSubDir(creationInfo);
         createInternalTexturesSubDir(creationInfo);
-
-        sbcFileCreator.createInternalDataSubDir(creationInfo);
         if (createDevDataDir) {
             createDevDataDir(creationInfo);
+        }
+
+        /* create sbc files only */
+        sbcFileCreator.createEntityContainersSbc(creationInfo);
+        sbcFileCreator.createCharactersSbc(creationInfo);
+        if (creationInfo.isCreateAdditionalFilesForAnAnimalBot()) {
+            sbcFileCreator.createStatsSbc(creationInfo);
+            sbcFileCreator.createEntityComponentsSbc(creationInfo);
+            sbcFileCreator.createBotsSbc(creationInfo);
+            sbcFileCreator.createAIBehaviorSbc(creationInfo);
+            sbcFileCreator.createContainerTypesSbc(creationInfo);
         }
     }
 

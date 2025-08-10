@@ -20,20 +20,7 @@ public class SbcFileCreator {
     private static final String CHAR_FEMALE_TEMPLATE = "CharacterFemaleTemplate";
     private static final String CHARACTER_DEFAULT_TEMPLATE = "CharacterDefaultTemplate";
 
-    public void createInternalDataSubDir(CharacterModCreationInfo creationInfo) throws IOException, URISyntaxException {
-        createEntityContainersSbc(creationInfo);
-        createCharactersSbc(creationInfo);
-
-        if (creationInfo.isCreateAdditionalFilesForAnAnimalBot()) {
-            createStatsSbc(creationInfo);
-            createEntityComponentsSbc(creationInfo);
-            createBotsSbc(creationInfo);
-            createAIBehaviorSbc(creationInfo);
-            createContainerTypesSbc(creationInfo);
-        }
-    }
-
-    private void createEntityContainersSbc(CharacterModCreationInfo creationInfo) throws IOException, URISyntaxException {
+    public void createEntityContainersSbc(CharacterModCreationInfo creationInfo) throws IOException, URISyntaxException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHAR_MALE_TEMPLATE, creationInfo.getModScopeName()),
                 Map.entry(CHAR_FEMALE_TEMPLATE, creationInfo.getModScopeName()));
@@ -50,7 +37,7 @@ public class SbcFileCreator {
         }
     }
 
-    private void createCharactersSbc(CharacterModCreationInfo creationInfo) throws IOException, URISyntaxException {
+    public void createCharactersSbc(CharacterModCreationInfo creationInfo) throws IOException, URISyntaxException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHAR_MALE_TEMPLATE, creationInfo.getModScopeName()),
                 Map.entry(CHAR_FEMALE_TEMPLATE, creationInfo.getModScopeName()));
@@ -67,7 +54,7 @@ public class SbcFileCreator {
         }
     }
 
-    private void createStatsSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
+    public void createStatsSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
@@ -76,7 +63,7 @@ public class SbcFileCreator {
                 replacements);
     }
 
-    private void createEntityComponentsSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
+    public void createEntityComponentsSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
@@ -85,7 +72,7 @@ public class SbcFileCreator {
                 replacements);
     }
 
-    private void createBotsSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
+    public void createBotsSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
@@ -94,7 +81,7 @@ public class SbcFileCreator {
                 replacements);
     }
 
-    private void createAIBehaviorSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
+    public void createAIBehaviorSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
@@ -103,7 +90,7 @@ public class SbcFileCreator {
                 replacements);
     }
 
-    private void createContainerTypesSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
+    public void createContainerTypesSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
