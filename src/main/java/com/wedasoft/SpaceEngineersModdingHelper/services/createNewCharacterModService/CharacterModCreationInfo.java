@@ -12,32 +12,32 @@ import java.nio.file.Path;
 public class CharacterModCreationInfo {
 
     private final String modName;
-    private final String wishedSubtype;
+    private final String newSubtype;
     private final Gender gender;
     private final boolean devDataDirShallBeCreated;
     private final boolean createAdditionalFilesForAnAnimalBot;
     private final Path modRootDirectory;
 
-    public String getInternalKeyName() {
-        return wishedSubtype;
+    public String getModScopeName() {
+        return newSubtype;
     }
 
     public Path getDataInternalKeyDir() {
         return modRootDirectory
                 .resolve("Data")
-                .resolve(getInternalKeyName());
+                .resolve(getModScopeName());
     }
 
     public Path getTexturesInternalKeyDir() {
         return modRootDirectory
                 .resolve("Textures")
-                .resolve(getInternalKeyName());
+                .resolve(getModScopeName());
     }
 
     public Path getModelsInternalKeyDir() {
         return modRootDirectory
                 .resolve("Models")
-                .resolve(getInternalKeyName());
+                .resolve(getModScopeName());
     }
 
 }

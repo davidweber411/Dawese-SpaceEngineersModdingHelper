@@ -37,8 +37,8 @@ public class DataDirSubService {
 
     private void createEntityContainersSbc(CharacterModCreationInfo creationInfo) throws IOException, URISyntaxException {
         final Map<String, String> replacements = Map.ofEntries(
-                Map.entry(CHAR_MALE_TEMPLATE, creationInfo.getInternalKeyName()),
-                Map.entry(CHAR_FEMALE_TEMPLATE, creationInfo.getInternalKeyName()));
+                Map.entry(CHAR_MALE_TEMPLATE, creationInfo.getModScopeName()),
+                Map.entry(CHAR_FEMALE_TEMPLATE, creationInfo.getModScopeName()));
         if (creationInfo.getGender() == Gender.MALE) {
             createModifiedSbcFileInto(
                     getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_EntityContainers.sbc"),
@@ -54,8 +54,8 @@ public class DataDirSubService {
 
     private void createCharactersSbc(CharacterModCreationInfo creationInfo) throws IOException, URISyntaxException {
         final Map<String, String> replacements = Map.ofEntries(
-                Map.entry(CHAR_MALE_TEMPLATE, creationInfo.getInternalKeyName()),
-                Map.entry(CHAR_FEMALE_TEMPLATE, creationInfo.getInternalKeyName()));
+                Map.entry(CHAR_MALE_TEMPLATE, creationInfo.getModScopeName()),
+                Map.entry(CHAR_FEMALE_TEMPLATE, creationInfo.getModScopeName()));
         if (creationInfo.getGender() == Gender.MALE) {
             createModifiedSbcFileInto(
                     getClass().getResource("/seFiles/characterCreation/male/CharacterMaleTemplate_Characters.sbc"),
@@ -71,7 +71,7 @@ public class DataDirSubService {
 
     private void createStatsSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
-                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
+                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
                 getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Stats.sbc"),
                 creationInfo.getDataInternalKeyDir(),
@@ -80,7 +80,7 @@ public class DataDirSubService {
 
     private void createEntityComponentsSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
-                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
+                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
                 getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_EntityComponents.sbc"),
                 creationInfo.getDataInternalKeyDir(),
@@ -89,7 +89,7 @@ public class DataDirSubService {
 
     private void createBotsSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
-                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
+                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
                 getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_Bots.sbc"),
                 creationInfo.getDataInternalKeyDir(),
@@ -98,7 +98,7 @@ public class DataDirSubService {
 
     private void createAIBehaviorSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
-                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
+                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
                 getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_AIBehavior.sbc"),
                 creationInfo.getDataInternalKeyDir(),
@@ -107,7 +107,7 @@ public class DataDirSubService {
 
     private void createContainerTypesSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
-                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getInternalKeyName()));
+                Map.entry(CHARACTER_DEFAULT_TEMPLATE, creationInfo.getModScopeName()));
         createModifiedSbcFileInto(
                 getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_ContainerTypes.sbc"),
                 creationInfo.getDataInternalKeyDir(),
