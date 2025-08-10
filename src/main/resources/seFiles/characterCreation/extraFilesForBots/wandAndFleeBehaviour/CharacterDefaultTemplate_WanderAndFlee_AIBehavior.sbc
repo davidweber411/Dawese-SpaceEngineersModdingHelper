@@ -1,0 +1,230 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <AIBehaviors>
+
+        <AIBehavior xsi:type="MyObjectBuilder_BehaviorTreeDefinition">
+            <Id Type="MyObjectBuilder_BehaviorTreeDefinition"
+                Subtype="CharacterDefaultTemplateBehaviorSubtype"/>
+            <FirstNode xsi:type="MyObjectBuilder_BehaviorTreeSequenceNode">
+                <BTNodes>
+                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSelectorNode">
+                        <BTNodes>
+                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSequenceNode">
+                                <BTNodes>
+                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                        <ActionName>IsRunningAway</ActionName>
+                                    </BTNode>
+                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                        <ActionName>RunAway</ActionName>
+                                        <Parameters>
+                                            <Parameter xsi:type="FloatType" FloatValue="300"/>
+                                        </Parameters>
+                                    </BTNode>
+                                </BTNodes>
+                                <Name>Sequence</Name>
+                            </BTNode>
+                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                <ActionName>IsHealthAboveThreshold</ActionName>
+                                <Parameters>
+                                    <Parameter xsi:type="FloatType" FloatValue="40"/>
+                                </Parameters>
+                            </BTNode>
+                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                <ActionName>RunAway</ActionName>
+                                <Parameters>
+                                    <Parameter xsi:type="FloatType" FloatValue="300"/>
+                                </Parameters>
+                            </BTNode>
+                        </BTNodes>
+                        <Name>RunAwaySelector</Name>
+                    </BTNode>
+                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSelectorNode">
+                        <BTNodes>
+                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                <ActionName>IsAttacking</ActionName>
+                            </BTNode>
+                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSequenceNode">
+                                <BTNodes>
+                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSelectorNode">
+                                        <BTNodes>
+                                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSequenceNode">
+                                                <BTNodes>
+                                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                        <ActionName>HasTarget</ActionName>
+                                                    </BTNode>
+                                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeDecoratorNode">
+                                                        <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSequenceNode">
+                                                            <BTNodes>
+                                                                <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                                    <ActionName>GetTargetWithPriority</ActionName>
+                                                                    <Parameters>
+                                                                        <Parameter xsi:type="FloatType"
+                                                                                   FloatValue="200"/>
+                                                                        <Parameter xsi:type="MemType" MemName="target"/>
+                                                                        <Parameter xsi:type="MemType"
+                                                                                   MemName="priority"/>
+                                                                    </Parameters>
+                                                                </BTNode>
+                                                                <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                                    <ActionName>SetTarget</ActionName>
+                                                                    <Parameters>
+                                                                        <Parameter xsi:type="MemType" MemName="target"/>
+                                                                    </Parameters>
+                                                                </BTNode>
+                                                            </BTNodes>
+                                                            <Name>Sequence</Name>
+                                                        </BTNode>
+                                                        <DecoratorLogic xsi:type="CounterLogic">
+                                                            <Count>15</Count>
+                                                        </DecoratorLogic>
+                                                        <DefaultReturnValue>SUCCESS</DefaultReturnValue>
+                                                    </BTNode>
+                                                </BTNodes>
+                                                <Name>Sequence</Name>
+                                            </BTNode>
+                                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSequenceNode">
+                                                <BTNodes>
+                                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSelectorNode">
+                                                        <BTNodes>
+                                                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                                <ActionName>GetTargetWithPriority</ActionName>
+                                                                <Parameters>
+                                                                    <Parameter xsi:type="FloatType" FloatValue="400"/>
+                                                                    <Parameter xsi:type="MemType" MemName="target"/>
+                                                                    <Parameter xsi:type="MemType" MemName="priority"/>
+                                                                </Parameters>
+                                                            </BTNode>
+                                                        </BTNodes>
+                                                        <Name>Selector</Name>
+                                                    </BTNode>
+                                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                        <ActionName>SetInt</ActionName>
+                                                        <Parameters>
+                                                            <Parameter xsi:type="MemType" MemName="priority"/>
+                                                            <Parameter xsi:type="IntType" IntValue="0"/>
+                                                        </Parameters>
+                                                    </BTNode>
+                                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                        <ActionName>SetTarget</ActionName>
+                                                        <Parameters>
+                                                            <Parameter xsi:type="MemType" MemName="target"/>
+                                                        </Parameters>
+                                                    </BTNode>
+                                                </BTNodes>
+                                                <Name>Sequence</Name>
+                                            </BTNode>
+                                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSelectorNode">
+                                                <BTNodes>
+                                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSequenceNode">
+                                                        <BTNodes>
+                                                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                                <ActionName>GetTargetWithPriority</ActionName>
+                                                                <Parameters>
+                                                                    <Parameter xsi:type="FloatType" FloatValue="200"/>
+                                                                    <Parameter xsi:type="MemType" MemName="target"/>
+                                                                    <Parameter xsi:type="MemType" MemName="priority"/>
+                                                                </Parameters>
+                                                            </BTNode>
+                                                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                                <ActionName>SetTarget</ActionName>
+                                                                <Parameters>
+                                                                    <Parameter xsi:type="MemType" MemName="target"/>
+                                                                </Parameters>
+                                                            </BTNode>
+                                                        </BTNodes>
+                                                        <Name>ObtainTarget</Name>
+                                                    </BTNode>
+                                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                        <ActionName>Wander</ActionName>
+                                                        <Parameters>
+                                                            <Parameter xsi:type="FloatType" FloatValue="42"/>
+                                                        </Parameters>
+                                                    </BTNode>
+                                                </BTNodes>
+                                                <Name>ObtainTargetOrWander</Name>
+                                            </BTNode>
+                                        </BTNodes>
+                                        <Name>FindTarget</Name>
+                                        <IsMemorable>true</IsMemorable>
+                                    </BTNode>
+                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSelectorNode">
+                                        <BTNodes>
+                                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                <ActionName>IsAtTargetPosition</ActionName>
+                                                <Parameters>
+                                                    <Parameter xsi:type="FloatType" FloatValue="1.5"/>
+                                                </Parameters>
+                                            </BTNode>
+                                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSequenceNode">
+                                                <BTNodes>
+                                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                        <ActionName>IsTargetValid</ActionName>
+                                                        <Parameters>
+                                                            <Parameter xsi:type="MemType" MemName="target"/>
+                                                        </Parameters>
+                                                    </BTNode>
+                                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                        <ActionName>AimWithMovement</ActionName>
+                                                    </BTNode>
+                                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSelectorNode">
+                                                        <BTNodes>
+                                                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                                <ActionName>GotoTarget</ActionName>
+                                                            </BTNode>
+                                                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                                                <ActionName>IsWaitingForTileGeneration</ActionName>
+                                                            </BTNode>
+                                                        </BTNodes>
+                                                        <Name>Selector</Name>
+                                                        <IsMemorable>true</IsMemorable>
+                                                    </BTNode>
+                                                </BTNodes>
+                                                <Name>Sequence</Name>
+                                                <IsMemorable>true</IsMemorable>
+                                            </BTNode>
+                                        </BTNodes>
+                                        <Name>MoveToTarget</Name>
+                                    </BTNode>
+                                </BTNodes>
+                                <Name>FindAndApproachTarget</Name>
+                            </BTNode>
+                        </BTNodes>
+                        <Name>FindTargetIfNotAttacking</Name>
+                    </BTNode>
+                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSelectorNode">
+                        <BTNodes>
+                            <BTNode xsi:type="MyObjectBuilder_BehaviorTreeSequenceNode">
+                                <BTNodes>
+                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                        <ActionName>IsAtTargetPosition</ActionName>
+                                        <Parameters>
+                                            <Parameter xsi:type="FloatType" FloatValue="1.5"/>
+                                        </Parameters>
+                                    </BTNode>
+                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                        <ActionName>IsTargetValid</ActionName>
+                                        <Parameters>
+                                            <Parameter xsi:type="MemType" MemName="target"/>
+                                        </Parameters>
+                                    </BTNode>
+                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                        <ActionName>Attack</ActionName>
+                                    </BTNode>
+                                    <BTNode xsi:type="MyObjectBuilder_BehaviorTreeActionNode">
+                                        <ActionName>StopAiming</ActionName>
+                                    </BTNode>
+                                </BTNodes>
+                                <Name>Sequence</Name>
+                            </BTNode>
+                        </BTNodes>
+                        <Name>PerformAttack</Name>
+                    </BTNode>
+                </BTNodes>
+                <Name>AttackSequence</Name>
+            </FirstNode>
+            <Behavior>CharacterDefaultTemplateBehavior</Behavior>
+        </AIBehavior>
+
+
+    </AIBehaviors>
+</Definitions>
