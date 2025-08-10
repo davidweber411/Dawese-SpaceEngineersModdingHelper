@@ -1,5 +1,6 @@
 package com.wedasoft.SpaceEngineersModdingHelper.services.createNewCharacterModService;
 
+import com.wedasoft.SpaceEngineersModdingHelper.enums.AiBehavior;
 import com.wedasoft.SpaceEngineersModdingHelper.enums.Gender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -84,10 +85,18 @@ public class SbcFileCreator {
     public void createAIBehaviorSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
         final Map<String, String> replacements = Map.ofEntries(
                 Map.entry(UNIQUE_PREFIX_FOR_SBC_FILES, creationInfo.getModScopeName()));
-        createModifiedSbcFileInto(
-                getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_AIBehavior.sbc"),
-                creationInfo.getDataModScopeDir(),
-                replacements);
+
+        if (creationInfo.getAiBehavior() == AiBehavior.WANDER_AND_FLEE) {
+            createModifiedSbcFileInto(
+                    getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_WanderAndFlee_AIBehavior.sbc"),
+                    creationInfo.getDataModScopeDir(),
+                    replacements);
+        } else {
+            createModifiedSbcFileInto(
+                    getClass().getResource("/seFiles/characterCreation/extraFilesForBots/CharacterDefaultTemplate_AIBehavior.sbc"),
+                    creationInfo.getDataModScopeDir(),
+                    replacements);
+        }
     }
 
     public void createContainerTypesSbc(CharacterModCreationInfo creationInfo) throws URISyntaxException, IOException {
