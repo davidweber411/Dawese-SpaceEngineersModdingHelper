@@ -2,7 +2,7 @@ package com.wedasoft.SpaceEngineersModdingHelper.services.createNewCharacterModS
 
 import com.wedasoft.SpaceEngineersModdingHelper.enums.Gender;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -12,9 +12,9 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Objects;
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class DataDirSubService {
+public class SbcFileCreator {
 
     private static final String CHAR_MALE_TEMPLATE = "CharacterMaleTemplate";
     private static final String CHAR_FEMALE_TEMPLATE = "CharacterFemaleTemplate";

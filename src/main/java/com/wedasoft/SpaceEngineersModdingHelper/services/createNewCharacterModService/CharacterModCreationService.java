@@ -19,8 +19,7 @@ public class CharacterModCreationService {
 
     private final ConfigurationsRepository configurationsRepository;
     private final FileSystemRepository fileSystemRepository;
-
-    private final DataDirSubService dataDirSubService;
+    private final SbcFileCreator sbcFileCreator;
 
     public void createNewCharacterMod(
             String modName, String newSubtype, Gender gender,
@@ -57,7 +56,7 @@ public class CharacterModCreationService {
         createInternalModelsSubDir(creationInfo);
         createInternalTexturesSubDir(creationInfo);
 
-        dataDirSubService.createInternalDataSubDir(creationInfo);
+        sbcFileCreator.createInternalDataSubDir(creationInfo);
         if (createDevDataDir) {
             createDevDataDir(creationInfo);
         }
