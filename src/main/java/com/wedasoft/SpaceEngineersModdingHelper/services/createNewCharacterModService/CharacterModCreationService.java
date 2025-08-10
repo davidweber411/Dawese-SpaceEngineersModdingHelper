@@ -54,9 +54,9 @@ public class CharacterModCreationService {
         createThumbnail(creationInfo);
 
         /* create directories only */
-        createInternalDataSubDir(creationInfo);
-        createInternalModelsSubDir(creationInfo);
-        createInternalTexturesSubDir(creationInfo);
+        createDataModScopeDir(creationInfo);
+        createModelsModScopeDir(creationInfo);
+        createTexturesModScopeDir(creationInfo);
         if (createDevDataDir) {
             createDevDataDir(creationInfo);
         }
@@ -73,7 +73,7 @@ public class CharacterModCreationService {
         }
     }
 
-    private void createInternalDataSubDir(CharacterModCreationInfo creationInfo) throws IOException {
+    private void createDataModScopeDir(CharacterModCreationInfo creationInfo) throws IOException {
         Files.createDirectories(creationInfo.getDataModScopeDir());
     }
 
@@ -86,11 +86,11 @@ public class CharacterModCreationService {
         fileSystemRepository.createJpgWithTextContentInto(creationInfo.getModName(), creationInfo.getModRootDirectory());
     }
 
-    public void createInternalModelsSubDir(CharacterModCreationInfo creationInfo) throws IOException {
+    public void createModelsModScopeDir(CharacterModCreationInfo creationInfo) throws IOException {
         Files.createDirectories(creationInfo.getModelsModScopeDir());
     }
 
-    private void createInternalTexturesSubDir(CharacterModCreationInfo creationInfo) throws IOException {
+    private void createTexturesModScopeDir(CharacterModCreationInfo creationInfo) throws IOException {
         Files.createDirectories(creationInfo.getTexturesModScopeDir());
     }
 
