@@ -1,11 +1,12 @@
 package com.wedasoft.SpaceEngineersModdingHelper.views;
 
+import com.wedasoft.SpaceEngineersModdingHelper.enums.AiBehavior;
 import com.wedasoft.SpaceEngineersModdingHelper.enums.Gender;
 import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
 import com.wedasoft.SpaceEngineersModdingHelper.helper.RedirectionHelper;
 import com.wedasoft.SpaceEngineersModdingHelper.services.ConfigurationsService;
-import com.wedasoft.SpaceEngineersModdingHelper.services.createNewCharacterModService.CharacterModCreationService;
 import com.wedasoft.SpaceEngineersModdingHelper.services.JfxUiService;
+import com.wedasoft.SpaceEngineersModdingHelper.services.createNewCharacterModService.CharacterModCreationService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,6 +40,8 @@ public class CreateNewCharacterModController implements Initializable {
     @FXML
     private ChoiceBox<Gender> genderChoiceBox;
     @FXML
+    private ChoiceBox<AiBehavior> aiBehaviorChoiceBox;
+    @FXML
     private CheckBox createDevDataDirCheckbox;
     @FXML
     private CheckBox createAdditionalFilesForAnAnimalBotCheckbox;
@@ -47,6 +50,9 @@ public class CreateNewCharacterModController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         genderChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(Gender.values())));
         genderChoiceBox.getSelectionModel().select(0);
+
+        aiBehaviorChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(AiBehavior.values())));
+        aiBehaviorChoiceBox.getSelectionModel().select(0);
     }
 
     public void init() {
@@ -65,6 +71,7 @@ public class CreateNewCharacterModController implements Initializable {
                     modNameTextField.getText(),
                     wishedSubtypeTextField.getText(),
                     genderChoiceBox.getValue(),
+                    aiBehaviorChoiceBox.getValue(),
                     createDevDataDirCheckbox.isSelected(),
                     createAdditionalFilesForAnAnimalBotCheckbox.isSelected());
             jfxUiService.displayInformationDialog("Character mod created in your workspace!");

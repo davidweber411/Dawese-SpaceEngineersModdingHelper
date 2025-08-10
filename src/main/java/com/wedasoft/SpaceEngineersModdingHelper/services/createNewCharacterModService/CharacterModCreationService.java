@@ -1,5 +1,6 @@
 package com.wedasoft.SpaceEngineersModdingHelper.services.createNewCharacterModService;
 
+import com.wedasoft.SpaceEngineersModdingHelper.enums.AiBehavior;
 import com.wedasoft.SpaceEngineersModdingHelper.enums.Gender;
 import com.wedasoft.SpaceEngineersModdingHelper.exceptions.NotValidException;
 import com.wedasoft.SpaceEngineersModdingHelper.repositories.ConfigurationsRepository;
@@ -22,7 +23,7 @@ public class CharacterModCreationService {
     private final SbcFileCreator sbcFileCreator;
 
     public void createNewCharacterMod(
-            String modName, String newSubtype, Gender gender,
+            String modName, String newSubtype, Gender gender, AiBehavior aiBehavior,
             boolean createDevDataDir, boolean createAdditionalFilesForAnAnimalBot)
             throws NotValidException, IOException, URISyntaxException {
 
@@ -35,6 +36,9 @@ public class CharacterModCreationService {
         if (gender == null) {
             throw new NotValidException("Your entered gender is invalid.");
         }
+        if (aiBehavior == null) {
+            throw new NotValidException("Your entered AI behavior is invalid.");
+        }
         if (modExistsAlreadyInModsWorkspace(modName)) {
             throw new NotValidException("A mod with this name already exists in your modding workspace.");
         }
@@ -46,6 +50,7 @@ public class CharacterModCreationService {
                 modName,
                 newSubtype,
                 gender,
+                aiBehavior,
                 createDevDataDir,
                 createAdditionalFilesForAnAnimalBot,
                 modRootDir);

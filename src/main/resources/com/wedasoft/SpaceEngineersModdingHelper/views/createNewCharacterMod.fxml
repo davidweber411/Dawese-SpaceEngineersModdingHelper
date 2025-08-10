@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wedasoft.SpaceEngineersModdingHelper.views.CreateNewCharacterModController">
+<BorderPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wedasoft.SpaceEngineersModdingHelper.views.CreateNewCharacterModController">
    <center>
       <ScrollPane fitToWidth="true" BorderPane.alignment="CENTER">
          <content>
@@ -17,6 +25,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -25,16 +34,18 @@
               </rowConstraints>
                <children>
                   <Label text="Gender:" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" onAction="#onCreateModInWorkspaceButtonClick" text="Create template mod in your modding workspace" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+                  <Button mnemonicParsing="false" onAction="#onCreateModInWorkspaceButtonClick" text="Create template mod in your modding workspace" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
                   <ChoiceBox fx:id="genderChoiceBox" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Mod name:" />
                   <TextField fx:id="modNameTextField" GridPane.columnIndex="1" />
                   <TextField fx:id="wishedSubtypeTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Wished subtype:" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="createDevDataDirCheckbox" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" selected="true" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                  <Label text="Create _devData dir:" GridPane.rowIndex="3" />
-                  <Label text="Create additional files for an animal bot:" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="createAdditionalFilesForAnAnimalBotCheckbox" alignment="CENTER_RIGHT" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                  <CheckBox fx:id="createDevDataDirCheckbox" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" selected="true" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                  <Label text="Create _devData dir:" GridPane.rowIndex="4" />
+                  <Label text="Create additional files for an animal bot:" GridPane.rowIndex="6" />
+                  <CheckBox fx:id="createAdditionalFilesForAnAnimalBotCheckbox" alignment="CENTER_RIGHT" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                  <Label layoutX="18.0" layoutY="101.0" text="AI Behavior:" GridPane.rowIndex="3" />
+                  <ChoiceBox fx:id="aiBehaviorChoiceBox" layoutX="238.0" layoutY="97.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
                <padding>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
