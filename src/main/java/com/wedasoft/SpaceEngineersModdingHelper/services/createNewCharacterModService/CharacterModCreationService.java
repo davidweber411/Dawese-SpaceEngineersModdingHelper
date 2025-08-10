@@ -20,7 +20,6 @@ public class CharacterModCreationService {
     private final ConfigurationsRepository configurationsRepository;
     private final FileSystemRepository fileSystemRepository;
 
-    private final TexturesDirSubService texturesDirSubService;
     private final DevDataDirSubService devDataDirSubService;
     private final ModelsDirSubService modelsDirSubService;
     private final DataDirSubService dataDirSubService;
@@ -59,7 +58,7 @@ public class CharacterModCreationService {
 
         dataDirSubService.createInternalDataSubDir(creationInfo);
         modelsDirSubService.createInternalModelsSubDir(creationInfo);
-        texturesDirSubService.createInternalTexturesSubDir(creationInfo);
+        createInternalTexturesSubDir(creationInfo);
         if (createDevDataDir) {
             devDataDirSubService.createDevDataDir(creationInfo);
         }
@@ -70,8 +69,12 @@ public class CharacterModCreationService {
         return Files.exists(modsWorkspacePath.resolve(modName));
     }
 
-    public void createThumbnail(CharacterModCreationInfo creationInfo) throws IOException {
+    private void createThumbnail(CharacterModCreationInfo creationInfo) throws IOException {
         fileSystemRepository.createJpgWithTextContentInto(creationInfo.getModName(), creationInfo.getModRootDirectory());
+    }
+
+    private void createInternalTexturesSubDir(CharacterModCreationInfo creationInfo) throws IOException {
+        Files.createDirectories(creationInfo.getTexturesInternalKeyDir());
     }
 
 }
